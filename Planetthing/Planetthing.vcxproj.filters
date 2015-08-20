@@ -29,6 +29,9 @@
     <ClInclude Include="GEwindow.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GEopengl.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Planetthing.rc">

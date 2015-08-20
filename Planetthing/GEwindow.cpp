@@ -79,6 +79,9 @@ VOID GEWindow::Create()
 
 	m_hwnd = CreateWindowEx(WS_EX_LAYERED, m_className.data(), m_windowTitle.data(), m_style, m_windowLeft, m_windowsTop, m_windowWidth, m_windowHeight, m_parent, m_hMenu, GetModuleHandle(NULL), this);
 
+	// Device context
+	m_deviceContext =  GetDC(m_hwnd);
+
 	// Created flag.
 	m_created = TRUE;
 
@@ -204,6 +207,11 @@ LRESULT GEWindow::HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 HWND GEWindow::hWnd()
 {
 	return m_hwnd;
+}
+
+HDC GEWindow::DeviceContext()
+{
+	return m_deviceContext;
 }
 
 VOID GEWindow::SetWindowMetrics()
