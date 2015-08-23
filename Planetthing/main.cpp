@@ -1,10 +1,14 @@
-#include "GEopengl.h"
-#include "GEwindow.h"
+#include "GEviewcontroller.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, int iCmdShow)
 {
 	GEWindow main_window;
+	GEViewController main_viewControler;
 
+	// Share the main window with the view controller.
+	main_viewControler.MainWindow = &main_window;
+
+	// Create the main window.
 	main_window.Create();
 	
 	// Initialize OpenGL for render in the main window.
@@ -12,6 +16,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 
 	// Show the main window.
 	main_window.Show();
+
+	// Add the view controller to the window as a delegate.
+	main_window.addDelegate(&main_viewControler);
 
 	//////// Main Loop ///////
 	MSG msg;
@@ -32,9 +39,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 			done = true;
 		else
 		{
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			glFlush();
-			SwapBuffers(main_window.DeviceContext());
+			main_viewControler.update();
+			main_viewControler.render();
 		}
 	}
 

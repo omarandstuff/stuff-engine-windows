@@ -146,11 +146,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GEviewcontroller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GEwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GEopengl.h" />
+    <ClInclude Include="GEviewcontroller.h" />
     <ClInclude Include="GEwindow.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

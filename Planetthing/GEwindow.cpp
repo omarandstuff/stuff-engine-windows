@@ -24,7 +24,6 @@ GEWindow::GEWindow()
 	m_isLayered = FALSE;
 	m_layeredMovible = TRUE;
 	m_layeredBitMap = NULL;
-	m_resized = FALSE;
 
 	m_maximized = FALSE;
 	m_minimized = FALSE;
@@ -136,6 +135,7 @@ VOID GEWindow::RegClass()
 	wc.lpfnWndProc = GEWindowProc;
 	wc.hInstance = GetModuleHandle(NULL);
 	wc.lpszClassName = m_className.data();
+	wc.hbrBackground = NULL;
 
 	RegisterClassEx(&wc);
 }
@@ -178,21 +178,24 @@ LRESULT GEWindow::HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	case WM_PAINT:
 	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(m_hwnd, &ps);
-		FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
-		EndPaint(m_hwnd, &ps);
+		if (m_resized)
+		{
+			for (vector<GEWindowProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
+			{
+				(*it)->didResized(m_clientWidth, m_clientHeight);
+			}
+			m_resized = false;
+		}
 		return 0;
 	}
 	case WM_SIZE:
 	{
 		SetWindowMetrics();
-		m_resized = TRUE;
+		m_resized = true;
 		return 0;
 	}
 	case WM_MOUSEMOVE:
 	{
-		m_mouseMove = true;
 		return 0;
 	}
 	case WM_NCHITTEST:
@@ -203,6 +206,12 @@ LRESULT GEWindow::HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	return DefWindowProc(m_hwnd, uMsg, wParam, lParam);
 }
+
+void GEWindow::addDelegate(GEWindowProtocol* delegate)
+{
+	m_delegates.push_back(delegate);
+}
+
 
 HWND GEWindow::hWnd()
 {
@@ -633,24 +642,4 @@ UINT GEWindow::ScreenWidth()
 UINT GEWindow::ScreenHeight()
 {
 	return m_screenHeight;
-}
-
-BOOL GEWindow::Resized()
-{
-	if (m_resized)
-	{
-		m_resized = FALSE;
-		return TRUE;
-	}
-	return FALSE;
-}
-
-BOOL GEWindow::MouseMove()
-{
-	if (m_mouseMove)
-	{
-		m_mouseMove = false;
-		return true;
-	}
-	return false;
 }

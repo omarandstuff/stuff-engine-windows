@@ -23,6 +23,13 @@ using std::vector;
 using std::wstring;
 using std::to_wstring;
 
+class GEWindowProtocol
+{
+public:
+	virtual void didResized(int width, int height) = 0;
+	virtual void didRepaint() = 0;
+};
+
 class GEWindow
 {
 public:
@@ -79,8 +86,7 @@ public:
 	VOID LayeredMovible(BOOL value);
 
 	// Events
-	BOOL Resized();
-	BOOL MouseMove();
+	void addDelegate(GEWindowProtocol* delegate);
 
 private:
 	VOID RegClass();
@@ -158,8 +164,8 @@ private:
 	UINT m_savedHeight;
 
 	// Events
-	BOOL m_resized;
-	BOOL m_mouseMove;
+	bool m_resized;
+	vector<GEWindowProtocol*> m_delegates;
 
 	static UINT count;
 };
