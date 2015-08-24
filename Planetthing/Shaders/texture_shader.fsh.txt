@@ -1,0 +1,12 @@
+uniform sampler2D textureSampler;
+uniform float opasityComponent;
+
+in vec2 finalTextureCoord;
+
+out vec4 color;
+
+void main()
+{
+    color = texture2D(textureSampler, finalTextureCoord);
+    color.a *= opasityComponent;
+}

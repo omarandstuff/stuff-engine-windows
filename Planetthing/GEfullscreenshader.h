@@ -33,6 +33,6 @@ private:
 	void setUpSahder();
 
 private:
-	GLint uniforms[GE_NUM_UNIFORMS];
+	GLint m_uniforms[GE_NUM_UNIFORMS];
 
 };

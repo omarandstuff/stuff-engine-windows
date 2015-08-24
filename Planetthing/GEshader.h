@@ -2,6 +2,7 @@
 
 #include "GEcommon.h"
 #include "GEopengl.h"
+#include "GEmaterial.h"
 
 class GEShader
 {

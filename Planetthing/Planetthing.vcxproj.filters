@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{5fcf5984-7159-4cc6-adbc-8d46a2585794}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,7 +39,13 @@
     <ClCompile Include="GEshader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GEtextureshader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
     <ClCompile Include="GEfullscreenshader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GEmaterial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,7 +74,13 @@
     <ClInclude Include="GEshader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="GEtextureshader.h">
+      <Filter>Source Files\Shaders</Filter>
+    </ClInclude>
     <ClInclude Include="GEfullscreenshader.h">
+      <Filter>Source Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GEmaterial.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

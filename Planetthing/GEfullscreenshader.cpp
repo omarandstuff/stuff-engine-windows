@@ -14,7 +14,7 @@ GEFullScreenShader* GEFullScreenShader::sharedInstance()
 void GEFullScreenShader::setUpSahder()
 {
 	// Get uniform locations.
-	uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP] = glGetUniformLocation(m_programID, "textureSampler");
+	m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP] = glGetUniformLocation(m_programID, "textureSampler");
 }
 
 // ------------------------------------------------------------------------------ //
@@ -28,5 +28,5 @@ void GEFullScreenShader::useProgram()
 	// Set one texture to render and the current texture to render.
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, TextureID);
-	glUniform1i(uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP], 0);
+	glUniform1i(m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP], 0);
 }

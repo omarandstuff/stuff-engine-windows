@@ -14,6 +14,7 @@
 
 extern PFNGLBLENDEQUATIONPROC glBlendEquation;
 extern PFNGLVALIDATEPROGRAMPROC glValidateProgram;
+extern PFNGLUNIFORM2FVPROC glUniform2fv;
 
 extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDBUFFERPROC glBindBuffer;

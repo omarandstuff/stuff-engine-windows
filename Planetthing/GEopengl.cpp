@@ -2,6 +2,7 @@
 
 PFNGLBLENDEQUATIONPROC glBlendEquation;
 PFNGLVALIDATEPROGRAMPROC glValidateProgram;
+PFNGLUNIFORM2FVPROC glUniform2fv;
 
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;
@@ -102,6 +103,10 @@ bool glInit(HDC deviceContext)
 
 	glValidateProgram = (PFNGLVALIDATEPROGRAMPROC)wglGetProcAddress("glValidateProgram");
 	if (!glValidateProgram)
+		return false;
+
+	glUniform2fv = (PFNGLUNIFORM2FVPROC)wglGetProcAddress("glUniform2fv");
+	if (!glUniform2fv)
 		return false;
 
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");
@@ -330,6 +335,9 @@ bool glInit(HDC deviceContext)
 
 	// Turn on or off the vertical sync depending on the input bool value.
 	wglSwapIntervalEXT(0);
+
+	// Set the polygon winding to front facing for the left handed system.
+	glFrontFace(GL_CW);
 
 	return true;
 }
