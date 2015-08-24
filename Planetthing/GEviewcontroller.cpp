@@ -8,6 +8,7 @@ void GEViewController::viewDidLoad()
 {
 	texture = GETexture::textureWithFileName(L"resources/images/Test.png");
 	fullscreen = GEFullScreen::sharedInstance();
+	fullscreen->TextureID = texture->TextureID;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -23,6 +24,9 @@ void GEViewController::render()
 {
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	fullscreen->render();
+
 	glFlush();
 	SwapBuffers(MainWindow->DeviceContext());
 }

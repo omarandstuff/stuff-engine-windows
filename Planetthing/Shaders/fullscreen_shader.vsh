@@ -1,11 +1,14 @@
-#version 330 core
-layout(location = 0) in vec3 positionCoord;
-layout(location = 1) in vec2 textureCoord;
+#version 400
+in vec3 positionCoord;
+in vec2 textureCoord;
 
-out vec2 finalTextureCoord;
+out vec2 texCoord;
 
-void main()
+void main(void)
 {
-    gl_Position = vec4(positionCoord, 1.0);
-    finalTextureCoord = textureCoord;
+	// Calculate the position of the vertex against the world, view, and projection matrices.
+	gl_Position = vec4(positionCoord, 1.0);
+
+	// Store the texture coordinates for the pixel shader.
+	texCoord = textureCoord;
 }

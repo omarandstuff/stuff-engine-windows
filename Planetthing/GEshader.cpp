@@ -108,7 +108,7 @@ GLuint GEShader::compileShader(GLenum type, wstring filename)
 	}
 
 	// Genrate and pass the buffer to a OpenGL shader.
-	shader = glCreateShader(GL_VERTEX_SHADER);
+	shader = glCreateShader(type);
 	glShaderSource(shader, 1, &shaderBuffer, NULL);
 
 	// Free the buffer.

@@ -35,6 +35,7 @@ private:
 private:
 	GEFullScreenShader* m_fullScreenShader;
 
-	GLuint m_vertexBufferId;
-	GLuint m_vertexArrayId;
+	GLuint m_vertexArrayID;
+	GLuint m_vertexBufferID;
+	GLuint m_indexBufferID;
 };

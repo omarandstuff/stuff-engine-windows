@@ -1,11 +1,17 @@
-#version 330 core
+#version 400
+
+in vec2 texCoord;
+
+out vec4 outputColor;
+
 uniform sampler2D textureSampler;
 
-in vec2 finalTextureCoord;
-
-out vec4 color;
-
-void main()
+void main(void)
 {
-    color = texture(textureSampler, finalTextureCoord);
+	vec4 textureColor;
+
+	// Sample the pixel color from the texture using the sampler at this texture coordinate location.
+	textureColor = texture(textureSampler, texCoord);
+
+	outputColor = textureColor;
 }
