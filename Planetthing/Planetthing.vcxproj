@@ -88,11 +88,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(ProjectDir)DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,12 +149,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GEopengl.cpp" />
+    <ClCompile Include="GEtexture.cpp" />
     <ClCompile Include="GEviewcontroller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GEwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEopengl.h" />
+    <ClInclude Include="GEtexture.h" />
     <ClInclude Include="GEviewcontroller.h" />
     <ClInclude Include="GEwindow.h" />
     <ClInclude Include="resource.h" />

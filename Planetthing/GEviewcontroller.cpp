@@ -1,5 +1,19 @@
 #include "GEviewcontroller.h"
 
+// ------------------------------------------------------------------------------ //
+// ------------------------------ View Load - Unload ---------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GEViewController::viewDidLoad()
+{
+	GETexture* texture = GETexture::textureWithFileName(L"resources/images/Test.png");
+	GETexture* texture2 = GETexture::textureWithFileName(L"resources/images/Test.png");
+}
+
+// ------------------------------------------------------------------------------ //
+// -------------------------- Update - Render - Layout -------------------------- //
+// ------------------------------------------------------------------------------ //
+
 void GEViewController::update()
 {
 
@@ -13,13 +27,8 @@ void GEViewController::render()
 	SwapBuffers(MainWindow->DeviceContext());
 }
 
-void GEViewController::didResized(int width, int height)
+void GEViewController::didLayout(int width, int height)
 {
 	glViewport(0, 0, width, height);
 	render();
-}
-
-void GEViewController::didRepaint()
-{
-	
 }

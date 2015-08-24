@@ -26,8 +26,7 @@ using std::to_wstring;
 class GEWindowProtocol
 {
 public:
-	virtual void didResized(int width, int height) = 0;
-	virtual void didRepaint() = 0;
+	virtual void didLayout(int width, int height) = 0;
 };
 
 class GEWindow

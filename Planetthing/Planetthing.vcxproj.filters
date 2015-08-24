@@ -24,6 +24,12 @@
     <ClCompile Include="GEviewcontroller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GEtexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GEopengl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GEviewcontroller.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEtexture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEcommon.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

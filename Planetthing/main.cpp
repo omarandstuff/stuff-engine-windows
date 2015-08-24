@@ -14,15 +14,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 	// Initialize OpenGL for render in the main window.
 	glInit(main_window.DeviceContext());
 
-	// Show the main window.
-	main_window.Show();
-
 	// Add the view controller to the window as a delegate.
 	main_window.addDelegate(&main_viewControler);
+
+	// Did load everything
+	main_viewControler.viewDidLoad();
 
 	//////// Main Loop ///////
 	MSG msg;
 	bool done = false;
+
+	bool firstRender = false;
 
 	// Loop until there is a quit message from the window or the user.
 	while (!done)
@@ -41,6 +43,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 		{
 			main_viewControler.update();
 			main_viewControler.render();
+
+			if (!firstRender)
+			{
+				// Show the main window.
+				main_window.Show();
+				firstRender = false;
+			}
 		}
 	}
 

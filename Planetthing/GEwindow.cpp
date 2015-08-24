@@ -182,7 +182,7 @@ LRESULT GEWindow::HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 		{
 			for (vector<GEWindowProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
 			{
-				(*it)->didResized(m_clientWidth, m_clientHeight);
+				(*it)->didLayout(m_clientWidth, m_clientHeight);
 			}
 			m_resized = false;
 		}
@@ -515,7 +515,7 @@ VOID GEWindow::SetLayeredWnd(DWORD resourceID)
 	if(m_layeredPixels) delete[] m_layeredPixels;
 	m_layeredBitMap = CreateDIBSection(dcBitmap, &bmpInfo, DIB_RGB_COLORS, (void**)&m_layeredPixels, NULL, 0);
 
-	for(int i = 0; i < m_layeredBitMapWidth * m_layeredBitMapHeight; i++)
+	for(unsigned int i = 0; i < m_layeredBitMapWidth * m_layeredBitMapHeight; i++)
 	{
 		m_layeredPixels[i * 4] = pixel[i * 4] * pixel[i * 4 + 3] / 255;
 		m_layeredPixels[i * 4 + 1] = pixel[i * 4 + 1] * pixel[i * 4 + 3] / 255;
@@ -546,7 +546,7 @@ VOID GEWindow::MakeLayeredWnd()
 	HGDIOBJ hPrevObj = NULL;
 	POINT ptDest = { 0, 0 };
 	POINT ptSrc = { 0, 0 };
-	SIZE client = { m_layeredBitMapWidth, m_layeredBitMapHeight };
+	SIZE client = { (LONG)m_layeredBitMapWidth, (LONG)m_layeredBitMapHeight };
 
 	// create a memory DC holding the splash bitmap
 	HDC hdcScreen = GetDC(NULL);

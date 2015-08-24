@@ -1,16 +1,26 @@
 #pragma once
 #include "GEwindow.h"
-#include "GEopengl.h"
+#include "GEtexture.h"
 
 class GEViewController : public GEWindowProtocol
 {
 public:
+	// -------------------------------------------- //
+	// --------- Update - Render - Layout --------- //
+	// -------------------------------------------- //
+	void viewDidLoad();
 	void update();
 	void render();
+	void didLayout(int width, int height);
 
-	void didResized(int width, int height);
-	void didRepaint();
+	// -------------------------------------------- //
+	// ------------------ Events ------------------ //
+	// -------------------------------------------- //
+
 
 public:
+	// -------------------------------------------- //
+	// ---------------- Properties ---------------- //
+	// -------------------------------------------- //
 	GEWindow* MainWindow;
 };
