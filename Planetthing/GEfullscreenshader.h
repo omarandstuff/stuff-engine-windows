@@ -1,24 +1,18 @@
 #pragma once
-#include "GEcommon.h"
-#include "GEfullscreenshader.h"
 
-class GEFullScreen
+#include "GEshader.h"
+
+class GEFullScreenShader : public GEShader
 {
 	// -------------------------------------------- //
 	// ----------------- Singleton ---------------- //
 	// -------------------------------------------- //
 public:
-	static GEFullScreen* sharedInstance();
+	static GEFullScreenShader* sharedInstance();
 private:
-	GEFullScreen() { createFullScreenVO(); m_fullScreenShader = GEFullScreenShader::sharedInstance(); };
-	GEFullScreen(GEFullScreen const&) = delete;
-	void operator=(GEFullScreen const&) = delete;
-
-	// -------------------------------------------- //
-	// ------------------ Render ------------------ //
-	// -------------------------------------------- //
-public:
-	void render();
+	GEFullScreenShader() { loadShaderWithFileName(L"Shaders/fullscreen_shader", GE_BUFFER_MODE_POSITION_TEXTURE); setUpSahder(); };
+	GEFullScreenShader(GEFullScreenShader const&) = delete;
+	void operator=(GEFullScreenShader const&) = delete;
 
 public:
 	// -------------------------------------------- //
@@ -26,15 +20,19 @@ public:
 	// -------------------------------------------- //
 	GLuint TextureID;
 
+public:
+	// -------------------------------------------- //
+	// ---------------- Use Program --------------- //
+	// -------------------------------------------- //
+	void useProgram();
+
 	// -------------------------------------------- //
 	// ------------- private members -------------- //
 	// -------------------------------------------- //
 private:
-	void createFullScreenVO();
+	void setUpSahder();
 
 private:
-	GEFullScreenShader* m_fullScreenShader;
+	GLint uniforms[GE_NUM_UNIFORMS];
 
-	GLuint m_vertexBufferId;
-	GLuint m_vertexArrayId;
 };

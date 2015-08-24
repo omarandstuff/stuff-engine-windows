@@ -33,6 +33,12 @@
     <ClCompile Include="GEfullscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GEshader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GEfullscreenshader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -54,6 +60,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GEfullscreen.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEshader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEfullscreenshader.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

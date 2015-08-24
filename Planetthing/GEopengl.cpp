@@ -1,6 +1,7 @@
 #include "GEopengl.h"
 
 PFNGLBLENDEQUATIONPROC glBlendEquation;
+PFNGLVALIDATEPROGRAMPROC glValidateProgram;
 
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;
@@ -97,6 +98,10 @@ bool glInit(HDC deviceContext)
 
 	glBlendEquation = (PFNGLBLENDEQUATIONPROC)wglGetProcAddress("glBlendEquation");
 	if (!glBlendEquation)
+		return false;
+
+	glValidateProgram = (PFNGLVALIDATEPROGRAMPROC)wglGetProcAddress("glValidateProgram");
+	if (!glValidateProgram)
 		return false;
 
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");

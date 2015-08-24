@@ -150,7 +150,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GEfullscreen.cpp" />
+    <ClCompile Include="GEfullscreenshader.cpp" />
     <ClCompile Include="GEopengl.cpp" />
+    <ClCompile Include="GEshader.cpp" />
     <ClCompile Include="GEtexture.cpp" />
     <ClCompile Include="GEviewcontroller.cpp" />
     <ClCompile Include="main.cpp" />
@@ -159,7 +161,9 @@
   <ItemGroup>
     <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEfullscreen.h" />
+    <ClInclude Include="GEfullscreenshader.h" />
     <ClInclude Include="GEopengl.h" />
+    <ClInclude Include="GEshader.h" />
     <ClInclude Include="GEtexture.h" />
     <ClInclude Include="GEviewcontroller.h" />
     <ClInclude Include="GEwindow.h" />

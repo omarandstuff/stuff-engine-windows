@@ -13,6 +13,7 @@
 #include <gl\glext.h>
 
 extern PFNGLBLENDEQUATIONPROC glBlendEquation;
+extern PFNGLVALIDATEPROGRAMPROC glValidateProgram;
 
 extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDBUFFERPROC glBindBuffer;

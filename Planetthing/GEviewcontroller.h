@@ -24,4 +24,7 @@ public:
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
 	GEWindow* MainWindow;
+
+	GEFullScreen* fullscreen;
+	GETexture* texture;
 };
