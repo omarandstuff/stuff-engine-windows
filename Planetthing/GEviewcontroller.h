@@ -1,6 +1,7 @@
 #pragma once
 #include "GEwindow.h"
 #include "GEtexture.h"
+#include "GEfullscreen.h"
 
 class GEViewController : public GEWindowProtocol
 {

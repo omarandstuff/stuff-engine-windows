@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEopengl.cpp" />
     <ClCompile Include="GEtexture.cpp" />
     <ClCompile Include="GEviewcontroller.cpp" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GEcommon.h" />
+    <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEopengl.h" />
     <ClInclude Include="GEtexture.h" />
     <ClInclude Include="GEviewcontroller.h" />

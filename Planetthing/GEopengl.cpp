@@ -1,5 +1,7 @@
 #include "GEopengl.h"
 
+PFNGLBLENDEQUATIONPROC glBlendEquation;
+
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;
 PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
@@ -91,6 +93,10 @@ bool glInit(HDC deviceContext)
 
 	wglSwapIntervalEXT = (PFNWGLSWAPINTERVALEXTPROC)wglGetProcAddress("wglSwapIntervalEXT");
 	if (!wglSwapIntervalEXT)
+		return false;
+
+	glBlendEquation = (PFNGLBLENDEQUATIONPROC)wglGetProcAddress("glBlendEquation");
+	if (!glBlendEquation)
 		return false;
 
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");

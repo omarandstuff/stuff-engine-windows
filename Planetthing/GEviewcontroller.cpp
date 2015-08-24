@@ -8,6 +8,7 @@ void GEViewController::viewDidLoad()
 {
 	GETexture* texture = GETexture::textureWithFileName(L"resources/images/Test.png");
 	GETexture* texture2 = GETexture::textureWithFileName(L"resources/images/Test.png");
+	GEFullScreen* fullscreen = GEFullScreen::sharedInstance();
 }
 
 // ------------------------------------------------------------------------------ //

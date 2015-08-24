@@ -12,6 +12,8 @@
 #include <gl\wglext.h>
 #include <gl\glext.h>
 
+extern PFNGLBLENDEQUATIONPROC glBlendEquation;
+
 extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDBUFFERPROC glBindBuffer;
 extern PFNGLBINDVERTEXARRAYPROC glBindVertexArray;
