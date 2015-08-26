@@ -170,9 +170,12 @@
   <ItemGroup>
     <ClInclude Include="GEanimatedmodel.h" />
     <ClInclude Include="GEanimation.h" />
+    <ClInclude Include="GEbound.h" />
     <ClInclude Include="GEcommon.h" />
+    <ClInclude Include="GEframe.h" />
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />
+    <ClInclude Include="GEjoint.h" />
     <ClInclude Include="GMmain.h" />
     <ClInclude Include="GEmaterial.h" />
     <ClInclude Include="GEmesh.h" />

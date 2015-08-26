@@ -19,43 +19,28 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{5c946af0-623d-4ee4-90ff-0714903d8eac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Animation">
+      <UniqueIdentifier>{1866e2e2-1dd2-4565-9b3c-f8d5adcce45e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Support">
+      <UniqueIdentifier>{6b709b4c-4958-48f4-b67b-8dc2cf555d11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{bf7ec872-d69b-419b-9216-780060623845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects">
+      <UniqueIdentifier>{eb059e57-f62c-46be-844e-56b97420aedd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GEwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEtexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEopengl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEfullscreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GEtextureshader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="GEfullscreenshader.cpp">
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="GEmaterial.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEmesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEanimatedmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GEanimation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GEshader.cpp">
       <Filter>Source Files\Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="GEupdatecaller.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GMmain.cpp">
       <Filter>Source Files\Game</Filter>
@@ -66,25 +51,37 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="GEanimation.cpp">
+      <Filter>Source Files\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="GEmaterial.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEmesh.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEopengl.cpp">
+      <Filter>Source Files\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEfullscreen.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="GEtexture.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEupdatecaller.cpp">
+      <Filter>Source Files\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEwindow.cpp">
+      <Filter>Source Files\Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEanimatedmodel.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
       <Filter>Resource Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEwindow.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEopengl.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEtexture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEcommon.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEfullscreen.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GEtextureshader.h">
       <Filter>Source Files\Shaders</Filter>
@@ -92,29 +89,53 @@
     <ClInclude Include="GEfullscreenshader.h">
       <Filter>Source Files\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="GEmaterial.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEmesh.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEanimatedmodel.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GEanimation.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="GEshader.h">
       <Filter>Source Files\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="GEupdatecaller.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="GMmain.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="GMviewcontroller.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GEanimation.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GEcommon.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEmaterial.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEmesh.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEopengl.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEfullscreen.h">
+      <Filter>Source Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="GEtexture.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEupdatecaller.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEwindow.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEanimatedmodel.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEframe.h">
+      <Filter>Source Files\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="GEbound.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEjoint.h">
+      <Filter>Source Files\Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

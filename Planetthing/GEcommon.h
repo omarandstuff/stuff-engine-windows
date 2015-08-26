@@ -6,6 +6,8 @@
 #include <tuple>
 #include <fstream>
 #include <glm.hpp>
+#include <gtx\compatibility.hpp>
+#include <gtx\quaternion.hpp>
 using namespace std;
 
 // -------------------------------------------- //
