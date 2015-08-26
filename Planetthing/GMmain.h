@@ -2,6 +2,7 @@
 
 #include "GEupdatecaller.h"
 #include "GEtexture.h"
+#include "GEanimation.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol
 {

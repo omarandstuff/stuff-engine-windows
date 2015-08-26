@@ -15,7 +15,9 @@ class GEAnimation : public GEUpdateProtocol
 	// -------------------------------------------- //
 	// --------------- Initializaion -------------- //
 	// -------------------------------------------- //
+public:
 	GEAnimation();
+	GEAnimation(wstring filename);
 	~GEAnimation();
 
 	// -------------------------------------------- //
@@ -46,6 +48,9 @@ public:
 	// -------------------------------------------- //
 public:
 	void update(float time);
+	void preUpdate() {}
+	void posUpdate() {}
+
 
 	// -------------------------------------------- //
 	// ---------- Load - Import - Export ---------- //
@@ -74,6 +79,4 @@ private:
 	float m_frameDuration;
 	vector<GEAnimationProtocol*> m_selectors;
 	GEFrame m_finalFrame;
-
-
 };

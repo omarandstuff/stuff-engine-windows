@@ -9,6 +9,12 @@ GEAnimation::GEAnimation()
 	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
 }
 
+GEAnimation::GEAnimation(wstring filename)
+{
+	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
+	loadAnimationWithFileName(filename);
+}
+
 GEAnimation::~GEAnimation()
 {
 	GEUpdateCaller::sharedInstance()->removeSelector((void**)this);
@@ -115,8 +121,10 @@ void GEAnimation::removeSelector(void** selector)
 
 void GEAnimation::loadAnimationWithFileName(wstring filename)
 {
-	wstring fileType = filename.substr(filename.size() - 3, 3);
-	wstring filePath = filename.substr(filename.size()- 4);
+	if (filename == L"") return;
+
+	wstring fileType = filename.substr(filename.find_last_of(L".") + 1);
+	wstring filePath = filename.substr(0, filename.find_last_of(L"."));
 
 	FileName = filename;
 
@@ -134,6 +142,32 @@ void GEAnimation::loadAnimationWithFileName(wstring filename)
 
 bool GEAnimation::loadMD5WithFileName(wstring filename)
 {
+	wfstream wStream((filename + L".md5anim").c_str());
+
+	if (!wStream)
+		return false;
+
+	// Animation counters.
+	unsigned int numberOfJoints = 0;
+	unsigned int numberOfAnimatedComponents = 0;
+
+	//Joints
+	vector<wstring> jointNames;
+	struct jointInf
+	{
+		int parentID;
+		int flags;
+		int startData;
+	};
+	struct jointInf* jointInfs = 0;
+
+
+	wchar_t line[256];
+	while (wStream.getline(line, 256))
+	{
+		wstringstream newLine(line, wstringstream::in);
+	}
+	
 
 	return true;
 }
