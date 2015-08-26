@@ -21,10 +21,10 @@ private:
 private:
 	static map<wstring, pair<int, GETexture*>> m_texturesHolder;
 
-public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
+public:
 	GLuint TextureID;
 	wstring FileName;
 	GLuint Width;
@@ -39,4 +39,7 @@ public:
 private:
 	unsigned char* loadImageWithFileName(wstring filename);
 	void generateTextureFromPixels(unsigned char* rawPixels);
+
+private:
+	GLenum m_imageFormat;
 };

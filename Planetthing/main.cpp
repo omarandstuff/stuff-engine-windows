@@ -1,15 +1,15 @@
-#include "GEviewcontroller.h"
+#include "GMviewcontroller.h"
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, int iCmdShow)
 {
 	GEWindow main_window;
-	GEViewController main_viewControler;
-
-	// Share the main window with the view controller.
-	main_viewControler.MainWindow = &main_window;
+	GMViewController main_viewControler;
 
 	// Create the main window.
 	main_window.Create();
+
+	// Share the main window with the view controller.
+	main_viewControler.MainWindow = &main_window;
 	
 	// Initialize OpenGL for render in the main window.
 	glInit(main_window.DeviceContext());

@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -151,27 +151,37 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GEanimatedmodel.cpp" />
+    <ClCompile Include="GEanimation.cpp" />
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
+    <ClCompile Include="GMmain.cpp" />
     <ClCompile Include="GEmaterial.cpp" />
+    <ClCompile Include="GEmesh.cpp" />
     <ClCompile Include="GEopengl.cpp" />
     <ClCompile Include="GEshader.cpp" />
     <ClCompile Include="GEtexture.cpp" />
     <ClCompile Include="GEtextureshader.cpp" />
-    <ClCompile Include="GEviewcontroller.cpp" />
+    <ClCompile Include="GEupdatecaller.cpp" />
+    <ClCompile Include="GMviewcontroller.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GEwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GEanimatedmodel.h" />
+    <ClInclude Include="GEanimation.h" />
     <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />
+    <ClInclude Include="GMmain.h" />
     <ClInclude Include="GEmaterial.h" />
+    <ClInclude Include="GEmesh.h" />
     <ClInclude Include="GEopengl.h" />
     <ClInclude Include="GEshader.h" />
     <ClInclude Include="GEtexture.h" />
     <ClInclude Include="GEtextureshader.h" />
-    <ClInclude Include="GEviewcontroller.h" />
+    <ClInclude Include="GEupdatecaller.h" />
+    <ClInclude Include="GMviewcontroller.h" />
     <ClInclude Include="GEwindow.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>

@@ -1,14 +1,14 @@
 #pragma once
 #include "GEwindow.h"
-#include "GEtexture.h"
-#include "GEfullscreen.h"
+#include "GEupdatecaller.h"
+#include "GMmain.h"
 
-class GEViewController : public GEWindowProtocol
+class GMViewController : public GEWindowProtocol
 {
-public:
 	// -------------------------------------------- //
 	// --------- Update - Render - Layout --------- //
 	// -------------------------------------------- //
+public:
 	void viewDidLoad();
 	void update();
 	void render();
@@ -17,14 +17,17 @@ public:
 	// -------------------------------------------- //
 	// ------------------ Events ------------------ //
 	// -------------------------------------------- //
+private:
 
-
-public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
+public:
 	GEWindow* MainWindow;
 
-	GEFullScreen* fullscreen;
-	GETexture* texture;
+	// -------------------------------------------- //
+	// ------------- Private members -------------- //
+	// -------------------------------------------- //
+private:
+	GEUpdateCaller* m_updateCaller;
 };

@@ -80,7 +80,7 @@ unsigned char* GETexture::loadImageWithFileName(wstring filename)
 	Width = ilGetInteger(IL_IMAGE_WIDTH);
 	Height = ilGetInteger(IL_IMAGE_HEIGHT);
 
-	ILenum imageFormat = ilGetInteger(IL_IMAGE_FORMAT);
+	m_imageFormat = ilGetInteger(IL_IMAGE_FORMAT);
 	ILint imageBBP = ilGetInteger(IL_IMAGE_BPP);
 
 	// Allocate a buffer to store the bitmap data.
@@ -91,7 +91,7 @@ unsigned char* GETexture::loadImageWithFileName(wstring filename)
 	}
 
 	// Copy data from DevIL to our pixmap.
-	ilCopyPixels(0, 0, 0, Width, Height, 1, imageFormat, IL_UNSIGNED_BYTE, rawPixels);
+	ilCopyPixels(0, 0, 0, Width, Height, 1, m_imageFormat, IL_UNSIGNED_BYTE, rawPixels);
 
 	// Unbound image name and frees DevIL image memory.
 	ilBindImage(0);
@@ -109,7 +109,7 @@ void GETexture::generateTextureFromPixels(unsigned char* rawPixels)
 	glBindTexture(GL_TEXTURE_2D, TextureID);
 
 	// Load the image data into the texture unit.
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Width, Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, rawPixels);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, Width, Height, 0, m_imageFormat, GL_UNSIGNED_BYTE, rawPixels);
 
 	// Use linear filetring
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
