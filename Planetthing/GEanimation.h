@@ -27,7 +27,7 @@ public:
 	wstring FileName;
 	unsigned int NumberOfFrames;
 	unsigned int FrameRate;
-	vector<GEFrame> Frames;
+	vector<GEFrame*> Frames;
 	bool Ready;
 
 	float Duration;
@@ -78,5 +78,5 @@ private:
 private:
 	float m_frameDuration;
 	vector<GEAnimationProtocol*> m_selectors;
-	GEFrame m_finalFrame;
+	GEFrame* m_finalFrame;
 };

@@ -67,22 +67,22 @@ void GEAnimation::update(float time)
 
 	float interpolation = frameIndex - floorf(frameIndex);
 
-	GEFrame* preFrame = &Frames[preFrameIndex];
-	GEFrame* posFrame = &Frames[posFrameIndex];
+	GEFrame* preFrame = Frames[preFrameIndex];
+	GEFrame* posFrame = Frames[posFrameIndex];
 
 	for (int i = 0; i < (int)preFrame->Joints.size(); i++)
 	{
-		GEJoint* finalJoint = &m_finalFrame.Joints[i];
-		GEJoint* preJoint = &preFrame->Joints[i];
-		GEJoint* posJoint = &posFrame->Joints[i];
+		GEJoint* finalJoint = m_finalFrame->Joints[i];
+		GEJoint* preJoint = preFrame->Joints[i];
+		GEJoint* posJoint = posFrame->Joints[i];
 
 		finalJoint->Position = glm::lerp(preJoint->Position, posJoint->Position, interpolation);
 		finalJoint->Orientation = glm::mix(preJoint->Orientation, posJoint->Orientation, interpolation);
 	}
 
 	// Interpolate bounds.
-	m_finalFrame.Bound.MaxBound = glm::lerp(preFrame->Bound.MaxBound, posFrame->Bound.MaxBound, interpolation);
-	m_finalFrame.Bound.MinBound = glm::lerp(preFrame->Bound.MinBound, posFrame->Bound.MinBound, interpolation);
+	m_finalFrame->Bounds.MaxBound = glm::lerp(preFrame->Bounds.MaxBound, posFrame->Bounds.MaxBound, interpolation);
+	m_finalFrame->Bounds.MinBound = glm::lerp(preFrame->Bounds.MinBound, posFrame->Bounds.MinBound, interpolation);
 
 	callSelectors();
 }
@@ -91,7 +91,7 @@ void GEAnimation::callSelectors()
 {
 	// Update every selector
 	for (vector<GEAnimationProtocol*>::iterator it = m_selectors.begin(); it != m_selectors.end(); it++)
-		(*it)->poseForFrameDidFinish(&m_finalFrame);
+		(*it)->poseForFrameDidFinish(m_finalFrame);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -162,15 +162,12 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 	vector<jointInf> jointInfs;
 
 	// Bounds
-	struct bound
-	{
-		float maxX, maxY, maxZ;
-		float minX, minY, minZ;
-	};
-	vector<bound> bounds;
+	vector<GEBound> bounds;
 
 	// Frames
 	vector<vector<float> > frameDatas;
+
+	m_finalFrame = new GEFrame;
 
 	wchar_t line[256];
 	while (wStream.getline(line, 256))
@@ -234,7 +231,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 		}
 		else if (first == L"bounds")
 		{
-			bound currentBound;
+			GEBound currentBound;
 			// Fill the data holder with every bound line.
 			for (unsigned int i = 0; i < NumberOfFrames; i++)
 			{
@@ -243,14 +240,20 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 				wistringstream boundLine(line, wistringstream::in);
 
 				// New Bound.
-				boundLine >> currentBound.minX;
-				boundLine >> currentBound.minZ;
-				currentBound.minZ *= -1.0f;
-				boundLine >> currentBound.minY;
-				boundLine >> currentBound.maxX;
-				boundLine >> currentBound.maxZ;
-				currentBound.maxZ *= -1.0f;
-				boundLine >> currentBound.maxY;
+				wstring junk;
+				boundLine >> junk;
+
+				boundLine >> currentBound.MinBound.x;
+				boundLine >> currentBound.MinBound.z;
+				boundLine >> currentBound.MinBound.y;
+				boundLine >> junk >> junk;
+				boundLine >> currentBound.MaxBound.x;
+				boundLine >> currentBound.MaxBound.z;
+				boundLine >> currentBound.MaxBound.y;
+
+				// Flip ZY
+				currentBound.MinBound.z *= -1.0f;
+				currentBound.MaxBound.z *= -1.0f;
 
 				bounds.push_back(currentBound);
 			}
@@ -265,21 +268,26 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 				wistringstream jointLine(line, wistringstream::in);
 
 				// New joint.
-				GEJoint currentJoint;
+				GEJoint* currentJoint = new GEJoint;
+
+				wstring junk;
+				jointLine >> junk;
 
 				// Position data.
-				jointLine >> currentJoint.Position.x;
-				jointLine >> currentJoint.Position.y;
-				jointLine >> currentJoint.Position.z;
+				jointLine >> currentJoint->Position.x;
+				jointLine >> currentJoint->Position.y;
+				jointLine >> currentJoint->Position.z;
+
+				jointLine >> junk;
+				jointLine >> junk;
 
 				// Orientation data.
-				jointLine >> currentJoint.Orientation.x;
-				jointLine >> currentJoint.Orientation.y;
-				jointLine >> currentJoint.Orientation.z;
-				computeWComponentOfQuaternion(currentJoint.Orientation);
+				jointLine >> currentJoint->Orientation.x;
+				jointLine >> currentJoint->Orientation.y;
+				jointLine >> currentJoint->Orientation.z;
 
 				// Add new joint.
-				m_finalFrame.Joints.push_back(currentJoint);
+				m_finalFrame->Joints.push_back(currentJoint);
 			}
 		}
 		else if (first == L"frame")
@@ -291,26 +299,88 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 			// Fill the data with all the next data lines.
 			unsigned int dataIndex = 0;
 			unsigned int remainDatas = numberOfAnimatedComponents;
+
+			frameDatas.push_back(vector<float>());
+			vector<vector<float> >::iterator currentFrameData = frameDatas.end() - 1;
+
 			do
 			{
 				// Joint line.
 				wStream.getline(line, 256);
 				wistringstream jointLine(line, wistringstream::in);
 
-				vector<float> currentFrameData;
-
 				do
 				{
 					float currentData;
 					jointLine >> currentData;
-					currentFrameData.push_back(currentData);
+					currentFrameData->push_back(currentData);
 					remainDatas--;
 				} while (jointLine.rdbuf()->in_avail() != 0);
 
-				if (!remainDatas)frameDatas.push_back(currentFrameData);
-
 			} while (remainDatas);
 		}
+	}
+
+	// Build frames
+	for (int i = 0; i < NumberOfFrames; i++)
+	{
+		// New Frame
+		GEFrame* currentFrame = new GEFrame;
+
+		// Fill bound inf.
+
+		currentFrame->Bounds = bounds[i];
+
+		// Frame data
+		vector<float>* currentFrameData = &frameDatas[i];
+
+		// Calculate every new joint based on the base frame.
+		for (unsigned int j = 0; j < numberOfJoints; j++)
+		{
+			// BaseJoint
+			GEJoint* baseJoint = m_finalFrame->Joints[j];
+			jointInf* baseJointInf = &jointInfs[j];
+
+			// New joint
+			GEJoint* currentJoint = new GEJoint;
+
+			currentJoint->Position = baseJoint->Position;
+			currentJoint->Orientation = baseJoint->Orientation;
+
+			// Parenting
+			currentJoint->Parent = baseJointInf->parentID != -1 ? currentFrame->Joints[baseJointInf->parentID] : 0;
+
+			// Flags that tell what member in position and orientation is been modified.
+			unsigned int o = 0;
+			if (baseJointInf->flags & 1)
+				currentJoint->Position.x = (*currentFrameData)[baseJointInf->startData + o++];
+			if (baseJointInf->flags & 2)
+				currentJoint->Position.y = (*currentFrameData)[baseJointInf->startData + o++];
+			if (baseJointInf->flags & 4)
+				currentJoint->Position.z = (*currentFrameData)[baseJointInf->startData + o++];
+			if (baseJointInf->flags & 8)
+				currentJoint->Orientation.x = (*currentFrameData)[baseJointInf->startData + o++];
+			if (baseJointInf->flags & 16)
+				currentJoint->Orientation.y = (*currentFrameData)[baseJointInf->startData + o++];
+			if (baseJointInf->flags & 32)
+				currentJoint->Orientation.z = (*currentFrameData)[baseJointInf->startData + o++];
+
+			computeWComponentOfQuaternion(currentJoint->Orientation);
+
+			if (currentJoint->Parent != 0) // Has a parent joint
+			{
+				glm::vec3 rotPosition = currentJoint->Parent->Orientation * currentJoint->Position;
+
+				currentJoint->Position = currentJoint->Parent->Position + rotPosition;
+				currentJoint->Orientation = glm::normalize(currentJoint->Parent->Orientation * currentJoint->Orientation);
+			}
+
+			// Push the new joint.
+			currentFrame->Joints.push_back(currentJoint);
+		}
+
+		// Push the new frame.
+		Frames.push_back(currentFrame);
 	}
 
 	return true;
