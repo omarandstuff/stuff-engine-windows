@@ -71,7 +71,7 @@ public:
 	// -------------------------------------------- //
 private:
 	bool loadMD5WithFileName(wstring filename);
-	float computeWComponentOfQuaternion(glm::quat quaternion);
+	void computeWComponentOfQuaternion(glm::quat& quaternion);
 
 	void callSelectors();
 

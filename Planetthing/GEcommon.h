@@ -5,6 +5,7 @@
 #include <map>
 #include <tuple>
 #include <fstream>
+#include <sstream>
 #include <glm.hpp>
 #include <gtx\compatibility.hpp>
 #include <gtx\quaternion.hpp>
