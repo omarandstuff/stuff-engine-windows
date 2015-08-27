@@ -2,7 +2,7 @@
 
 #include "GEvertex.h"
 
-class GEtriangle
+class GETriangle
 {
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //

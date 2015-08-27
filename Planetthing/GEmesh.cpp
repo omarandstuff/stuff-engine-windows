@@ -44,7 +44,7 @@ void GEMesh::matchMeshWithFrame(GEFrame* frame)
 		m_vertexBuffer[index * 8 + 4] = (*vertex)->TextureCoord.y;
 	}
 
-	for (vector<GEtriangle*>::iterator triangle = Triangles.begin(); triangle != Triangles.end(); triangle++)
+	for (vector<GETriangle*>::iterator triangle = Triangles.begin(); triangle != Triangles.end(); triangle++)
 	{
 		glm::vec3 normal = glm::cross((*triangle)->Vertex3->Position - (*triangle)->Vertex1->Position, (*triangle)->Vertex2->Position - (*triangle)->Vertex1->Position);
 
@@ -72,11 +72,11 @@ void GEMesh::matchMeshWithFrame(GEFrame* frame)
 void GEMesh::generateBuffers()
 {
 	// Create the dynamic vertex data and the static index data.
-	m_vertexBuffer = (float*)calloc(Vertices.size() * 8, sizeof(float));
-	m_indexBuffer = (unsigned int*)calloc(Triangles.size() * 3, sizeof(unsigned int));
+	m_vertexBuffer = new float[Vertices.size() * 8];
+	m_indexBuffer = new unsigned int[Triangles.size() * 3];
 
 	// Fill the index information
-	for (vector<GEtriangle*>::iterator triangle = Triangles.begin(); triangle != Triangles.end(); triangle++)
+	for (vector<GETriangle*>::iterator triangle = Triangles.begin(); triangle != Triangles.end(); triangle++)
 	{
 		int index = triangle - Triangles.begin();
 		m_indexBuffer[index * 3] = (*triangle)->Vertex1->Index;

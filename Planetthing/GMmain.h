@@ -2,7 +2,7 @@
 
 #include "GEupdatecaller.h"
 #include "GEtexture.h"
-#include "GEanimation.h"
+#include "GEanimatedmodel.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol
 {
@@ -27,5 +27,8 @@ public:
 	void layout(int width, int height);
 
 private:
+
+	GEAnimation* animation;
+	GEAnimatedModel* model;
 
 };

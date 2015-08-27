@@ -11,9 +11,9 @@ class GEMesh
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
 public:
-	GEMaterial* Material;
+	GEMaterial Material;
 	vector<GEVertex*> Vertices;
-	vector<GEtriangle*> Triangles;
+	vector<GETriangle*> Triangles;
 	vector<GEWight*> Weights;
 
 	// -------------------------------------------- //

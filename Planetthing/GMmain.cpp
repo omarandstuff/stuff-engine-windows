@@ -17,7 +17,9 @@ GMMain::GMMain()
 	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
 	GEUpdateCaller::sharedInstance()->addRenderableSelector(this);
 
-	GEAnimation* animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
+	animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
+	animation->play();
+	model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
 }
 
 // ------------------------------------------------------------------------------ //
