@@ -176,6 +176,9 @@
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />
     <ClInclude Include="GEjoint.h" />
+    <ClInclude Include="GEtriangle.h" />
+    <ClInclude Include="GEvertex.h" />
+    <ClInclude Include="GEweigh.h" />
     <ClInclude Include="GMmain.h" />
     <ClInclude Include="GEmaterial.h" />
     <ClInclude Include="GEmesh.h" />

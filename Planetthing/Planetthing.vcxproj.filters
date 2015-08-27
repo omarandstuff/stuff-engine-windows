@@ -137,6 +137,15 @@
     <ClInclude Include="GEjoint.h">
       <Filter>Source Files\Support</Filter>
     </ClInclude>
+    <ClInclude Include="GEvertex.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEweigh.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEtriangle.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Planetthing.rc">
