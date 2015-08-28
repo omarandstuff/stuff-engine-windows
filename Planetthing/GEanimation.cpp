@@ -322,7 +322,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 	}
 
 	// Build frames
-	for (int i = 0; i < NumberOfFrames; i++)
+	for (unsigned int i = 0; i < NumberOfFrames; i++)
 	{
 		// New Frame
 		GEFrame* currentFrame = new GEFrame;

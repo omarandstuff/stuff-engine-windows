@@ -55,7 +55,7 @@ void GEUpdateCaller::removeSelector(void** selector)
 void GEUpdateCaller::update()
 {
 	INT64 currentTime;
-	double timeDifference;
+	float timeDifference;
 
 	// Query the current time.
 	QueryPerformanceCounter((LARGE_INTEGER*)&currentTime);

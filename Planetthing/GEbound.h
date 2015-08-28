@@ -10,5 +10,4 @@ class GEBound
 public:
 	glm::vec3 MaxBound;
 	glm::vec3 MinBound;
-
 };

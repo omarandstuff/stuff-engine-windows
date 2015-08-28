@@ -21,7 +21,7 @@ GEAnimatedModel::GEAnimatedModel()
 	//m_depthShader = [GEDepthShader sharedIntance];
 
 	// Bounding box.
-	//m_boundingBox = [GEBoundingbox sharedIntance];
+	m_boundingBox = GEBoundingBox::sharedInstance();
 	m_boundingBoxMaterial.DiffuseColor = {0.2f, 0.2f, 0.2f};
 
 	// Ebanled and Visible by default.
@@ -81,7 +81,7 @@ void GEAnimatedModel::render()
 	// Draw bounding box
 	if (RenderBoundingBox)
 	{
-		//m_boundingBox.Bound = m_currentBound;
+		m_boundingBox->updateBoundingLines(m_currentBound);
 
 		glLineWidth(2.0f);
 
@@ -90,7 +90,7 @@ void GEAnimatedModel::render()
 
 		//[m_colorShader useProgram];
 
-		//[m_boundingBox render];
+		m_boundingBox->render();
 	}
 }
 

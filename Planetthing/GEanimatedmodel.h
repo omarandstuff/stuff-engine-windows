@@ -3,6 +3,7 @@
 #include "GEtextureshader.h"
 #include "GEmesh.h"
 #include "GEanimation.h"
+#include "GEboundingbox.h"
 
 class GEAnimatedModel : public GEAnimationProtocol
 {
@@ -52,7 +53,7 @@ private:
 	GETextureShader* m_textureShader;
 	//GEDepthShader* m_depthShader;
 	//GEColorShader* m_colorShader;
-	//GEBoundingbox* m_boundingBox;
+	GEBoundingBox* m_boundingBox;
 
 	GEBound* m_currentBound;
 	GEBound m_bindBound;

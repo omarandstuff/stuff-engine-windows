@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClCompile Include="GEanimatedmodel.cpp" />
     <ClCompile Include="GEanimation.cpp" />
+    <ClCompile Include="GEboundingbox.cpp" />
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
     <ClCompile Include="GMmain.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="GEanimatedmodel.h" />
     <ClInclude Include="GEanimation.h" />
     <ClInclude Include="GEbound.h" />
+    <ClInclude Include="GEboundingbox.h" />
     <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEframe.h" />
     <ClInclude Include="GEfullscreen.h" />
