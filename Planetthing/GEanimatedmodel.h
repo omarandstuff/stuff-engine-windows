@@ -1,11 +1,13 @@
 #pragma once
 
+#include "GErenderable.h"
 #include "GEtextureshader.h"
+#include "GEcolorshader.h"
 #include "GEmesh.h"
 #include "GEanimation.h"
 #include "GEboundingbox.h"
 
-class GEAnimatedModel : public GEAnimationProtocol
+class GEAnimatedModel : public GERenderable, public GEAnimationProtocol
 {
 public:
 	GEAnimatedModel(wstring filename);
@@ -35,8 +37,7 @@ public:
 	// -------------------------------------------- //
 	// ------------------ Render ------------------ //
 	// -------------------------------------------- //
-	void render();
-	void renderDepth();
+	void render(GE_RENDER_MODE mode);
 
 	// -------------------------------------------- //
 	// ------------- Private members -------------- //
@@ -52,7 +53,7 @@ private:
 	//GEBlinnPhongShader* m_blinnPhongShader;
 	GETextureShader* m_textureShader;
 	//GEDepthShader* m_depthShader;
-	//GEColorShader* m_colorShader;
+	GEColorShader* m_colorShader;
 	GEBoundingBox* m_boundingBox;
 
 	GEBound* m_currentBound;

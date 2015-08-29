@@ -17,7 +17,7 @@ GEAnimatedModel::GEAnimatedModel()
 	// Get the shaders.
 	//m_blinnPhongShader = [GEBlinnPhongShader sharedIntance];
 	m_textureShader = GETextureShader::sharedInstance();
-	//m_colorShader = [GEColorShader sharedIntance];
+	m_colorShader = GEColorShader::sharedInstance();
 	//m_depthShader = [GEDepthShader sharedIntance];
 
 	// Bounding box.
@@ -62,52 +62,51 @@ void GEAnimatedModel::poseForFrameDidFinish(GEFrame* frame)
 // ------------------------------------ Render ---------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GEAnimatedModel::render()
+void GEAnimatedModel::render(GE_RENDER_MODE mode)
 {
 	// If it's not supouse to be visible don't render at all.
 	if (!Visible) return;
 
-	glEnable(GL_DEPTH_TEST);
-
-	// Draw each mesh.
-	for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+	if (mode == GE_RENDER_MODE_NORMAL)
 	{
-		m_textureShader->Material = &mesh->Material;
+		glEnable(GL_DEPTH_TEST);
 
-		m_textureShader->useProgram();
-		mesh->render(GL_TRIANGLES);
+		// Draw each mesh.
+		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+		{
+			m_textureShader->Material = &mesh->Material;
+
+			m_textureShader->useProgram();
+			mesh->render(GL_TRIANGLES);
+		}
+
+		// Draw bounding box
+		if (RenderBoundingBox)
+		{
+			m_boundingBox->updateBoundingLines(m_currentBound);
+
+			glLineWidth(2.0f);
+
+			// Ware frame pass.
+			m_colorShader->Material = &m_boundingBoxMaterial;
+
+			m_colorShader->useProgram();
+
+			m_boundingBox->render();
+		}
 	}
-
-	// Draw bounding box
-	if (RenderBoundingBox)
+	else if (mode == GE_RENDER_MODE_DEPTH)
 	{
-		m_boundingBox->updateBoundingLines(m_currentBound);
+		// Disable blend.
+		glDisable(GL_BLEND);
+		glEnable(GL_DEPTH_TEST);
 
-		glLineWidth(2.0f);
-
-		// Ware frame pass.
-		//m_colorShader.Material = m_boundingBoxMaterial;
-
-		//[m_colorShader useProgram];
-
-		m_boundingBox->render();
-	}
-}
-
-void GEAnimatedModel::renderDepth()
-{
-	// If it's not supouse to be visible don't render at all.
-	if (!Visible) return;
-
-	// Disable blend.
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-
-	// Draw each mesh.
-	for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
-	{
-		//[m_depthShader useProgram];
-		mesh->render(GL_TRIANGLES);
+		// Draw each mesh.
+		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+		{
+			//[m_depthShader useProgram];
+			mesh->render(GL_TRIANGLES);
+		}
 	}
 }
 

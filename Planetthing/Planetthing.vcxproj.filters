@@ -25,11 +25,14 @@
     <Filter Include="Source Files\Support">
       <UniqueIdentifier>{6b709b4c-4958-48f4-b67b-8dc2cf555d11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\View">
-      <UniqueIdentifier>{bf7ec872-d69b-419b-9216-780060623845}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{eb059e57-f62c-46be-844e-56b97420aedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects Support">
+      <UniqueIdentifier>{b6d80e01-fe08-415a-bb22-cd99d1958a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{bf7ec872-d69b-419b-9216-780060623845}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,20 +57,11 @@
     <ClCompile Include="GEanimation.cpp">
       <Filter>Source Files\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="GEmaterial.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="GEmesh.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="GEopengl.cpp">
       <Filter>Source Files\Support</Filter>
     </ClCompile>
     <ClCompile Include="GEfullscreen.cpp">
       <Filter>Source Files\View</Filter>
-    </ClCompile>
-    <ClCompile Include="GEtexture.cpp">
-      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GEupdatecaller.cpp">
       <Filter>Source Files\Support</Filter>
@@ -79,7 +73,22 @@
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="GEboundingbox.cpp">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Objects Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEmaterial.cpp">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEmesh.cpp">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEtexture.cpp">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClCompile>
+    <ClCompile Include="GEcolorshader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="GElayer.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,20 +116,11 @@
     <ClInclude Include="GEcommon.h">
       <Filter>Source Files\Support</Filter>
     </ClInclude>
-    <ClInclude Include="GEmaterial.h">
-      <Filter>Source Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="GEmesh.h">
-      <Filter>Source Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="GEopengl.h">
       <Filter>Source Files\Support</Filter>
     </ClInclude>
     <ClInclude Include="GEfullscreen.h">
       <Filter>Source Files\View</Filter>
-    </ClInclude>
-    <ClInclude Include="GEtexture.h">
-      <Filter>Source Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="GEupdatecaller.h">
       <Filter>Source Files\Support</Filter>
@@ -135,21 +135,39 @@
       <Filter>Source Files\Animation</Filter>
     </ClInclude>
     <ClInclude Include="GEbound.h">
-      <Filter>Source Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="GEjoint.h">
-      <Filter>Source Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="GEvertex.h">
-      <Filter>Source Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="GEweigh.h">
-      <Filter>Source Files\Support</Filter>
-    </ClInclude>
-    <ClInclude Include="GEtriangle.h">
-      <Filter>Source Files\Support</Filter>
+      <Filter>Source Files\Objects Support</Filter>
     </ClInclude>
     <ClInclude Include="GEboundingbox.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEjoint.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEmaterial.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEmesh.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEtexture.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEtriangle.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEvertex.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEweigh.h">
+      <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEcolorshader.h">
+      <Filter>Source Files\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="GElayer.h">
+      <Filter>Source Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="GErenderable.h">
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

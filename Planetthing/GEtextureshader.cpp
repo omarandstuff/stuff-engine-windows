@@ -17,6 +17,7 @@ void GETextureShader::setUpSahder()
 	m_uniforms[GE_UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(m_programID, "modelViewProjectionMatrix");
 	m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION] = glGetUniformLocation(m_programID, "materialTextureCompression");
 	m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP] = glGetUniformLocation(m_programID, "materialDifficeMapSampler");
+	m_uniforms[GE_UNIFORM_MATERIAL_OPASITY] = glGetUniformLocation(m_programID, "opasity");
 }
 
 // ------------------------------------------------------------------------------ //
@@ -32,6 +33,9 @@ void GETextureShader::useProgram()
 
 	// Material texture compression.
 	glUniform2fv(m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION], 1, &Material->TextureCompression.x);
+
+	// Opasity
+	glUniform1f(m_uniforms[GE_UNIFORM_MATERIAL_OPASITY], Material->Opasity);
 
 	// Material diffuce texture.
 	glActiveTexture(GL_TEXTURE0);

@@ -154,8 +154,10 @@
     <ClCompile Include="GEanimatedmodel.cpp" />
     <ClCompile Include="GEanimation.cpp" />
     <ClCompile Include="GEboundingbox.cpp" />
+    <ClCompile Include="GEcolorshader.cpp" />
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
+    <ClCompile Include="GElayer.cpp" />
     <ClCompile Include="GMmain.cpp" />
     <ClCompile Include="GEmaterial.cpp" />
     <ClCompile Include="GEmesh.cpp" />
@@ -173,11 +175,14 @@
     <ClInclude Include="GEanimation.h" />
     <ClInclude Include="GEbound.h" />
     <ClInclude Include="GEboundingbox.h" />
+    <ClInclude Include="GEcolorshader.h" />
     <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEframe.h" />
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />
     <ClInclude Include="GEjoint.h" />
+    <ClInclude Include="GElayer.h" />
+    <ClInclude Include="GErenderable.h" />
     <ClInclude Include="GEtriangle.h" />
     <ClInclude Include="GEvertex.h" />
     <ClInclude Include="GEweigh.h" />

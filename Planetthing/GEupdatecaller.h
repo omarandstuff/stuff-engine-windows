@@ -60,7 +60,7 @@ public:
 public:
 	void addUpdateableSelector(GEUpdateProtocol* selector);
 	void addRenderableSelector(GERenderProtocol* selector);
-	void removeSelector(void** selector);
+	void removeSelector(void* selector);
 
 	// -------------------------------------------- //
 	// ------------------ Update ------------------ //

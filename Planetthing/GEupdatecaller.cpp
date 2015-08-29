@@ -25,12 +25,12 @@ void GEUpdateCaller::addRenderableSelector(GERenderProtocol* selector)
 	m_renderSelectors.push_back(selector);
 }
 
-void GEUpdateCaller::removeSelector(void** selector)
+void GEUpdateCaller::removeSelector(void* selector)
 {
 	// If selector is in update selectors.
 	for (vector<GEUpdateProtocol*>::iterator it = m_updateSelectors.begin(); it != m_updateSelectors.end(); it++)
 	{
-		if (it._Ptr == (GEUpdateProtocol**)selector)
+		if (*it._Ptr == selector)
 		{
 			m_updateSelectors.erase(it);
 			return;
@@ -40,7 +40,7 @@ void GEUpdateCaller::removeSelector(void** selector)
 	// If selector is in render selectors.
 	for (vector<GERenderProtocol*>::iterator it = m_renderSelectors.begin(); it != m_renderSelectors.end(); it++)
 	{
-		if (it._Ptr == (GERenderProtocol**)selector)
+		if (*it._Ptr == selector)
 		{
 			m_renderSelectors.erase(it);
 			return;
