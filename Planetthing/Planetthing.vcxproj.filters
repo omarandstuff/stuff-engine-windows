@@ -99,6 +99,9 @@
     <ClCompile Include="GElight.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GEblinnphongshader.cpp">
+      <Filter>Source Files\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -187,6 +190,9 @@
     </ClInclude>
     <ClInclude Include="GElight.h">
       <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEblinnphongshader.h">
+      <Filter>Source Files\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
