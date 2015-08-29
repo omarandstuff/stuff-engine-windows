@@ -2,6 +2,8 @@
 
 #include "GErenderable.h"
 #include "GEtextureshader.h"
+#include "GEblinnphongshader.h"
+#include "GEdepthshader.h"
 #include "GEcolorshader.h"
 #include "GEmesh.h"
 #include "GEanimation.h"
@@ -50,9 +52,9 @@ private:
 	GEFrame m_bindPose;
 	vector<GEMesh> m_meshes;
 
-	//GEBlinnPhongShader* m_blinnPhongShader;
+	GEBlinnPhongShader* m_blinnPhongShader;
 	GETextureShader* m_textureShader;
-	//GEDepthShader* m_depthShader;
+	GEDepthShader* m_depthShader;
 	GEColorShader* m_colorShader;
 	GEBoundingBox* m_boundingBox;
 

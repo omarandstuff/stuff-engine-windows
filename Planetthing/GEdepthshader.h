@@ -2,27 +2,23 @@
 
 #include "GEshader.h"
 
-class GEBlinnPhongShader : public GEShader
+class GEDepthShader : public GEShader
 {
 	// -------------------------------------------- //
 	// ----------------- Singleton ---------------- //
 	// -------------------------------------------- //
 public:
-	static GEBlinnPhongShader* sharedInstance();
+	static GEDepthShader* sharedInstance();
 private:
-	GEBlinnPhongShader() { loadShaderWithFileName(L"Shaders/blinn_phong_shader", GE_BUFFER_MODE_ALL); setUpSahder(); DiffuceMapEnabled = true; SpecularMapEnabled = true; };
-	GEBlinnPhongShader(GEBlinnPhongShader const&) = delete;
-	void operator=(GEBlinnPhongShader const&) = delete;
+	GEDepthShader() { loadShaderWithFileName(L"Shaders/depth_shader", GE_BUFFER_MODE_POSITION); setUpSahder(); };
+	GEDepthShader(GEDepthShader const&) = delete;
+	void operator=(GEDepthShader const&) = delete;
 
 public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
 	glm::mat4* ModelViewProjectionMatrix;
-	GEMaterial* Material;
-	vector<GELight*>* Lights;
-	bool DiffuceMapEnabled;
-	bool SpecularMapEnabled;
 
 public:
 	// -------------------------------------------- //
@@ -38,6 +34,5 @@ private:
 
 private:
 	GLint m_uniforms[GE_NUM_UNIFORMS];
-	GLint m_lightUniforms[10][GE_NUM_LIGHT_UNIFORMS];
 };
 

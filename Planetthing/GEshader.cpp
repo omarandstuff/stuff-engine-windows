@@ -21,7 +21,7 @@ void GEShader::loadShaderWithFileName(wstring filename, GE_BUFFER_MODE buffermod
 
 	// Create and compile fragment shader.
 	fragShader = compileShader(GL_FRAGMENT_SHADER, filename + L".fsh");
-	if (!vertShader)
+	if (!fragShader)
 	{
 		OutputDebugString(L"Filed to compile fragment shader");
 		return;

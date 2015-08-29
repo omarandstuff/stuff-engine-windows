@@ -27,9 +27,8 @@ void GEBlinnPhongShader::setUpSahder()
 	m_uniforms[GE_UNIFORM_MATERIAL_OPASITY] = glGetUniformLocation(m_programID, "materialOpasity");
 
 	// Uniform locations for all possible 10 lights.
-	m_uniforms[GE_UNIFORM_NUMBER_OF_VERTEX_LIGHTS] = glGetUniformLocation(m_programID, "numberOfVertexLights");
-	m_uniforms[GE_UNIFORM_NUMBER_OF_FRAGMENT_LIGHTS] = glGetUniformLocation(m_programID, "numberOfFragmentLights");
-	for (int i = 0; i < 10; i++)
+	m_uniforms[GE_UNIFORM_NUMBER_OF_LIGHTS] = glGetUniformLocation(m_programID, "numberOfLights");
+	for (int i = 0; i < 8; i++)
 	{
 		m_lightUniforms[i][GE_UNIFORM_LIGHT_TYPE] = glGetUniformLocation(m_programID, ("lights[" + to_string(i) + "].type").data());
 		m_lightUniforms[i][GE_UNIFORM_LIGHT_POSITION] = glGetUniformLocation(m_programID, ("lights[" + to_string(i) + "].position").data());
@@ -62,13 +61,13 @@ void GEBlinnPhongShader::useProgram()
 	// Set the Projection View Model Matrix to the shader.
 	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, &(*ModelViewProjectionMatrix)[0].x);
 
-	// Material texture compression.
+	//// Material texture compression.
 	glUniform2fv(m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION], 1, &Material->TextureCompression.x);
 
-	// Material ambient color.
+	//// Material ambient color.
 	glUniform3fv(m_uniforms[GE_UNIFORM_MATERIAL_AMBIENT_COLOR], 1, &Material->AmbientColor.x);
 
-	// Materialshininess.
+	//// Materialshininess.
 	glUniform1f(m_uniforms[GE_UNIFORM_MATERIAL_SHININESS], Material->Shininess);
 
 	// Material diffuce based of existance of a texture.
@@ -104,8 +103,7 @@ void GEBlinnPhongShader::useProgram()
 	}
 
 	// Lights.
-	glUniform1i(m_uniforms[GE_UNIFORM_NUMBER_OF_VERTEX_LIGHTS], (GLint)Lights->size());
-	glUniform1i(m_uniforms[GE_UNIFORM_NUMBER_OF_FRAGMENT_LIGHTS], (GLint)Lights->size());
+	glUniform1i(m_uniforms[GE_UNIFORM_NUMBER_OF_LIGHTS], (GLint)Lights->size());
 	for (vector<GELight*>::iterator light = Lights->begin(); light != Lights->end(); light++)
 	{
 		int index = light - Lights->begin();

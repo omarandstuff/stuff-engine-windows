@@ -14,10 +14,10 @@ GEAnimatedModel::GEAnimatedModel(wstring filename) : GEAnimatedModel()
 GEAnimatedModel::GEAnimatedModel()
 {
 	// Get the shaders.
-	//m_blinnPhongShader = [GEBlinnPhongShader sharedIntance];
+	m_blinnPhongShader = GEBlinnPhongShader::sharedInstance();
 	m_textureShader = GETextureShader::sharedInstance();
 	m_colorShader = GEColorShader::sharedInstance();
-	//m_depthShader = [GEDepthShader sharedIntance];
+	m_depthShader = GEDepthShader::sharedInstance();
 
 	// Bounding box.
 	m_boundingBox = GEBoundingBox::sharedInstance();
@@ -69,13 +69,16 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 	if (mode == GE_RENDER_MODE_NORMAL)
 	{
 		glEnable(GL_DEPTH_TEST);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		// Draw each mesh.
 		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
 		{
-			m_textureShader->Material = &mesh->Material;
+			m_blinnPhongShader->Material = &mesh->Material;
 
-			m_textureShader->useProgram();
+			m_blinnPhongShader->useProgram();
+
 			mesh->render(GL_TRIANGLES);
 		}
 
@@ -103,7 +106,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 		// Draw each mesh.
 		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
 		{
-			//[m_depthShader useProgram];
+			m_depthShader->useProgram();
 			mesh->render(GL_TRIANGLES);
 		}
 	}

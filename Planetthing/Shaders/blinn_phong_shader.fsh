@@ -1,6 +1,8 @@
+#version 400
 in vec3 finalPositionCoord;
 in vec2 finalTextureCoord;
 in vec3 finalNormalCoord;
+in vec3 finalPositionLightSpaceCoord[8];
 
 uniform sampler2D materialDiffuceMapSampler;
 uniform bool materialDiffuceMapEnabled;
@@ -28,10 +30,7 @@ struct Light
 };
 
 uniform Light lights[8];
-uniform int numberOfFragmentLights;
-
-varying vec3 finalPositionLightSpaceCoord[8];
-uniform int lightShadowMapTexelSize[8];
+uniform int numberOfLights;
 
 out vec4 outputColor;
 
@@ -42,7 +41,7 @@ void main()
     vec3 perLightColor;
     
     // Material properties.
-    vec3 surficeColor;
+    vec3 surfaceColor;
     float surfaceOpasity;
     vec3 surfaceSpecular;
     
@@ -63,33 +62,33 @@ void main()
     // Surfice color from sampling the diffuse texture or taking the diffuce color.
     if(materialDiffuceMapEnabled)
     {
-        surficeColor = texture(materialDiffuceMapSampler, finalTextureCoord).rgb;
+        surfaceColor = texture(materialDiffuceMapSampler, finalTextureCoord).rgb;
         surfaceOpasity = texture(materialDiffuceMapSampler, finalTextureCoord).a;
     }
     else
-        surficeColor = materialDiffuceColor;
+        surfaceColor = materialDiffuceColor;
     
     // Specular surface factor.
     if(materialSpecularMapEnabled)
         surfaceSpecular = texture(materialSpecularMapSampler, finalTextureCoord).rgb;
     else
         surfaceSpecular = materialSpecularColor;
-    
+
     // Normal vector for this fragment.
     normal = normalize(finalNormalCoord);
     
     // View vector for this fragment.
     viewDir = normalize(vec3(0.0, 90.0, 120.0) - finalPositionCoord);
-    
-    // Calculate the contribution of every light.
-    for(int i = 0; i < numberOfFragmentLights; i++)
+
+        // Calculate the contribution of every light.
+    for(int i = 0; i < 1; i++)
     {
         // Calculate the light to surfice direction.
         if(lights[i].type == 0) // Directional light.
             lightDir = normalize(lights[i].position);
         else
             lightDir = normalize(lights[i].position - finalPositionCoord);
-        
+
         // Ambient contribution of this light.
         ambient += lights[i].ambientColor;
         
@@ -112,15 +111,15 @@ void main()
                 // Check whether current frag pos is in shadow.
                 float bias = max(0.05 * (1.0 - normalDir), 0.005);
                 
-                for(int x = -0; x <= 0; x++)
+                for(int x = -8; x <= 8; x++)
                 {
-                    for(int y = -0; y <= 0; y++)
+                    for(int y = -8; y <= 8; y++)
                     {
                         float pcfDepth = texture(lights[i].shadowMapSampler, finalPositionLightSpaceCoord[i].xy + vec2(x, y) * lights[i].shadowMapTextelSize).r;
                         shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
                     }
                 }
-                shadow /= 1.0;
+                shadow /= 256.0;
             }
         }
         
@@ -145,17 +144,17 @@ void main()
         // Specular color base camera and light positions.
         highp vec3 halfwayDir = normalize(lightDir + viewDir);
         reflectDir = reflect(-lightDir, normal);
-        specular += lights[i].specularColor * pow(max(dot(normal, halfwayDir), 0.0), materialShininess);;
+        specular += lights[i].specularColor * pow(max(dot(normal, halfwayDir), 0.0), materialShininess);
     }
-    
+
     // Final ambient color.
-    ambient *= materialAmbientColor * surficeColor;
+    ambient *= materialAmbientColor * surfaceColor;
     
     // Final diffuce color.
-    diffuse *= surficeColor;
+    diffuse *= surfaceColor;
     
     // Final specular color.
     specular *= surfaceSpecular;
     
-    gl_FragColor = vec4(ambient + diffuse + specular, surfaceOpasity);
+    outputColor = vec4(ambient + diffuse + specular, surfaceOpasity);
 }

@@ -2,7 +2,9 @@
 
 #include "GElayer.h"
 #include "GEtextureshader.h"
+#include "GEblinnphongshader.h"
 #include "GEcolorshader.h"
+#include "GEdepthshader.h"
 #include "GEfullscreen.h"
 
 class GEView
@@ -33,9 +35,9 @@ public:
 	// -------------------------------------------- //
 	// ------------------ Lights ------------------ //
 	// -------------------------------------------- //
-	//- (void)addLight:(GELight*)light;
-	//-(void)removeLight:(GELight*)light;
-	//-(void)cleanLights;
+	void addLight(GELight* light);
+	void removeLight(GELight* light);
+	void cleanLights();
 
 	// -------------------------------------------- //
 	// ------------------ Render ------------------ //
@@ -47,10 +49,12 @@ public:
 	// ------------- Private Members -------------- //
 	// -------------------------------------------- //
 private:
-	//GEBlinnPhongShader* m_blinnPhongShader;
+	GEBlinnPhongShader* m_blinnPhongShader;
 	GETextureShader* m_textureShader;
-	//GEDepthShader* m_depthShader;
+	GEDepthShader* m_depthShader;
 	GEColorShader* m_colorShader;
+
+	vector<GELight*> m_lights;
 
 	GEFullScreen* m_fullScreen;
 };
