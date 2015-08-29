@@ -159,6 +159,7 @@
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
     <ClCompile Include="GElayer.cpp" />
+    <ClCompile Include="GElight.cpp" />
     <ClCompile Include="GEview.cpp" />
     <ClCompile Include="GMmain.cpp" />
     <ClCompile Include="GEmaterial.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="GEfullscreenshader.h" />
     <ClInclude Include="GEjoint.h" />
     <ClInclude Include="GElayer.h" />
+    <ClInclude Include="GElight.h" />
     <ClInclude Include="GErenderable.h" />
     <ClInclude Include="GEtriangle.h" />
     <ClInclude Include="GEvertex.h" />
