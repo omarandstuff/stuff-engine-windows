@@ -59,7 +59,7 @@ void GEView::render()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glm::mat4 matrix = glm::perspective(45.0f, 1280.0f / 720.0f, 0.1f, 1000.0f) * glm::lookAt(glm::vec3(0.0f, 90.0f, 120.0f), glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 matrix = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.1f, 1000.0f) * glm::lookAt(glm::vec3(0.0f, 90.0f, 120.0f), glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	//m_blinnPhongShader.ModelViewProjectionMatrix = &matrix;
 	//m_blinnPhongShader.Lights = m_lights;

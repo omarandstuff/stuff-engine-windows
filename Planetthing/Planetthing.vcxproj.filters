@@ -93,6 +93,9 @@
     <ClCompile Include="GEview.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
+    <ClCompile Include="GEfbo.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -175,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="GErenderable.h">
       <Filter>Source Files\Objects Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GEfbo.h">
+      <Filter>Source Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

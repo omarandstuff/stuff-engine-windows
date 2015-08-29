@@ -48,7 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 			{
 				// Show the main window.
 				main_window.Show();
-				firstRender = false;
+				firstRender = true;
 			}
 		}
 	}

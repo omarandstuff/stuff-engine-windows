@@ -155,6 +155,7 @@
     <ClCompile Include="GEanimation.cpp" />
     <ClCompile Include="GEboundingbox.cpp" />
     <ClCompile Include="GEcolorshader.cpp" />
+    <ClCompile Include="GEfbo.cpp" />
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
     <ClCompile Include="GElayer.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="GEboundingbox.h" />
     <ClInclude Include="GEcolorshader.h" />
     <ClInclude Include="GEcommon.h" />
+    <ClInclude Include="GEfbo.h" />
     <ClInclude Include="GEframe.h" />
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />

@@ -6,6 +6,9 @@ PFNGLUNIFORM2FVPROC glUniform2fv;
 PFNGLBUFFERSUBDATAPROC glBufferSubData;
 PFNGLUNIFORM1FPROC glUniform1f;
 PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
+PFNGLGENFRAMEBUFFERSPROC glGenFramebuffers;
+PFNGLFRAMEBUFFERTEXTURE2DPROC glFramebufferTexture2D;
+PFNGLCHECKFRAMEBUFFERSTATUSPROC glCheckFramebufferStatus;
 
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;
@@ -123,6 +126,22 @@ bool glInit(HDC deviceContext)
 	glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer");
 	if (!glBindFramebuffer)
 		return false;
+
+	glGenFramebuffers = (PFNGLGENFRAMEBUFFERSPROC)wglGetProcAddress("glGenFramebuffers");
+	if (!glGenFramebuffers)
+		return false;
+
+	glFramebufferTexture2D = (PFNGLFRAMEBUFFERTEXTURE2DPROC)wglGetProcAddress("glFramebufferTexture2D");
+	if (!glFramebufferTexture2D)
+		return false;
+
+	glCheckFramebufferStatus = (PFNGLCHECKFRAMEBUFFERSTATUSPROC)wglGetProcAddress("glCheckFramebufferStatus");
+	if (!glCheckFramebufferStatus)
+		return false;
+
+
+
+
 
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");
 	if (!glAttachShader)
