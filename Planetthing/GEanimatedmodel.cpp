@@ -6,9 +6,8 @@
 
 GEMaterial GEAnimatedModel::m_boundingBoxMaterial;
 
-GEAnimatedModel::GEAnimatedModel(wstring filename)
+GEAnimatedModel::GEAnimatedModel(wstring filename) : GEAnimatedModel()
 {
-	GEAnimatedModel();
 	loadModelWithFileName(filename);
 }
 
@@ -276,6 +275,8 @@ bool GEAnimatedModel::loadMD5WithFileName(wstring filename)
 				// Texture coord data.
 				vertexLine >> currentVertex->TextureCoord.x;
 				vertexLine >> currentVertex->TextureCoord.y;
+
+				currentVertex->TextureCoord.y *= -1.0f;
 
 				vertexLine >> junk;
 

@@ -1,9 +1,10 @@
+#version 400
 uniform vec4 diffuceColor;
 
-out vec4 finalColor;
+out vec4 outputColor;
 
 void main()
 {
     // Color
-    finalColor = diffuceColor;
+    outputColor = diffuceColor;
 }

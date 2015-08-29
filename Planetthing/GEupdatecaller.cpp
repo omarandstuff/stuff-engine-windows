@@ -64,7 +64,7 @@ void GEUpdateCaller::update()
 	timeDifference = (float)(currentTime - m_startTime);
 
 	// Calculate the frame time by the time difference over the VETimer speed resolution.
-	m_frameTime = timeDifference / m_ticksPerMs;
+	m_frameTime = (timeDifference / m_ticksPerMs) / 1000.0f;
 
 	// Restart the VETimer.
 	m_startTime = currentTime;

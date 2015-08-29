@@ -1,8 +1,8 @@
 #pragma once
 
 #include "GEupdatecaller.h"
-#include "GEtexture.h"
 #include "GEanimatedmodel.h"
+#include "GEview.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol
 {
@@ -30,5 +30,6 @@ private:
 
 	GEAnimation* animation;
 	GEAnimatedModel* model;
+	GEView* view;
 
 };

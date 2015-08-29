@@ -20,6 +20,13 @@ GMMain::GMMain()
 	animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
 	animation->play();
 	model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
+	animation->addSelector(model);
+
+	view = new GEView;
+	view->BackgroundColor = { 1.0f, 0.5f, 0.1f };
+
+	GELayer* layer = view->addLayerWithName(L"Layer1");
+	layer->addObject(model);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -47,9 +54,7 @@ void GMMain::posUpdate()
 
 void GMMain::render()
 {
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	model->render(GE_RENDER_MODE_NORMAL);
+	view->render();
 }
 
 void GMMain::layout(int width, int height)

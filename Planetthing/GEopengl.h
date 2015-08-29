@@ -17,6 +17,7 @@ extern PFNGLVALIDATEPROGRAMPROC glValidateProgram;
 extern PFNGLUNIFORM2FVPROC glUniform2fv;
 extern PFNGLBUFFERSUBDATAPROC glBufferSubData;
 extern PFNGLUNIFORM1FPROC glUniform1f;
+extern PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 
 extern PFNGLATTACHSHADERPROC glAttachShader;
 extern PFNGLBINDBUFFERPROC glBindBuffer;

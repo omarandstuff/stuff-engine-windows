@@ -26,7 +26,7 @@ void GEMesh::matchMeshWithFrame(GEFrame* frame)
 	{
 		(*vertex)->Position = { 0.0f, 0.0f, 0.0f };
 
-		for (vector<GEWight*>::iterator weight = Weights.begin(); weight != Weights.end(); weight++)
+		for (vector<GEWight*>::iterator weight = (*vertex)->Weights.begin(); weight != (*vertex)->Weights.end(); weight++)
 		{
 			GEJoint* joint = frame->Joints[(*weight)->JointID];
 			glm::vec3 rotPosition = joint->Orientation * (*weight)->Position;
@@ -109,6 +109,8 @@ void GEMesh::generateBuffers()
 	glGenBuffers(1, &m_indexBufferID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * Triangles.size() * 3, m_indexBuffer, GL_STATIC_DRAW);
+
+	delete[] m_indexBuffer;
 
 	// Unbind everything.
 	glBindBuffer(GL_ARRAY_BUFFER, 0);

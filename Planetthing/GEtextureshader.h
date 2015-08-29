@@ -18,7 +18,6 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
-	GLuint TextureID;
 	glm::mat4* ModelViewProjectionMatrix;
 	GEMaterial* Material;
 

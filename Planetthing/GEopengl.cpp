@@ -5,6 +5,7 @@ PFNGLVALIDATEPROGRAMPROC glValidateProgram;
 PFNGLUNIFORM2FVPROC glUniform2fv;
 PFNGLBUFFERSUBDATAPROC glBufferSubData;
 PFNGLUNIFORM1FPROC glUniform1f;
+PFNGLBINDFRAMEBUFFERPROC glBindFramebuffer;
 
 PFNGLATTACHSHADERPROC glAttachShader;
 PFNGLBINDBUFFERPROC glBindBuffer;
@@ -117,6 +118,10 @@ bool glInit(HDC deviceContext)
 
 	glUniform1f = (PFNGLUNIFORM1FPROC)wglGetProcAddress("glUniform1f");
 	if (!glUniform1f)
+		return false;
+
+	glBindFramebuffer = (PFNGLBINDFRAMEBUFFERPROC)wglGetProcAddress("glBindFramebuffer");
+	if (!glBindFramebuffer)
 		return false;
 
 	glAttachShader = (PFNGLATTACHSHADERPROC)wglGetProcAddress("glAttachShader");

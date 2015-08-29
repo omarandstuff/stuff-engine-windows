@@ -16,9 +16,6 @@
     <Filter Include="Source Files\Shaders">
       <UniqueIdentifier>{5fcf5984-7159-4cc6-adbc-8d46a2585794}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game">
-      <UniqueIdentifier>{5c946af0-623d-4ee4-90ff-0714903d8eac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Animation">
       <UniqueIdentifier>{1866e2e2-1dd2-4565-9b3c-f8d5adcce45e}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="Source Files\View">
       <UniqueIdentifier>{bf7ec872-d69b-419b-9216-780060623845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{5c946af0-623d-4ee4-90ff-0714903d8eac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +88,9 @@
       <Filter>Source Files\Shaders</Filter>
     </ClCompile>
     <ClCompile Include="GElayer.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="GEview.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,8 +170,11 @@
     <ClInclude Include="GElayer.h">
       <Filter>Source Files\View</Filter>
     </ClInclude>
+    <ClInclude Include="GEview.h">
+      <Filter>Source Files\View</Filter>
+    </ClInclude>
     <ClInclude Include="GErenderable.h">
-      <Filter>Source Files\Objects</Filter>
+      <Filter>Source Files\Objects Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

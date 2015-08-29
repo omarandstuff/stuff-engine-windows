@@ -1,3 +1,4 @@
+#version 400
 in vec3 positionCoord;
 
 uniform mat4 modelViewProjectionMatrix;
