@@ -30,10 +30,18 @@ GMMain::GMMain()
 	light->Intensity = 1.0f;
 	light->CastShadows = true;
 
+	GELight* light2 = new GELight;
+	//light2.LightType = GE_LIGHT_SPOT;
+	light2->Position = { -0.0f, 60.0f, -10.0f };
+	//light2.Direction = GLKVector3Make(0.0f, 30.0f, 0.0f);
+	light2->Intensity = 1.0f;
+	light2->CastShadows = true;
+
 	view = new GEView;
 	view->BackgroundColor = color_banana;
 
 	view->addLight(light);
+	view->addLight(light2);
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	layer->addObject(model);

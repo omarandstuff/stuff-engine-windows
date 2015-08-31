@@ -81,7 +81,7 @@ void main()
     viewDir = normalize(vec3(0.0, 90.0, 120.0) - finalPositionCoord);
 
         // Calculate the contribution of every light.
-    for(int i = 0; i < 1; i++)
+    for(int i = 0; i < numberOfLights; i++)
     {
         // Calculate the light to surfice direction.
         if(lights[i].type == 0) // Directional light.
