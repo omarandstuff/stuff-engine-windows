@@ -20,6 +20,7 @@ public:
 	glm::vec3 BackgroundColor;
 	float Opasity;
 	map<wstring, GELayer*> Layers;
+	int Width, Height;
 
 	// -------------------------------------------- //
 	// ------------------ Layers ------------------ //
@@ -44,6 +45,7 @@ public:
 	// -------------------------------------------- //
 public:
 	void render();
+	void layout(int width, int height);
 
 	// -------------------------------------------- //
 	// ------------- Private Members -------------- //

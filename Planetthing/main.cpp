@@ -10,7 +10,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 
 	// Share the main window with the view controller.
 	main_viewControler.MainWindow = &main_window;
-	
+
 	// Initialize OpenGL for render in the main window.
 	glInit(main_window.DeviceContext());
 
@@ -19,6 +19,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 
 	// Did load everything
 	main_viewControler.viewDidLoad();
+
+	// Set initial size.
+	GEUpdateCaller::sharedInstance()->layout(main_window.ClientWidth(), main_window.ClientHeight());
 
 	//////// Main Loop ///////
 	MSG msg;

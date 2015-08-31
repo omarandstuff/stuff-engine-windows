@@ -31,7 +31,7 @@ GMMain::GMMain()
 	light->CastShadows = true;
 
 	view = new GEView;
-	view->BackgroundColor = { 1.0f, 0.5f, 0.1f };
+	view->BackgroundColor = color_banana;
 
 	view->addLight(light);
 
@@ -69,5 +69,7 @@ void GMMain::render()
 
 void GMMain::layout(int width, int height)
 {
-	glViewport(0, 0, width, height);
+	m_screenWidth = width;
+	m_screenHeight = height;
+	view->layout(width, height);
 }

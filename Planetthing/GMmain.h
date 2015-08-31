@@ -27,6 +27,7 @@ public:
 	void layout(int width, int height);
 
 private:
+	unsigned int m_screenWidth, m_screenHeight;
 
 	GEAnimation* animation;
 	GEAnimatedModel* model;
