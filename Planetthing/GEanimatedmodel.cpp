@@ -4,8 +4,6 @@
 // ------------------------------- Initialization ------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-GEMaterial GEAnimatedModel::m_boundingBoxMaterial;
-
 GEAnimatedModel::GEAnimatedModel(wstring filename) : GEAnimatedModel()
 {
 	loadModelWithFileName(filename);
@@ -30,7 +28,7 @@ void GEAnimatedModel::resetPose()
 {
 	// Bind pose and bounds.
 	m_currentBound = &m_bindBound;
-	for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+	for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 		mesh->matchMeshWithFrame(&m_bindPose);
 }
 
@@ -43,7 +41,7 @@ void GEAnimatedModel::poseForFrameDidFinish(GEFrame* frame)
 	m_currentBound = &frame->Bounds;
 
 	// Updtae every mesh.
-	for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+	for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 		mesh->matchMeshWithFrame(frame);
 }
 
@@ -62,14 +60,43 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		if (Wireframe)
+		{
+			glEnable(GL_POLYGON_OFFSET_FILL);
+			glPolygonOffset(1, 1);
+		}
+
+
 		// Draw each mesh.
-		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+		for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 		{
 			m_blinnPhongShader->Material = &mesh->Material;
 
 			m_blinnPhongShader->useProgram();
 
 			mesh->render(GL_TRIANGLES);
+		}
+
+		if (Wireframe)
+		{
+			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_BLEND);
+			glDisable(GL_POLYGON_OFFSET_FILL);
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+			glLineWidth(1.0f);
+
+			m_colorShader->Material = &m_wireframeMaerial;
+
+			// Draw each mesh.
+			for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
+			{
+				m_colorShader->useProgram();
+
+				mesh->render(GL_TRIANGLES);
+			}
+
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
 
 		// Draw bounding box
@@ -94,7 +121,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 		glEnable(GL_DEPTH_TEST);
 
 		// Draw each mesh.
-		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+		for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 		{
 			m_depthShader->useProgram();
 			mesh->render(GL_TRIANGLES);
@@ -122,7 +149,7 @@ void GEAnimatedModel::loadModelWithFileName(wstring filename)
 	// If the file was loaded duccessfully prepare all the meshes buffers.
 	if (Ready)
 	{
-		for (vector<GEMesh>::iterator mesh = m_meshes.begin(); mesh != m_meshes.end(); mesh++)
+		for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 			mesh->generateBuffers();
 
 		resetPose();
@@ -224,8 +251,8 @@ bool GEAnimatedModel::loadMD5WithFileName(wstring filename)
 		else if (first == L"mesh")
 		{
 			// New Mesh.
-			m_meshes.push_back(GEMesh());
-			currentMesh = m_meshes.end() - 1;
+			Meshes.push_back(GEMesh());
+			currentMesh = Meshes.end() - 1;
 		}
 		else if (first == L"shader")
 		{

@@ -7,6 +7,7 @@
 #include <fstream>
 #include <sstream>
 #include <glm.hpp>
+#include <gtc\constants.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtx\compatibility.hpp>
 #include <gtx\quaternion.hpp>

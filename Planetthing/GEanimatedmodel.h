@@ -19,6 +19,7 @@ public:
 	wstring FileName;
 	bool Ready;
 	bool RenderBoundingBox;
+	vector<GEMesh> Meshes;
 
 	// -------------------------------------------- //
 	// ---------- Load - Import - Export ---------- //
@@ -48,11 +49,10 @@ private:
 
 private:
 	GEFrame m_bindPose;
-	vector<GEMesh> m_meshes;
 
 	GEBoundingBox* m_boundingBox;
 
 	GEBound* m_currentBound;
 	GEBound m_bindBound;
-	static GEMaterial m_boundingBoxMaterial;
+	GEMaterial m_boundingBoxMaterial;
 };

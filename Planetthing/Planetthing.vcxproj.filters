@@ -108,6 +108,12 @@
     <ClCompile Include="GEplane.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GEsphere.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEprimitIve.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -188,9 +194,6 @@
     <ClInclude Include="GEview.h">
       <Filter>Source Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="GErenderable.h">
-      <Filter>Source Files\Objects Support</Filter>
-    </ClInclude>
     <ClInclude Include="GEfbo.h">
       <Filter>Source Files\View</Filter>
     </ClInclude>
@@ -204,6 +207,15 @@
       <Filter>Source Files\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="GEplane.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEsphere.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEprimitIve.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GErenderable.h">
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

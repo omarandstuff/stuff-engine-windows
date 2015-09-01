@@ -20,6 +20,10 @@ public:
 		Enabled = true;
 		Visible = true;
 
+		// Wireframe false by default.
+		Wireframe = false;
+		m_wireframeMaerial.DiffuseColor = color_wheat;
+
 	}
 
 	// -------------------------------------------- //
@@ -28,6 +32,7 @@ public:
 public:
 	bool Visible;
 	bool Enabled;
+	bool Wireframe;
 
 	// -------------------------------------------- //
 	// ------------------ Render ------------------ //
@@ -44,4 +49,5 @@ protected:
 	GEDepthShader* m_depthShader;
 	GEColorShader* m_colorShader;
 
+	GEMaterial m_wireframeMaerial;
 };

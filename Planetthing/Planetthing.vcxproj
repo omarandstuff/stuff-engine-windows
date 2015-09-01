@@ -163,6 +163,8 @@
     <ClCompile Include="GElayer.cpp" />
     <ClCompile Include="GElight.cpp" />
     <ClCompile Include="GEplane.cpp" />
+    <ClCompile Include="GEprimitIve.cpp" />
+    <ClCompile Include="GEsphere.cpp" />
     <ClCompile Include="GEview.cpp" />
     <ClCompile Include="GMmain.cpp" />
     <ClCompile Include="GEmaterial.cpp" />
@@ -193,7 +195,9 @@
     <ClInclude Include="GElayer.h" />
     <ClInclude Include="GElight.h" />
     <ClInclude Include="GEplane.h" />
+    <ClInclude Include="GEprimitIve.h" />
     <ClInclude Include="GErenderable.h" />
+    <ClInclude Include="GEsphere.h" />
     <ClInclude Include="GEtriangle.h" />
     <ClInclude Include="GEvertex.h" />
     <ClInclude Include="GEview.h" />
