@@ -11,21 +11,11 @@ GEAnimatedModel::GEAnimatedModel(wstring filename) : GEAnimatedModel()
 	loadModelWithFileName(filename);
 }
 
-GEAnimatedModel::GEAnimatedModel()
+GEAnimatedModel::GEAnimatedModel() : GERenderable()
 {
-	// Get the shaders.
-	m_blinnPhongShader = GEBlinnPhongShader::sharedInstance();
-	m_textureShader = GETextureShader::sharedInstance();
-	m_colorShader = GEColorShader::sharedInstance();
-	m_depthShader = GEDepthShader::sharedInstance();
-
 	// Bounding box.
 	m_boundingBox = GEBoundingBox::sharedInstance();
 	m_boundingBoxMaterial.DiffuseColor = {0.2f, 0.2f, 0.2f};
-
-	// Ebanled and Visible by default.
-	Enabled = true;
-	Visible = true;
 }
 
 GEAnimatedModel::~GEAnimatedModel()

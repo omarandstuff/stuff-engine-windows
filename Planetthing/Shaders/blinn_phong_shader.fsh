@@ -42,7 +42,7 @@ void main()
     
     // Material properties.
     vec3 surfaceColor;
-    float surfaceOpasity;
+    float surfaceOpasity = 1.0;
     vec3 surfaceSpecular;
     
     // Light calculations.
@@ -111,15 +111,15 @@ void main()
                 // Check whether current frag pos is in shadow.
                 float bias = max(0.05 * (1.0 - normalDir), 0.005);
                 
-                for(int x = -8; x <= 8; x++)
+                for(int x = -2; x <= 2; x++)
                 {
-                    for(int y = -8; y <= 8; y++)
+                    for(int y = -2; y <= 2; y++)
                     {
                         float pcfDepth = texture(lights[i].shadowMapSampler, finalPositionLightSpaceCoord[i].xy + vec2(x, y) * lights[i].shadowMapTextelSize).r;
                         shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
                     }
                 }
-                shadow /= 256.0;
+                shadow /= 16.0;
             }
         }
         

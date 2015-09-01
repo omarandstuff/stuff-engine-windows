@@ -81,6 +81,20 @@ enum GE_LIGHT_TYPE
 };
 
 // -------------------------------------------- //
+// --------------- MODELS_STYLES -------------- //
+// -------------------------------------------- //
+
+enum GE_DIRECTION
+{
+	GE_DIRECTION_POSITIVE_X,
+	GE_DIRECTION_NEGATIVE_X,
+	GE_DIRECTION_POSITIVE_Y,
+	GE_DIRECTION_NEGATIVE_Y,
+	GE_DIRECTION_POSITIVE_Z,
+	GE_DIRECTION_NEGATIVE_Z
+};
+
+// -------------------------------------------- //
 // ------------------- COLORS ----------------- //
 // -------------------------------------------- //
 

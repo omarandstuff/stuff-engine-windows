@@ -1,10 +1,6 @@
 #pragma once
 
 #include "GErenderable.h"
-#include "GEtextureshader.h"
-#include "GEblinnphongshader.h"
-#include "GEdepthshader.h"
-#include "GEcolorshader.h"
 #include "GEmesh.h"
 #include "GEanimation.h"
 #include "GEboundingbox.h"
@@ -19,26 +15,28 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
+public:
 	wstring FileName;
 	bool Ready;
 	bool RenderBoundingBox;
-	bool Visible;
-	bool Enabled;
 
 	// -------------------------------------------- //
 	// ---------- Load - Import - Export ---------- //
 	// -------------------------------------------- //
+public:
 	void loadModelWithFileName(wstring filename);
 
 	// -------------------------------------------- //
 	// ----------------- Animation ---------------- //
 	// -------------------------------------------- //
+public:
 	void resetPose();
 	void poseForFrameDidFinish(GEFrame* frame);
 
 	// -------------------------------------------- //
 	// ------------------ Render ------------------ //
 	// -------------------------------------------- //
+public:
 	void render(GE_RENDER_MODE mode);
 
 	// -------------------------------------------- //
@@ -52,10 +50,6 @@ private:
 	GEFrame m_bindPose;
 	vector<GEMesh> m_meshes;
 
-	GEBlinnPhongShader* m_blinnPhongShader;
-	GETextureShader* m_textureShader;
-	GEDepthShader* m_depthShader;
-	GEColorShader* m_colorShader;
 	GEBoundingBox* m_boundingBox;
 
 	GEBound* m_currentBound;

@@ -38,13 +38,16 @@ GMMain::GMMain()
 	light2->CastShadows = true;
 
 	view = new GEView;
-	view->BackgroundColor = color_banana;
+	view->BackgroundColor = color_black;
 
 	view->addLight(light);
-	view->addLight(light2);
+	//view->addLight(light2);
+
+	plane = new GEPlane(200.0f, 200.0f, GE_DIRECTION_POSITIVE_Y, 1, 1);
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	layer->addObject(model);
+	layer->addObject(plane);
 }
 
 // ------------------------------------------------------------------------------ //
