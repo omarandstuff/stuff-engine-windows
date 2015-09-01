@@ -44,7 +44,7 @@ GMMain::GMMain()
 	//view->addLight(light2);
 
 	plane = new GEPlane(380.0f, 260.0f, GE_DIRECTION_POSITIVE_Y, 1, 1);
-	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test.png");
+	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	layer->addObject(model);
