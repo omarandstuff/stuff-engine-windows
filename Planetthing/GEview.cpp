@@ -35,7 +35,7 @@ void GEView::render()
 		glViewport(0, 0, (*light)->ShadowMapFBO->Width, (*light)->ShadowMapFBO->Height);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 matrix = glm::ortho(-60.0f, 60.0f, -60.0f, 60.0f, 1.0f, 200.0f) * glm::lookAt((*light)->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 matrix = glm::ortho(-200.0f, 200.0f, -200.0f, 200.0f, 1.0f, 400.0f) * glm::lookAt((*light)->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		m_depthShader->ModelViewProjectionMatrix = &matrix;
 

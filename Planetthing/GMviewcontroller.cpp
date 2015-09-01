@@ -21,6 +21,9 @@ void GMViewController::update()
 
 	// Update scene.
 	m_updateCaller->update();
+
+	// Post update scene.
+	m_updateCaller->posUpdate();
 }
 
 void GMViewController::render()
@@ -33,9 +36,6 @@ void GMViewController::render()
 
 	// Present final image.
 	SwapBuffers(MainWindow->DeviceContext());
-
-	// Post update scene.
-	m_updateCaller->posUpdate();
 }
 
 void GMViewController::didLayout(int width, int height)
