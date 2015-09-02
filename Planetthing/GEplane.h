@@ -13,8 +13,4 @@ public:
 	// -------------------------------------------- //
 public:
 	void generate(float width, float height, unsigned int segment_w, unsigned int segment_h);
-
-	// -------------------------------------------- //
-	// -------------- Private Members ------------- //
-	// -------------------------------------------- //
 };

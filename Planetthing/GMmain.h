@@ -3,6 +3,7 @@
 #include "GEupdatecaller.h"
 #include "GEanimatedmodel.h"
 #include "GEplane.h"
+#include "GEsphere.h"
 #include "GEview.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol
@@ -33,6 +34,7 @@ private:
 	GEAnimation* animation;
 	GEAnimatedModel* model;
 	GEPlane* plane;
+	GESphere* sphere;
 	GEView* view;
 
 };

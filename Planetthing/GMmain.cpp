@@ -17,11 +17,11 @@ GMMain::GMMain()
 	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
 	GEUpdateCaller::sharedInstance()->addRenderableSelector(this);
 
-	animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
-	animation->play();
-	model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
-	model->RenderBoundingBox = true;
-	animation->addSelector(model);
+	//animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
+	//animation->play();
+	//model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
+	//model->RenderBoundingBox = true;
+	//animation->addSelector(model);
 
 	GELight* light = new GELight;
 	//light.LightType = GE_LIGHT_SPOT;
@@ -46,11 +46,14 @@ GMMain::GMMain()
 	plane = new GEPlane(380.0f, 260.0f, 10, 10);
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 
-	
+	sphere = new GESphere(20.0f, 40, 20);
+	sphere->Material.DiffuseColor = color_banana;
+	sphere->Wireframe = false;
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
-	layer->addObject(model);
+	//layer->addObject(model);
 	layer->addObject(plane);
+	layer->addObject(sphere);
 }
 
 // ------------------------------------------------------------------------------ //

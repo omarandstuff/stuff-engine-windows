@@ -4,14 +4,13 @@
 
 class GESphere : public GEPrimitive
 {
-	GESphere(float radious, unsigned int segments);
+public:
+	GESphere(float radious, unsigned int segments_u, unsigned int segments_v);
 	~GESphere();
 
 	// -------------------------------------------- //
 	// ------------------- Load ------------------- //
 	// -------------------------------------------- //
 public:
-	void generate(float radious, unsigned int segments);
-
+	void generate(float radious, unsigned int segments_u, unsigned int segments_v);
 };
-

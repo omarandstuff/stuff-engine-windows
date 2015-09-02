@@ -22,7 +22,7 @@ void main()
     finalNormalCoord = normalCoord;
 
     // Calculate the light space position of this vertex.
-    for(int i = 0; i < numberOfLights; i++)
+    for(int i = 0; i < 1; i++)
     {
         vec4 lightPosCoord = lightModelViewProjectionMatrices[i] * vec4(positionCoord, 1.0);
         

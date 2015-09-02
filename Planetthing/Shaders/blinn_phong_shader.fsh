@@ -81,7 +81,7 @@ void main()
     viewDir = normalize(vec3(0.0, 90.0, 120.0) - finalPositionCoord);
 
         // Calculate the contribution of every light.
-    for(int i = 0; i < numberOfLights; i++)
+    for(int i = 0; i < 1; i++)
     {
         // Calculate the light to surfice direction.
         if(lights[i].type == 0) // Directional light.
@@ -109,7 +109,7 @@ void main()
                 float currentDepth = finalPositionLightSpaceCoord[i].z;
                 
                 // Check whether current frag pos is in shadow.
-                float bias = max(0.01 * (1.0 - normalDir), 0.001);
+                float bias = max(0.001 * (1.0 - normalDir), 0.001);
                 
                 for(int x = -2; x <= 2; x++)
                 {
