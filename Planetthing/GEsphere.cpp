@@ -19,119 +19,103 @@ GESphere::~GESphere()
 
 void GESphere::generate(float radious, unsigned int segments_u, unsigned int segments_v)
 {
-	// Vertex and index count of mesh.
-	m_vertexCount = (segments_u * (segments_v - 1) + 2) * 8;
-	m_indexCount = (segments_u * (segments_v - 2) * 6) + segments_u * 6;
+	// Vertex and index mesh count.
+	m_vertexCount = ((segments_u + 1) * (segments_v - 1) + segments_u * 2) * 8;
+	m_indexCount = segments_u * (segments_v - 2) * 6 + segments_u * 6;
 
 	// Generate the data holders.
 	m_vertexBuffer = new float[m_vertexCount];
 	m_indexBuffer = new unsigned int[m_indexCount];
 
-	// North pole vertex position coordinates.
-	m_vertexBuffer[0] = 0.0f;
-	m_vertexBuffer[1] = radious;
-	m_vertexBuffer[2] = 0.0f;
-
-	// North pole texture coordinates.
-	m_vertexBuffer[3] = 0.5f;
-	m_vertexBuffer[4] = 1.0f;
-
-	// North pole normal coordinates.
-	m_vertexBuffer[5] = 0.0f;
-	m_vertexBuffer[6] = 1.0f;
-	m_vertexBuffer[7] = 0.0f;
-
-	int lastVertexIndex = (segments_u * (segments_v - 1) + 2) - 1;
-
-	// South pole vertex position coordinates.
-	m_vertexBuffer[lastVertexIndex * 8] = 0.0f;
-	m_vertexBuffer[lastVertexIndex * 8 + 1] = -radious;
-	m_vertexBuffer[lastVertexIndex * 8 + 2] = 0.0f;
-
-	// South pole texture coordinates.
-	m_vertexBuffer[lastVertexIndex * 8 + 3] = 0.5f;
-	m_vertexBuffer[lastVertexIndex * 8 + 4] = 1.0f;
-
-	// South pole normal coordinates.
-	m_vertexBuffer[lastVertexIndex * 8 + 5] = 0.0f;
-	m_vertexBuffer[lastVertexIndex * 8 + 6] = -1.0f;
-	m_vertexBuffer[lastVertexIndex * 8 + 7] = 0.0f;
-
+	// Middle verteices coordinates.
 	float pi = glm::pi<float>();
 	float angleStride = glm::two_pi<float>() / segments_u;
 	float verticalAnlgeStride = pi / segments_v;
 
-	for (int i = 0; i < segments_v - 1; i++)
+	for (unsigned int i = 0; i < segments_v - 1; i++)
 	{
 		float currentYAngled = radious * glm::cos(verticalAnlgeStride * (i + 1));
 		float currentRadious = glm::sqrt(glm::pow(radious, 2.0f) - glm::pow(glm::abs(currentYAngled), 2.0f));
-		for (int j = 0; j < segments_u; j++)
+
+		for (unsigned int j = 0; j <= segments_u; j++)
 		{
-			int index = segments_u * i + j + 1;
+			unsigned int index = (segments_u + 1) * i + j;
 
 			m_vertexBuffer[index * 8] = currentRadious * glm::sin(angleStride * j);
 			m_vertexBuffer[index * 8 + 1] = currentYAngled;
 			m_vertexBuffer[index * 8 + 2] = currentRadious * glm::cos(angleStride * j);
 
-			m_vertexBuffer[index * 8 + 3] = 0.0f;
-			m_vertexBuffer[index * 8 + 4] = 0.0f;
+			glm::vec3 currentNormal = glm::normalize(glm::vec3(m_vertexBuffer[index * 8], m_vertexBuffer[index * 8 + 1], m_vertexBuffer[index * 8 + 2]));
 
-			m_vertexBuffer[index * 8 + 5] = 0.0f;
-			m_vertexBuffer[index * 8 + 6] = 1.0f;
-			m_vertexBuffer[index * 8 + 7] = 0.0f;
+			m_vertexBuffer[index * 8 + 5] = currentNormal.x;
+			m_vertexBuffer[index * 8 + 6] = currentNormal.y;
+			m_vertexBuffer[index * 8 + 7] = currentNormal.z;
 		}
 	}
 
-	// North pole trianlges.
-	for (int i = 0; i < segments_u - 1; i++)
-	{
-		m_indexBuffer[i * 3] = i + 1;
-		m_indexBuffer[i * 3 + 1] = 0;
-		m_indexBuffer[i * 3 + 2] = i + 2;
-	}
-	m_indexBuffer[(segments_u - 1) * 3] = segments_u;
-	m_indexBuffer[(segments_u - 1) * 3 + 1] = 0;
-	m_indexBuffer[(segments_u - 1) * 3 + 2] = 1;
+	// North pole vertices.
+	unsigned int vertexOffset = (segments_u + 1) * (segments_v - 1);
 
-	// Ecuador triangles.
-	int indexOffset = segments_u * 3;
-	for (int i = 0; i < segments_v - 2; i++)
+	for (unsigned int i = 0; i < segments_u; i++)
 	{
-		for (int j = 0; j < segments_u - 1; j++)
+		m_vertexBuffer[(vertexOffset + i) * 8] = 0.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 1] = radious;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 2] = 0.0f;
+
+		m_vertexBuffer[(vertexOffset + i) * 8 + 5] = 0.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 6] = 1.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 7] = 0.0f;
+	}
+
+	// South pole vertices.
+	vertexOffset = (segments_u + 1) * (segments_v - 1) + segments_u;
+
+	for (unsigned int i = 0; i < segments_u; i++)
+	{
+		m_vertexBuffer[(vertexOffset + i) * 8] = 0.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 1] = -radious;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 2] = 0.0f;
+
+		m_vertexBuffer[(vertexOffset + i) * 8 + 5] = 0.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 6] = -1.0f;
+		m_vertexBuffer[(vertexOffset + i) * 8 + 7] = 0.0f;
+	}
+
+	// Middle triangles indices.
+	for (unsigned int i = 0; i < segments_v - 2; i++)
+	{
+		for (unsigned int j = 0; j < segments_u; j++)
 		{
-			int index = segments_u * i + j;
+			unsigned int index = segments_u * i + j;
 
-			m_indexBuffer[index * 6 + indexOffset] = (segments_u * i) + j + 1;
-			m_indexBuffer[index * 6 + indexOffset + 1] = (segments_u * i) + j + 2;
-			m_indexBuffer[index * 6 + indexOffset + 2] = segments_u * (i + 1) + j + 1;
-			m_indexBuffer[index * 6 + indexOffset + 3] = segments_u * (i + 1) + j + 1;
-			m_indexBuffer[index * 6 + indexOffset + 4] = (segments_u * i) + j + 2;
-			m_indexBuffer[index * 6 + indexOffset + 5] = segments_u * (i + 1) + j + 2;
+			m_indexBuffer[index * 6] = (segments_u + 1) * i + j;
+			m_indexBuffer[index * 6 + 1] = (segments_u + 1) * i + j + 1;
+			m_indexBuffer[index * 6 + 2] = (segments_u + 1) * (i + 1) + j;
+			m_indexBuffer[index * 6 + 3] = (segments_u + 1) * (i + 1) + j;
+			m_indexBuffer[index * 6 + 4] = (segments_u + 1) * i + j + 1;
+			m_indexBuffer[index * 6 + 5] = (segments_u + 1) * (i + 1) + j + 1;
 		}
-
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset] = segments_u * i + segments_u;
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset + 1] = segments_u * i + 1;
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset + 2] = segments_u * (i + 1) + segments_u;
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset + 3] = segments_u * (i + 1) + segments_u;
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset + 4] = segments_u * i + 1;
-		m_indexBuffer[segments_u * i * 6 + (segments_u - 1) * 6 + indexOffset + 5] = segments_u * (i + 1) + 1;
-
 	}
 
-	// South pole triangles.
-	indexOffset = m_indexCount - (segments_u * 3);
-	int vertexOffset = lastVertexIndex - segments_u - 1;
-
-	for (int i = 0; i < segments_u - 1; i++)
+	// North pole triangles indices.
+	unsigned int indexOffset = m_indexCount - segments_u * 6;
+	vertexOffset = (segments_u + 1) * (segments_v - 1);
+	for (unsigned int i = 0; i < segments_u; i++)
 	{
-		m_indexBuffer[indexOffset + i * 3] = vertexOffset + i + 1;
-		m_indexBuffer[indexOffset + i * 3 + 1] = lastVertexIndex;
-		m_indexBuffer[indexOffset + i * 3 + 2] = vertexOffset + i + 2;
+		m_indexBuffer[indexOffset + i * 3] = i;
+		m_indexBuffer[indexOffset + i * 3 + 1] = vertexOffset + i;
+		m_indexBuffer[indexOffset + i * 3 + 2] = i + 1;
 	}
-	m_indexBuffer[indexOffset + (segments_u - 1) * 3] = vertexOffset + segments_u;
-	m_indexBuffer[indexOffset + (segments_u - 1) * 3 + 1] = lastVertexIndex;
-	m_indexBuffer[indexOffset + (segments_u - 1) * 3 + 2] = vertexOffset + 1;
 
+	// South pole triangles indices.
+	indexOffset = m_indexCount - segments_u * 3;
+	vertexOffset = (segments_u + 1) * (segments_v - 1) + segments_u;
+	for (unsigned int i = 0; i < segments_u; i++)
+	{
+		m_indexBuffer[indexOffset + i * 3] = vertexOffset - segments_u - 1 - i;
+		m_indexBuffer[indexOffset + i * 3 + 1] = vertexOffset - segments_u + i;
+		m_indexBuffer[indexOffset + i * 3 + 2] = vertexOffset + i;
+	}
 
 	generateBuffers();
 }

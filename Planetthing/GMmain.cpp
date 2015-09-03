@@ -46,13 +46,13 @@ GMMain::GMMain()
 	plane = new GEPlane(380.0f, 260.0f, 10, 10);
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 
-	sphere = new GESphere(20.0f, 40, 20);
-	sphere->Material.DiffuseColor = color_banana;
+	sphere = new GESphere(40.0f, 40, 20);
+	sphere->Material.DiffuseColor = color_greenyellow;
 	sphere->Wireframe = false;
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);
-	layer->addObject(plane);
+	//layer->addObject(plane);
 	layer->addObject(sphere);
 }
 

@@ -336,7 +336,7 @@ bool glInit(HDC deviceContext)
 
 	// Multisampling
 	attributeListInt[18] = WGL_SAMPLES_ARB;
-	attributeListInt[19] = 16;
+	attributeListInt[19] = 2;
 
 	// Null terminate the attribute list.
 	attributeListInt[20] = 0;
