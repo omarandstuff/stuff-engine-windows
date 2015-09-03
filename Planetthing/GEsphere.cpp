@@ -54,7 +54,7 @@ void GESphere::generate(float radious, unsigned int segments_u, unsigned int seg
 			float uCoord = glm::atan(currentNormal.x, currentNormal.z) / pi;
 			bool uCoordCut = uCoord < 0.0f;
 			m_vertexBuffer[index * 8 + 3] = j != segments_u ? ((uCoordCut ? 2.0f : 0.0f) + uCoord) * 0.5f : 1.0f;
-			m_vertexBuffer[index * 8 + 4] = glm::asin(-currentNormal.y / pi) + 0.5f;
+			m_vertexBuffer[index * 8 + 4] = glm::asin(-currentNormal.y) / pi + 0.5f;
 		}
 	}
 
@@ -67,7 +67,7 @@ void GESphere::generate(float radious, unsigned int segments_u, unsigned int seg
 		m_vertexBuffer[(vertexOffset + i) * 8 + 1] = radious;
 		m_vertexBuffer[(vertexOffset + i) * 8 + 2] = 0.0f;
 
-		m_vertexBuffer[(vertexOffset + i) * 8 + 3] = glm::cos(angleStride * (i + 1));
+		m_vertexBuffer[(vertexOffset + i) * 8 + 3] = glm::cos(angleStride * (i + 2));
 		m_vertexBuffer[(vertexOffset + i) * 8 + 4] = 0.0f;
 
 		m_vertexBuffer[(vertexOffset + i) * 8 + 5] = 0.0f;
