@@ -50,17 +50,25 @@ void GESphere::generate(float radious, unsigned int segments_u, unsigned int seg
 			m_vertexBuffer[index * 8 + 5] = currentNormal.x;
 			m_vertexBuffer[index * 8 + 6] = currentNormal.y;
 			m_vertexBuffer[index * 8 + 7] = currentNormal.z;
+
+			float uCoord = glm::atan(currentNormal.x, currentNormal.z) / pi;
+			bool uCoordCut = uCoord < 0.0f;
+			m_vertexBuffer[index * 8 + 3] = j != segments_u ? ((uCoordCut ? 2.0f : 0.0f) + uCoord) * 0.5f : 1.0f;
+			m_vertexBuffer[index * 8 + 4] = glm::asin(-currentNormal.y / pi) + 0.5f;
 		}
 	}
 
 	// North pole vertices.
 	unsigned int vertexOffset = (segments_u + 1) * (segments_v - 1);
-
+	angleStride = 1.0f / (segments_u + 1);
 	for (unsigned int i = 0; i < segments_u; i++)
 	{
 		m_vertexBuffer[(vertexOffset + i) * 8] = 0.0f;
 		m_vertexBuffer[(vertexOffset + i) * 8 + 1] = radious;
 		m_vertexBuffer[(vertexOffset + i) * 8 + 2] = 0.0f;
+
+		m_vertexBuffer[(vertexOffset + i) * 8 + 3] = glm::cos(angleStride * (i + 1));
+		m_vertexBuffer[(vertexOffset + i) * 8 + 4] = 0.0f;
 
 		m_vertexBuffer[(vertexOffset + i) * 8 + 5] = 0.0f;
 		m_vertexBuffer[(vertexOffset + i) * 8 + 6] = 1.0f;
