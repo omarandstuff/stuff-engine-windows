@@ -23,10 +23,10 @@ GMMain::GMMain()
 	//model->RenderBoundingBox = true;
 	//animation->addSelector(model);
 
-	GELight* light = new GELight;
-	//light.LightType = GE_LIGHT_SPOT;
+	light = new GELight;
+	//light->LightType = GE_LIGHT_POINT;
 	light->Position = { -100.0f, 60.0f, 10.0f };
-	//light.Direction = GLKVector3Make(0.0f, 30.0f, 0.0f);
+	//light->Direction = { 0.0f, 30.0f, 0.0f };
 	light->Intensity = 1.0f;
 	light->CastShadows = true;
 
@@ -45,11 +45,14 @@ GMMain::GMMain()
 
 	plane = new GEPlane(380.0f, 260.0f, 10, 10);
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
+	plane->Material.SpecularColor = { 0.1f, 0.1f, 0.1f };
 
-	sphere = new GESphere(40.0f, 30, 15);
+	sphere = new GESphere(40.0f, 40, 20);
 	sphere->Material.DiffuseColor = color_greenyellow;
+	sphere->Material.Shininess = 128.0f;
 	sphere->Wireframe = false;
-	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.jpg");
+	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);
@@ -63,7 +66,11 @@ GMMain::GMMain()
 
 void GMMain::update(float time)
 {
+	static float angle = 0.0f;
 
+	angle += time / 2.0f;
+
+	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
 }
 
 void GMMain::preUpdate()

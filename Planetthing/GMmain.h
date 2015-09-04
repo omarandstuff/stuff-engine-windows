@@ -32,6 +32,7 @@ private:
 	unsigned int m_screenWidth, m_screenHeight;
 
 	GEAnimation* animation;
+	GELight* light;
 	GEAnimatedModel* model;
 	GEPlane* plane;
 	GESphere* sphere;
