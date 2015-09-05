@@ -22,7 +22,7 @@ public:
 
 		// Wireframe false by default.
 		Wireframe = false;
-		m_wireframeMaerial.DiffuseColor = color_wheat;
+		m_wireframeMaerial.DiffuseColor = color_blueviolet;
 
 	}
 

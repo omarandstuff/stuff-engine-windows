@@ -47,9 +47,9 @@ GMMain::GMMain()
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 	plane->Material.SpecularColor = { 0.1f, 0.1f, 0.1f };
 
-	sphere = new GESphere(40.0f, 40, 20);
+	sphere = new GESphere(40.0f, 16);
 	sphere->Material.DiffuseColor = color_greenyellow;
-	sphere->Material.Shininess = 128.0f;
+	sphere->Material.Shininess = 1024.0f;
 	sphere->Wireframe = false;
 	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
