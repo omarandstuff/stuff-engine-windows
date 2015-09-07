@@ -4,6 +4,7 @@
 #include "GEanimatedmodel.h"
 #include "GEplane.h"
 #include "GEsphere.h"
+#include "GEcube.h"
 #include "GEview.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol
@@ -36,6 +37,7 @@ private:
 	GEAnimatedModel* model;
 	GEPlane* plane;
 	GESphere* sphere;
+	GECube* cube;
 	GEView* view;
 
 };

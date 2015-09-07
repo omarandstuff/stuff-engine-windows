@@ -23,6 +23,9 @@ GMMain::GMMain()
 	//model->RenderBoundingBox = true;
 	//animation->addSelector(model);
 
+	//model = new GEAnimatedModel(L"resources/images/sphere.md5mesh");
+	//model->Meshes[0].Material.Shininess = 128.0f;
+
 	light = new GELight;
 	//light->LightType = GE_LIGHT_POINT;
 	light->Position = { -100.0f, 60.0f, 10.0f };
@@ -54,10 +57,18 @@ GMMain::GMMain()
 	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
+	cube = new GECube(40.0f, 40.0f, 40.0f, 1, 1, 1);
+	cube->Material.DiffuseColor = color_greenyellow;
+	cube->Material.Shininess = 1024.0f;
+	cube->Wireframe = true;
+	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);
-	layer->addObject(plane);
-	layer->addObject(sphere);
+	//layer->addObject(plane);
+	//layer->addObject(sphere);
+	layer->addObject(cube);
 }
 
 // ------------------------------------------------------------------------------ //

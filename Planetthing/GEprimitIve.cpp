@@ -31,6 +31,8 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 		m_blinnPhongShader->Material = &Material;
 		m_blinnPhongShader->useProgram();
 
+		glCullFace(GL_BACK);
+
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
 		glDrawElements(GL_TRIANGLES, m_indexCount, GL_UNSIGNED_INT, NULL);
 

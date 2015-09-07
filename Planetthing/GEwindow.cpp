@@ -178,7 +178,7 @@ LRESULT GEWindow::HandleMessage(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 	}
 	case WM_PAINT:
 	{
-		if (m_resized)
+		if (m_resized && !(m_clientWidth == 0 && m_clientHeight == 0))
 		{
 			for (vector<GEWindowProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
 			{

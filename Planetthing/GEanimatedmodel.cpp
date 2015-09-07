@@ -66,6 +66,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 			glPolygonOffset(1, 1);
 		}
 
+		glCullFace(GL_BACK);
 
 		// Draw each mesh.
 		for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)

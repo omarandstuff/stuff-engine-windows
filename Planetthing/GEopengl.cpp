@@ -372,6 +372,7 @@ bool glInit(HDC deviceContext)
 
 	// Set the polygon winding to front facing for the left handed system.
 	glFrontFace(GL_CW);
+	glEnable(GL_CULL_FACE);
 
 	return true;
 }
