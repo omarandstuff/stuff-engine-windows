@@ -20,7 +20,6 @@ class GERenderProtocol
 public:
 	virtual void render() = 0;
 	virtual void layout(int width, int height) = 0	;
-
 };
 
 class GEUpdateCaller

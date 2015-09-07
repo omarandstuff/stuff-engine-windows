@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GE3Dobject.cpp" />
     <ClCompile Include="GEanimatedmodel.cpp" />
     <ClCompile Include="GEanimation.cpp" />
     <ClCompile Include="GEblinnphongshader.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="GEwindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GE3Dobject.h" />
     <ClInclude Include="GEanimatedmodel.h" />
     <ClInclude Include="GEanimation.h" />
     <ClInclude Include="GEblinnphongshader.h" />

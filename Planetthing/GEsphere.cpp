@@ -20,8 +20,8 @@ GESphere::~GESphere()
 void GESphere::generate(float radious, unsigned int segments)
 {
 	// Vertex and index mesh count.
-	m_vertexCount = (pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 12) * 8;
-	m_indexCount = (pow(segments, 2) * 3 + pow(segments / 2, 2) * 12) * 6;
+	m_vertexCount = (unsigned int)(pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 12) * 8;
+	m_indexCount = (unsigned int)(pow(segments, 2) * 3 + pow(segments / 2, 2) * 12) * 6;
 
 	// Generate the data holders.
 	m_vertexBuffer = new float[m_vertexCount];
@@ -50,8 +50,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(0, 0, segments2);
 
 	// Top-right vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2);
-	indexOffset = pow(segments / 2, 2);
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2);
+	indexOffset = (unsigned int)pow(segments / 2, 2);
 	for (unsigned int i = 0; i <= segments2; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)
@@ -64,8 +64,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-Left vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 2;
-	indexOffset = pow(segments / 2, 2) * 2;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 2;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 2;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments2; j++)
@@ -78,8 +78,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-right vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 3;
-	indexOffset = pow(segments / 2, 2) * 3;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 3;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 3;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)
@@ -94,8 +94,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	/////////////// South pole //////////////
 
 	// Top-Left vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 4;
-	indexOffset = pow(segments / 2, 2) * 4;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 4;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 4;
 	for (unsigned int i = 0; i <= segments2; i++)
 	{
 		for (unsigned int j = 0; j <= segments2; j++)
@@ -108,8 +108,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Top-right vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 5;
-	indexOffset = pow(segments / 2, 2) * 5;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 5;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 5;
 	for (unsigned int i = 0; i <= segments2; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)
@@ -122,8 +122,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-Left vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 6;
-	indexOffset = pow(segments / 2, 2) * 6;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 6;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 6;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments2; j++)
@@ -136,8 +136,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-right vertices.
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 7;
-	indexOffset = pow(segments / 2, 2) * 7;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 7;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 7;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)
@@ -150,8 +150,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	//////// Left side ///////
-	vertexOffset = pow((segments + 1) / 2 + 1, 2) * 8;
-	indexOffset = pow(segments / 2, 2) * 8;
+	vertexOffset = (unsigned int)pow((segments + 1) / 2 + 1, 2) * 8;
+	indexOffset = (unsigned int)pow(segments / 2, 2) * 8;
 	for (unsigned int i = 0; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments; j++)
@@ -164,8 +164,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments);
 
 	//////// Right side ///////
-	vertexOffset = pow(segments + 1, 2) + pow((segments + 1) / 2 + 1, 2) * 8;
-	indexOffset = pow(segments, 2) + pow(segments / 2, 2) * 8;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 8;
+	indexOffset = (unsigned int)pow(segments, 2) + (unsigned int)pow(segments / 2, 2) * 8;
 	for (unsigned int i = 0; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments; j++)
@@ -178,8 +178,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments);
 
 	//////// Back side ///////
-	vertexOffset = pow(segments + 1, 2) * 2 + pow((segments + 1) / 2 + 1, 2) * 8;
-	indexOffset = pow(segments, 2) * 2 + pow(segments / 2, 2) * 8;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) * 2 + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 8;
+	indexOffset = (unsigned int)pow(segments, 2) * 2 + (unsigned int)pow(segments / 2, 2) * 8;
 	for (unsigned int i = 0; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments; j++)
@@ -194,8 +194,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	//////// Front side ///////
 
 	// Top - Left vertices
-	vertexOffset = pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 8;
-	indexOffset = pow(segments, 2) * 3 + pow(segments / 2, 2) * 8;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) * 3 + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 8;
+	indexOffset = (unsigned int)pow(segments, 2) * 3 + (unsigned int)pow(segments / 2, 2) * 8;
 	for (unsigned int i = 0; i <= segments2; i++)
 	{
 		for (unsigned int j = 0; j <= segments2; j++)
@@ -208,8 +208,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Top-Right vertices
-	vertexOffset = pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 9;
-	indexOffset = pow(segments, 2) * 3 + pow(segments / 2, 2) * 9;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) * 3 + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 9;
+	indexOffset = (unsigned int)pow(segments, 2) * 3 + (unsigned int)pow(segments / 2, 2) * 9;
 	for (unsigned int i = 0; i <= segments2; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)
@@ -222,8 +222,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-Left vertices.
-	vertexOffset = pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 10;
-	indexOffset = pow(segments, 2) * 3 + pow(segments / 2, 2) * 10;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) * 3 + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 10;
+	indexOffset = (unsigned int)pow(segments, 2) * 3 + (unsigned int)pow(segments / 2, 2) * 10;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = 0; j <= segments2; j++)
@@ -236,8 +236,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
 	// Bottom-right vertices.
-	vertexOffset = pow(segments + 1, 2) * 3 + pow((segments + 1) / 2 + 1, 2) * 11;
-	indexOffset = pow(segments, 2) * 3 + pow(segments / 2, 2) * 11;
+	vertexOffset = (unsigned int)pow(segments + 1, 2) * 3 + (unsigned int)pow((segments + 1) / 2 + 1, 2) * 11;
+	indexOffset = (unsigned int)pow(segments, 2) * 3 + (unsigned int)pow(segments / 2, 2) * 11;
 	for (unsigned int i = segments2; i <= segments; i++)
 	{
 		for (unsigned int j = segments2; j <= segments; j++)

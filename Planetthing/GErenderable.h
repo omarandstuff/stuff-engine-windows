@@ -1,11 +1,12 @@
 #pragma once
 
+#include "GE3Dobject.h"
 #include "GEblinnphongshader.h"
 #include "GEtextureshader.h"
 #include "GEdepthshader.h"
 #include "GEcolorshader.h"
 
-class GERenderable
+class GERenderable : public GE3DObject
 {
 public:
 	GERenderable()
@@ -23,7 +24,6 @@ public:
 		// Wireframe false by default.
 		Wireframe = false;
 		m_wireframeMaerial.DiffuseColor = color_blueviolet;
-
 	}
 
 	// -------------------------------------------- //

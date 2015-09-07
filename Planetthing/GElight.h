@@ -1,9 +1,10 @@
 #pragma once
 
 #include "GEcommon.h"
+#include "GE3Dobject.h"
 #include "GEfbo.h"
 
-class GELight
+class GELight : public GE3DObject
 {
 public:
 	GELight();
@@ -14,8 +15,6 @@ public:
 	// -------------------------------------------- //
 public:
 	GE_LIGHT_TYPE LightType;
-	glm::vec3  Position;
-	glm::vec3 Direction;
 	float CutOff;
 	glm::vec3  DiffuseColor;
 	glm::vec3  AmbientColor;
