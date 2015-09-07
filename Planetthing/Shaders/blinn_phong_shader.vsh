@@ -19,7 +19,7 @@ out vec3 finalPositionLightSpaceCoord[8];
 
 void main()
 {
-    gl_Position = modelMatrix * viewMatrix * projectionMatrix * vec4(positionCoord, 1.0);
+    gl_Position = viewMatrix * projectionMatrix * modelMatrix * vec4(positionCoord, 1.0);
     finalPositionCoord = (modelMatrix * vec4(positionCoord, 1.0f)).xyz;
     finalTextureCoord = textureCoord * materialTextureCompression;
     finalNormalCoord = (normalMatrix * vec4(normalCoord, 1.0)).xyz;

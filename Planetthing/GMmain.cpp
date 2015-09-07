@@ -64,7 +64,8 @@ GMMain::GMMain()
 	cube->Wireframe = false;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
-	cube->setScale({ 0.5f, 0.5f, 0.5f });
+	//cube->setScale({ 0.5f, 0.5f, 0.5f });
+	//cube->setRotation({ 0.0f, 1.0f, 0.0f });
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);

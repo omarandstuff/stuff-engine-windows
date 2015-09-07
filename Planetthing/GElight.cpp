@@ -12,7 +12,7 @@ GELight::GELight()
 	AmbientColor = { 0.88f, 0.95f, 1.0f };
 	SpecularColor = { 1.0f, 1.0f, 1.0f };
 	Ambient = 0.1f;
-	ShadowMapSize = 8192;
+	ShadowMapSize = 1024;
 
 	ShadowMapFBO = new GEFBO(ShadowMapSize, ShadowMapSize);
 

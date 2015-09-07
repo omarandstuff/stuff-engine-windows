@@ -23,7 +23,7 @@ void GE3DObject::update(float time)
 	}
 	if (m_rotationChanged)
 	{
-		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), Rotation.y, { 1.0f, 0.0f, 0.0f });
+		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), Rotation.x, { 1.0f, 0.0f, 0.0f });
 		m_rotationMatrix = glm::rotate(m_rotationMatrix, Rotation.y, { 0.0f, 1.0f, 0.0f });
 		m_rotationMatrix = glm::rotate(m_rotationMatrix, Rotation.z, { 0.0f, 0.0f, 1.0f });
 		m_rotationChanged = false;
