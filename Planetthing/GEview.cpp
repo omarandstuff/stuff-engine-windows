@@ -54,11 +54,13 @@ void GEView::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, Width, Height);
 
-	glm::mat4 matrix = glm::perspective(glm::radians(45.0f), float(Width) / float(Height), 0.1f, 1000.0f) * glm::lookAt(glm::vec3(0.0f, 50.0f, 120.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 view = glm::perspective(glm::radians(45.0f), float(Width) / float(Height), 0.1f, 1000.0f);
+	glm::mat4 projection = glm::lookAt(glm::vec3(0.0f, 50.0f, 120.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	m_blinnPhongShader->ModelViewProjectionMatrix = &matrix;
+	m_blinnPhongShader->ViewMatrix = &view;
+	m_blinnPhongShader->ProjectionMatrix = &projection;
 	m_blinnPhongShader->Lights = &m_lights;
-	m_colorShader->ModelViewProjectionMatrix = &matrix;
+	//m_colorShader->ModelViewProjectionMatrix = &matrix;
 
 	// Render normal objects;
 	for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)

@@ -34,12 +34,12 @@ GMMain::GMMain()
 	light->Ambient = 0.85f;
 	light->CastShadows = true;
 
-	GELight* light2 = new GELight;
+	//GELight* light2 = new GELight;
 	//light2.LightType = GE_LIGHT_SPOT;
-	light2->Position = { -0.0f, 60.0f, -10.0f };
+	//light2->Position = { -0.0f, 60.0f, -10.0f };
 	//light2.Direction = GLKVector3Make(0.0f, 30.0f, 0.0f);
-	light2->Intensity = 1.0f;
-	light2->CastShadows = true;
+	//light2->Intensity = 1.0f;
+	//light2->CastShadows = true;
 
 	view = new GEView;
 	view->BackgroundColor = color_black;
@@ -51,19 +51,20 @@ GMMain::GMMain()
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 	plane->Material.SpecularColor = { 0.1f, 0.1f, 0.1f };
 
-	sphere = new GESphere(40.0f, 16);
-	sphere->Material.DiffuseColor = color_greenyellow;
-	sphere->Material.Shininess = 1024.0f;
-	sphere->Wireframe = false;
-	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
-	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+	//sphere = new GESphere(40.0f, 16);
+	//sphere->Material.DiffuseColor = color_greenyellow;
+	//sphere->Material.Shininess = 1024.0f;
+	//sphere->Wireframe = false;
+	//sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	//sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
 	cube = new GECube(40.0f, 40.0f, 40.0f, 1, 1, 1);
 	cube->Material.DiffuseColor = color_greenyellow;
 	cube->Material.Shininess = 1024.0f;
-	cube->Wireframe = true;
+	cube->Wireframe = false;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+	cube->setScale({ 0.5f, 0.5f, 0.5f });
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);

@@ -9,6 +9,7 @@
 #include <glm.hpp>
 #include <gtc\constants.hpp>
 #include <gtc\matrix_transform.hpp>
+#include <gtx\transform.hpp>
 #include <gtx\compatibility.hpp>
 #include <gtx\quaternion.hpp>
 using namespace std;
@@ -39,7 +40,10 @@ enum GE_BUFFER_MODE
 // -------------------------------------------- //
 enum
 {
-	GE_UNIFORM_MODELVIEWPROJECTION_MATRIX,
+	GE_UNIFORM_MODEL_MATRIX,
+	GE_UNIFORM_VIEW_MATRIX,
+	GE_UNIFORM_PROJECTION_MATRIX,
+	GE_UNIFORM_NORMAL_MATRIX,
 	GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION,
 	GE_UNIFORM_MATERIAL_DIFFUSE_MAP,
 	GE_UNIFORM_MATERIAL_DIFFUSE_MAP_ENABLED,

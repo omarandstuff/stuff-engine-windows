@@ -18,7 +18,10 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
-	glm::mat4* ModelViewProjectionMatrix;
+	glm::mat4* ModelMatrix;
+	glm::mat4* ViewMatrix;
+	glm::mat4* ProjectionMatrix;
+	glm::mat4* NormalMatrix;
 	GEMaterial* Material;
 	vector<GELight*>* Lights;
 	bool DiffuceMapEnabled;

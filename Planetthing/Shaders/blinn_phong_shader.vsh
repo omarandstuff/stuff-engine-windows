@@ -3,7 +3,10 @@ layout (location = 0) in vec3 positionCoord;
 layout (location = 1) in vec2 textureCoord;
 layout (location = 2) in vec3 normalCoord;
 
-uniform mat4 modelViewProjectionMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+uniform mat4 projectionMatrix;
+uniform mat4 normalMatrix;
 uniform vec2 materialTextureCompression;
 uniform mat4 lightModelViewProjectionMatrices[8];
 uniform int numberOfLights;
@@ -16,10 +19,10 @@ out vec3 finalPositionLightSpaceCoord[8];
 
 void main()
 {
-    gl_Position = modelViewProjectionMatrix * vec4(positionCoord, 1.0);
-    finalPositionCoord = positionCoord;
+    gl_Position = modelMatrix * viewMatrix * projectionMatrix * vec4(positionCoord, 1.0);
+    finalPositionCoord = (modelMatrix * vec4(positionCoord, 1.0f)).xyz;
     finalTextureCoord = textureCoord * materialTextureCompression;
-    finalNormalCoord = normalCoord;
+    finalNormalCoord = (normalMatrix * vec4(normalCoord, 1.0)).xyz;
 
     // Calculate the light space position of this vertex.
     for(int i = 0; i < 1; i++)

@@ -14,7 +14,10 @@ GEBlinnPhongShader* GEBlinnPhongShader::sharedInstance()
 void GEBlinnPhongShader::setUpSahder()
 {
 	// Get uniform locations.
-	m_uniforms[GE_UNIFORM_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(m_programID, "modelViewProjectionMatrix");
+	m_uniforms[GE_UNIFORM_MODEL_MATRIX] = glGetUniformLocation(m_programID, "modelMatrix");
+	m_uniforms[GE_UNIFORM_VIEW_MATRIX] = glGetUniformLocation(m_programID, "viewMatrix");
+	m_uniforms[GE_UNIFORM_PROJECTION_MATRIX] = glGetUniformLocation(m_programID, "projectionMatrix");
+	m_uniforms[GE_UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(m_programID, "normalMatrix");
 	m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION] = glGetUniformLocation(m_programID, "materialTextureCompression");
 	m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP] = glGetUniformLocation(m_programID, "materialDiffuceMapSampler");
 	m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP_ENABLED] = glGetUniformLocation(m_programID, "materialDiffuceMapEnabled");
@@ -58,16 +61,19 @@ void GEBlinnPhongShader::useProgram()
 	// Number of textures;
 	unsigned int m_textureNum = 0;
 
-	// Set the Projection View Model Matrix to the shader.
-	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_MODELVIEWPROJECTION_MATRIX], 1, 0, &(*ModelViewProjectionMatrix)[0].x);
+	// Set the Projection View Model and Normal matrices to the shader.
+	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_MODEL_MATRIX], 1, 0, &(*ModelMatrix)[0].x);
+	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_VIEW_MATRIX], 1, 0, &(*ViewMatrix)[0].x);
+	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_PROJECTION_MATRIX], 1, 0, &(*ProjectionMatrix)[0].x);
+	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_NORMAL_MATRIX], 1, 0, &(*NormalMatrix)[0].x);
 
-	//// Material texture compression.
+	// Material texture compression.
 	glUniform2fv(m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION], 1, &Material->TextureCompression.x);
 
-	//// Material ambient color.
+	// Material ambient color.
 	glUniform3fv(m_uniforms[GE_UNIFORM_MATERIAL_AMBIENT_COLOR], 1, &Material->AmbientColor.x);
 
-	//// Materialshininess.
+	// Materialshininess.
 	glUniform1f(m_uniforms[GE_UNIFORM_MATERIAL_SHININESS], Material->Shininess);
 
 	// Material diffuce based of existance of a texture.

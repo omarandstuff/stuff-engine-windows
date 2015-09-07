@@ -28,7 +28,11 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 			glPolygonOffset(1, 1);
 		}
 
+		// Material and model matrices.
 		m_blinnPhongShader->Material = &Material;
+		m_blinnPhongShader->ModelMatrix = &FinalMatrix;
+		m_blinnPhongShader->NormalMatrix = &m_rotationMatrix;
+
 		m_blinnPhongShader->useProgram();
 
 		glCullFace(GL_BACK);
