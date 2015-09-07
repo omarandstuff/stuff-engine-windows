@@ -30,7 +30,8 @@ GMMain::GMMain()
 	//light->LightType = GE_LIGHT_POINT;
 	light->Position = { -100.0f, 60.0f, 10.0f };
 	//light->Direction = { 0.0f, 30.0f, 0.0f };
-	light->Intensity = 1.0f;
+	light->Intensity = 0.8f;
+	light->Ambient = 0.85f;
 	light->CastShadows = true;
 
 	GELight* light2 = new GELight;
@@ -66,7 +67,7 @@ GMMain::GMMain()
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);
-	//layer->addObject(plane);
+	layer->addObject(plane);
 	//layer->addObject(sphere);
 	layer->addObject(cube);
 }

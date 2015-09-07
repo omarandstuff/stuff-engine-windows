@@ -111,15 +111,15 @@ void main()
                 // Check whether current frag pos is in shadow.
                 float bias = max(0.001 * (1.0 - normalDir), 0.001);
                 
-                for(int x = -5; x <= 5; x++)
+                for(int x = -1; x <= 1; x++)
                 {
-                    for(int y = -5; y <= 5; y++)
+                    for(int y = -1; y <= 1; y++)
                     {
                         float pcfDepth = texture(lights[i].shadowMapSampler, finalPositionLightSpaceCoord[i].xy + vec2(x, y) * lights[i].shadowMapTextelSize).r;
                         shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
                     }
                 }
-                shadow /= 100.0;
+                shadow /= 4.0;
             }
         }
         

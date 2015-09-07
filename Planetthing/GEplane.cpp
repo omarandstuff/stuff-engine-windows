@@ -4,9 +4,9 @@
 // ------------------------------- Initialization ------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-GEPlane::GEPlane(float width, float height, unsigned int segment_w, unsigned int segment_h)
+GEPlane::GEPlane(float width, float height, unsigned int segments_w, unsigned int segments_h, float offsetOrigin, glm::vec3 direction)
 {
-	generate(width, height, segment_w, segment_h);
+	generate(width, height, segments_w, segments_h, offsetOrigin, direction);
 }
 
 GEPlane::~GEPlane()
@@ -18,57 +18,74 @@ GEPlane::~GEPlane()
 // ------------------------------------ Load ------------------------------------ //
 // ------------------------------------------------------------------------------ //
 
-void GEPlane::generate(float width, float height, unsigned int segment_w, unsigned int segment_h)
+void GEPlane::generate(float width, float height, unsigned int segments_w, unsigned int segments_h, float offsetOrigin, glm::vec3 direction)
 {
 	// Vertex and index count of mesh.
-	m_vertexCount = (segment_w + 1) * (segment_h + 1) * 8;
-	m_indexCount = segment_w * segment_h * 6;
+	m_vertexCount = (segments_w + 1) * (segments_h + 1) * 8;
+	m_indexCount = segments_w * segments_h * 6;
 
 	// Generate the data holders.
 	m_vertexBuffer = new float[m_vertexCount];
 	m_indexBuffer = new unsigned int[m_indexCount];
 
-	// Size of every segment in the sides.
-	float w_stride = width / segment_w;
-	float h_stride = height / segment_h;
+	float wOrigin = width / 2.0f;
+	float hOrigin = height / 2.0f;
 
-	// Where begin to calculate the vertices.
-	float w_origin = -width / 2.0f;
-	float h_origin = -height / 2.0f;
+	float wStride = width / segments_w;
+	float hStride = height / segments_h;
 
-	// Calculate every vertex of the plane.
-	for (unsigned int i = 0; i <= segment_h; i++)
+	for (unsigned int i = 0; i <= segments_h; i++)
 	{
-		for (unsigned int j = 0; j <= segment_w; j++)
+		for (unsigned int j = 0; j <= segments_w; j++)
 		{
-			int index = i * (segment_w + 1) + j;
+			unsigned int index = (segments_w + 1) * i + j;
 
-			m_vertexBuffer[index * 8] = w_origin + w_stride * (float)j;
-			m_vertexBuffer[index * 8 + 1] = 0.0f;
-			m_vertexBuffer[index * 8 + 2] = h_origin + h_stride * (float)i;
+			if (direction.y != 0)
+			{
+				m_vertexBuffer[index * 8] = direction.y < 0.0f ? -wOrigin + wStride * j : wOrigin - wStride * j;
+				m_vertexBuffer[index * 8 + 1] = offsetOrigin * direction.y;
+				m_vertexBuffer[index * 8 + 2] = hOrigin - hStride * i;
 
-			m_vertexBuffer[index * 8 + 3] = (w_stride * (float)j) / width;
-			m_vertexBuffer[index * 8 + 4] = (h_stride * (float)i) / height;
+				m_vertexBuffer[index * 8 + 3] = direction.y > 0.0f ? 1.0f - wStride * j / width : wStride * j / width;
+				m_vertexBuffer[index * 8 + 4] = direction.y > 0.0f ? 1.0f - hStride * i / height : hStride * i / height;
+			}
+			else if (direction.x != 0)
+			{
+				m_vertexBuffer[index * 8] = offsetOrigin * direction.x;
+				m_vertexBuffer[index * 8 + 1] = hOrigin - hStride * i;
+				m_vertexBuffer[index * 8 + 2] = direction.x < 0.0f ? -wOrigin + wStride * j : wOrigin - wStride * j;
 
-			m_vertexBuffer[index * 8 + 5] = 0.0f;
-			m_vertexBuffer[index * 8 + 6] = 1.0f;
-			m_vertexBuffer[index * 8 + 7] = 0.0f;
+				m_vertexBuffer[index * 8 + 3] = wStride * j / width;
+				m_vertexBuffer[index * 8 + 4] = hStride * i / height;
+			}
+			else if (direction.z != 0)
+			{
+				m_vertexBuffer[index * 8] = direction.z > 0.0f ? -wOrigin + wStride * j : wOrigin - wStride * j;
+				m_vertexBuffer[index * 8 + 1] = hOrigin - hStride * i;
+				m_vertexBuffer[index * 8 + 2] = offsetOrigin * direction.z;
+
+				m_vertexBuffer[index * 8 + 3] = wStride * j / width;
+				m_vertexBuffer[index * 8 + 4] = hStride * i / height;
+			}
+
+			m_vertexBuffer[index * 8 + 5] = direction.x;
+			m_vertexBuffer[index * 8 + 6] = direction.y;
+			m_vertexBuffer[index * 8 + 7] = direction.z;
 		}
 	}
 
-	// Calculate every index of every triangle in the plane.
-	for (unsigned int i = 0; i < segment_h; i++)
+	for (unsigned int i = 0; i < segments_h; i++)
 	{
-		for (unsigned int j = 0; j < segment_w; j++)
+		for (unsigned int j = 0; j < segments_w; j++)
 		{
-			int index = i * segment_w + j;
+			unsigned int index = segments_w * i + j;
 
-			m_indexBuffer[index * 6] = (segment_w + 1) * i + j;
-			m_indexBuffer[index * 6 + 1] = (segment_w + 1) * (i + 1) + j;
-			m_indexBuffer[index * 6 + 2] = (segment_w + 1) * (i + 1) + j + 1;
-			m_indexBuffer[index * 6 + 3] = (segment_w + 1) * i + j;
-			m_indexBuffer[index * 6 + 4] = (segment_w + 1) * (i + 1) + j + 1;
-			m_indexBuffer[index * 6 + 5] = (segment_w + 1) * i + j + 1;
+			m_indexBuffer[index * 6] = (segments_w + 1) * i + j;
+			m_indexBuffer[index * 6 + 1] = (segments_w + 1) * i + j + 1;
+			m_indexBuffer[index * 6 + 2] = (segments_w + 1) * (i + 1) + j;
+			m_indexBuffer[index * 6 + 3] = (segments_w + 1) * (i + 1) + j;
+			m_indexBuffer[index * 6 + 4] = (segments_w + 1) * i + j + 1;
+			m_indexBuffer[index * 6 + 5] = (segments_w + 1) * (i + 1) + j + 1;
 		}
 	}
 

@@ -42,7 +42,7 @@ void GEView::render()
 		(*light)->LightModelViewProjectionMatrix = matrix;
 
 		// Draw back faces.
-		glCullFace(GL_FRONT);
+		glCullFace(GL_BACK);
 
 		// Render depth of object.
 		for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)
