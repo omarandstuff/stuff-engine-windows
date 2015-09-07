@@ -50,7 +50,7 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 			glLineWidth(1.0f);
 
 			m_colorShader->Material = &m_wireframeMaerial;
-
+			m_colorShader->ModelMatrix = &FinalMatrix;
 			m_colorShader->useProgram();
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
@@ -66,6 +66,7 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
+		m_depthShader->ModelMatrix = &FinalMatrix;
 		m_depthShader->useProgram();
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);

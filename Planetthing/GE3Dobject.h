@@ -14,8 +14,8 @@ public:
 public:
 	glm::mat4 FinalMatrix;
 	glm::vec3 Position;
-	glm::vec3 Direction;
 	glm::vec3 Rotation;
+	glm::vec3 Orbit;
 	glm::vec3 Scale;
 	GE3DObject* Parent;
 
@@ -34,6 +34,7 @@ public:
 	void setPosition(glm::vec3 position);
 	void setRotation(glm::vec3 rotation);
 	void setScale(glm::vec3 scale);
+	void setOrbit(glm::vec3 orbit);
 
 	// -------------------------------------------- //
 	// ------------ Protected members ------------- //
@@ -42,11 +43,11 @@ protected:
 	glm::mat4 m_translationMatrix;
 	glm::mat4 m_rotationMatrix;
 	glm::mat4 m_scaleMatrix;
-	glm::mat4 m_lookAtMatrix;
+	glm::mat4 m_orbitMatrix;
 	bool m_translationChanged;
 	bool m_rotationChanged;
 	bool m_scaleChanged;
-	bool m_lookAtChanged;
+	bool m_orbitChanged;
 	bool m_matrixChanged;
 
 	// -------------------------------------------- //

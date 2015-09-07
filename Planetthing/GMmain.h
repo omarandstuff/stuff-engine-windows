@@ -39,5 +39,6 @@ private:
 	GESphere* sphere;
 	GECube* cube;
 	GEView* view;
+	GEFullScreen* fullScreen;
 
 };

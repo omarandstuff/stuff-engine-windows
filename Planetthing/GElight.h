@@ -16,13 +16,14 @@ public:
 public:
 	GE_LIGHT_TYPE LightType;
 	float CutOff;
+	glm::vec3 Direction;
 	glm::vec3  DiffuseColor;
 	glm::vec3  AmbientColor;
 	glm::vec3  SpecularColor;
 	float Intensity;
 	float Ambient;
 	bool CastShadows;
-	glm::mat4 LightModelViewProjectionMatrix;
+	glm::mat4 ShadowMapViewProjectionMatrix;
 	GEFBO* ShadowMapFBO;
 	GLint ShadowMapSize;
 };

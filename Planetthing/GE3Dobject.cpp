@@ -3,7 +3,7 @@
 GE3DObject::GE3DObject()
 {
 	// Identity all transformations
-	m_translationMatrix = m_rotationMatrix = m_scaleMatrix = m_lookAtMatrix = FinalMatrix = glm::mat4(1.0f);
+	m_translationMatrix = m_rotationMatrix = m_scaleMatrix = m_orbitMatrix = FinalMatrix = glm::mat4(1.0f);
 
 	// Auto updateable
 	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
@@ -35,9 +35,17 @@ void GE3DObject::update(float time)
 		m_scaleChanged = false;
 		m_matrixChanged = true;
 	}
+	if (m_orbitChanged)
+	{
+		m_orbitMatrix = glm::rotate(glm::mat4(1.0f), Orbit.x, { 1.0f, 0.0f, 0.0f });
+		m_orbitMatrix = glm::rotate(m_orbitMatrix, Orbit.y, { 0.0f, 1.0f, 0.0f });
+		m_orbitMatrix = glm::rotate(m_orbitMatrix, Orbit.z, { 0.0f, 0.0f, 1.0f });
+		m_orbitChanged = false;
+		m_matrixChanged = true;
+	}
 	if (m_matrixChanged)
 	{
-		FinalMatrix = m_scaleMatrix * m_rotationMatrix * m_translationMatrix;
+		FinalMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_rotationMatrix;
 		m_matrixChanged = false;
 	}
 }
@@ -72,4 +80,10 @@ void GE3DObject::setScale(glm::vec3 scale)
 {
 	Scale = scale;
 	m_scaleChanged = true;
+}
+
+void GE3DObject::setOrbit(glm::vec3 orbit)
+{
+	Orbit = orbit;
+	m_orbitChanged = true;
 }

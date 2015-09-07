@@ -37,12 +37,12 @@ void GEView::render()
 
 		glm::mat4 matrix = glm::ortho(-200.0f, 200.0f, -200.0f, 200.0f, 1.0f, 400.0f) * glm::lookAt((*light)->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		m_depthShader->ModelViewProjectionMatrix = &matrix;
+		m_depthShader->ViewProjectionMatrix = &matrix;
 
-		(*light)->LightModelViewProjectionMatrix = matrix;
+		(*light)->ShadowMapViewProjectionMatrix = matrix;
 
 		// Draw back faces.
-		glCullFace(GL_BACK);
+		glCullFace(GL_FRONT);
 
 		// Render depth of object.
 		for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)
@@ -54,13 +54,11 @@ void GEView::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, Width, Height);
 
-	glm::mat4 view = glm::perspective(glm::radians(45.0f), float(Width) / float(Height), 0.1f, 1000.0f);
-	glm::mat4 projection = glm::lookAt(glm::vec3(0.0f, 50.0f, 120.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	glm::mat4 matrix = glm::perspective(glm::radians(45.0f), float(Width) / float(Height), 0.1f, 1000.0f) * glm::lookAt(glm::vec3(0.0f, 50.0f, 120.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-	m_blinnPhongShader->ViewMatrix = &view;
-	m_blinnPhongShader->ProjectionMatrix = &projection;
+	m_blinnPhongShader->ViewProjectionMatrix = &matrix;
 	m_blinnPhongShader->Lights = &m_lights;
-	//m_colorShader->ModelViewProjectionMatrix = &matrix;
+	m_colorShader->ViewProjectionMatrix = &matrix;
 
 	// Render normal objects;
 	for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)

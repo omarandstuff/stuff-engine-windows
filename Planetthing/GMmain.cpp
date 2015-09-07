@@ -51,26 +51,29 @@ GMMain::GMMain()
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 	plane->Material.SpecularColor = { 0.1f, 0.1f, 0.1f };
 
-	//sphere = new GESphere(40.0f, 16);
-	//sphere->Material.DiffuseColor = color_greenyellow;
-	//sphere->Material.Shininess = 1024.0f;
-	//sphere->Wireframe = false;
-	//sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
-	//sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+	sphere = new GESphere(10.0f, 4);
+	sphere->Material.DiffuseColor = color_greenyellow;
+	sphere->Material.Shininess = 1024.0f;
+	sphere->Wireframe = true;
+	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
 	cube = new GECube(40.0f, 40.0f, 40.0f, 1, 1, 1);
 	cube->Material.DiffuseColor = color_greenyellow;
 	cube->Material.Shininess = 1024.0f;
-	cube->Wireframe = false;
+	cube->Wireframe = true;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
-	//cube->setScale({ 0.5f, 0.5f, 0.5f });
-	//cube->setRotation({ 0.0f, 1.0f, 0.0f });
+	cube->setPosition({ 0.0f, 20.0f, 0.0f });
+	cube->setScale({ 0.5f, 0.5f, 0.5f });
+
+	fullScreen = GEFullScreen::sharedInstance();
+	fullScreen->TextureID = light->ShadowMapFBO->DepthTextureID;
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 	//layer->addObject(model);
 	layer->addObject(plane);
-	//layer->addObject(sphere);
+	layer->addObject(sphere);
 	layer->addObject(cube);
 }
 
@@ -84,7 +87,10 @@ void GMMain::update(float time)
 
 	angle += time / 2.0f;
 
-	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
+	//light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
+
+	//cube->setRotation({ glm::sin(angle), 0.0f, 0.0f });
+	cube->setOrbit({ 0.0f, 0.0f, glm::cos(angle) });
 }
 
 void GMMain::preUpdate()
@@ -104,6 +110,7 @@ void GMMain::posUpdate()
 void GMMain::render()
 {
 	view->render();
+	//fullScreen->render();
 }
 
 void GMMain::layout(int width, int height)

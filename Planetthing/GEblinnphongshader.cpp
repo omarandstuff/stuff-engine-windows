@@ -15,8 +15,7 @@ void GEBlinnPhongShader::setUpSahder()
 {
 	// Get uniform locations.
 	m_uniforms[GE_UNIFORM_MODEL_MATRIX] = glGetUniformLocation(m_programID, "modelMatrix");
-	m_uniforms[GE_UNIFORM_VIEW_MATRIX] = glGetUniformLocation(m_programID, "viewMatrix");
-	m_uniforms[GE_UNIFORM_PROJECTION_MATRIX] = glGetUniformLocation(m_programID, "projectionMatrix");
+	m_uniforms[GE_UNIFORM_VIEWPROJECTION_MATRIX] = glGetUniformLocation(m_programID, "viewProjectionMatrix");
 	m_uniforms[GE_UNIFORM_NORMAL_MATRIX] = glGetUniformLocation(m_programID, "normalMatrix");
 	m_uniforms[GE_UNIFORM_MATERIAL_TEXTURE_COMPRESSION] = glGetUniformLocation(m_programID, "materialTextureCompression");
 	m_uniforms[GE_UNIFORM_MATERIAL_DIFFUSE_MAP] = glGetUniformLocation(m_programID, "materialDiffuceMapSampler");
@@ -43,7 +42,7 @@ void GEBlinnPhongShader::setUpSahder()
 		m_lightUniforms[i][GE_UNIFORM_LIGHT_SHADOW_MAP] = glGetUniformLocation(m_programID, ("lights[" + to_string(i) + "].shadowMapSampler").data());
 		m_lightUniforms[i][GE_UNIFORM_LIGHT_SHADOWS_ENABLED] = glGetUniformLocation(m_programID, ("lights[" + to_string(i) + "].shadowsEnabled").data());
 		m_lightUniforms[i][GE_UNIFORM_LIGHT_SHADOW_MAP_TEXTEL_SIZE] = glGetUniformLocation(m_programID, ("lights[" + to_string(i) + "].shadowMapTextelSize").data());
-		m_lightUniforms[i][GE_UNIFORM_LIGHT_MODELVIEWPROJECTION_MATRIX] = glGetUniformLocation(m_programID, ("lightModelViewProjectionMatrices[" + to_string(i) + "]").data());
+		m_lightUniforms[i][GE_UNIFORM_LIGHT_VIEWPROJECTION_MATRIX] = glGetUniformLocation(m_programID, ("lightViewProjectionMatrices[" + to_string(i) + "]").data());
 	}
 }
 
@@ -63,8 +62,7 @@ void GEBlinnPhongShader::useProgram()
 
 	// Set the Projection View Model and Normal matrices to the shader.
 	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_MODEL_MATRIX], 1, 0, &(*ModelMatrix)[0].x);
-	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_VIEW_MATRIX], 1, 0, &(*ViewMatrix)[0].x);
-	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_PROJECTION_MATRIX], 1, 0, &(*ProjectionMatrix)[0].x);
+	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_VIEWPROJECTION_MATRIX], 1, 0, &(*ViewProjectionMatrix)[0].x);
 	glUniformMatrix4fv(m_uniforms[GE_UNIFORM_NORMAL_MATRIX], 1, 0, &(*NormalMatrix)[0].x);
 
 	// Material texture compression.
@@ -126,7 +124,7 @@ void GEBlinnPhongShader::useProgram()
 		glUniform1i(m_lightUniforms[index][GE_UNIFORM_LIGHT_SHADOWS_ENABLED], (*light)->CastShadows);
 		glUniform1f(m_lightUniforms[index][GE_UNIFORM_LIGHT_SHADOW_MAP_TEXTEL_SIZE], 1.0f / (*light)->ShadowMapSize);
 
-		glUniformMatrix4fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_MODELVIEWPROJECTION_MATRIX], 1, 0, &(*light)->LightModelViewProjectionMatrix[0].x);
+		glUniformMatrix4fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_VIEWPROJECTION_MATRIX], 1, 0, &(*light)->ShadowMapViewProjectionMatrix[0].x);
 
 		// Shadow map for this light.
 		glActiveTexture(GL_TEXTURE0 + m_textureNum);

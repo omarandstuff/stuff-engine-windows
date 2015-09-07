@@ -18,7 +18,8 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
-	glm::mat4* ModelViewProjectionMatrix;
+	glm::mat4* ModelMatrix;
+	glm::mat4* ViewProjectionMatrix;
 	GEMaterial* Material;
 
 public:
