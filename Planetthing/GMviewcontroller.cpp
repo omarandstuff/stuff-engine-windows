@@ -6,7 +6,13 @@
 
 void GMViewController::viewDidLoad()
 {
+	// Get the update caller.
 	m_updateCaller = GEUpdateCaller::sharedInstance();
+
+	// Initialize the shared input object.
+	GEInput::sharedInstance();
+
+	// Initialize the Main game entry object.
 	GMMain::sharedInstance();
 }
 

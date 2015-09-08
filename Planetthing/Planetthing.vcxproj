@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;Xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -128,7 +128,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;DevIL.lib;winmm.lib;Xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -163,6 +163,7 @@
     <ClCompile Include="GEfbo.cpp" />
     <ClCompile Include="GEfullscreen.cpp" />
     <ClCompile Include="GEfullscreenshader.cpp" />
+    <ClCompile Include="GEinput.cpp" />
     <ClCompile Include="GElayer.cpp" />
     <ClCompile Include="GElight.cpp" />
     <ClCompile Include="GEplane.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="GEframe.h" />
     <ClInclude Include="GEfullscreen.h" />
     <ClInclude Include="GEfullscreenshader.h" />
+    <ClInclude Include="GEinput.h" />
     <ClInclude Include="GEjoint.h" />
     <ClInclude Include="GElayer.h" />
     <ClInclude Include="GElight.h" />

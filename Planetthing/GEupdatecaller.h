@@ -4,6 +4,7 @@
 #include <mmsystem.h>
 #include <vector>
 using std::vector;
+
 // -------------------------------------------- //
 // ----------------- Protocols ---------------- //
 // -------------------------------------------- //
@@ -54,12 +55,12 @@ public:
 	float UpTime;
 
 	// -------------------------------------------- //
-	// ------------ Selector Management ----------- //
+	// ------------ Delegate Management ----------- //
 	// -------------------------------------------- //
 public:
-	void addUpdateableSelector(GEUpdateProtocol* selector);
-	void addRenderableSelector(GERenderProtocol* selector);
-	void removeSelector(void* selector);
+	void addUpdateableDelegate(GEUpdateProtocol* delegate);
+	void addRenderableDelegate(GERenderProtocol* delegate);
+	void removeDelegate(void* delegate);
 
 	// -------------------------------------------- //
 	// ------------------ Update ------------------ //
@@ -85,6 +86,6 @@ private:
 	INT64 m_startTime;
 	float m_frameTime;
 
-	vector<GEUpdateProtocol*> m_updateSelectors;
-	vector<GERenderProtocol*> m_renderSelectors;
+	vector<GEUpdateProtocol*> m_updateDelegates;
+	vector<GERenderProtocol*> m_renderDelegates;
 };

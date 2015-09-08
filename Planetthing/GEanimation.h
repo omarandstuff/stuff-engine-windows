@@ -37,11 +37,11 @@ public:
 	float PlaybackSpeed;
 
 	// -------------------------------------------- //
-	// ------------ Selector Management ----------- //
+	// ------------ Delegate Management ----------- //
 	// -------------------------------------------- //
 public:
-	void addSelector(GEAnimationProtocol* selector);
-	void removeSelector(void** selector);
+	void addDelegate(GEAnimationProtocol* delegate);
+	void removeDelegate(GEAnimationProtocol* deegate);
 
 	// -------------------------------------------- //
 	// ------------------ Update ------------------ //
@@ -73,10 +73,10 @@ private:
 	bool loadMD5WithFileName(wstring filename);
 	void computeWComponentOfQuaternion(glm::quat& quaternion);
 
-	void callSelectors();
+	void callDelegates();
 
 private:
 	float m_frameDuration;
-	vector<GEAnimationProtocol*> m_selectors;
+	vector<GEAnimationProtocol*> m_delegates;
 	GEFrame* m_finalFrame;
 };

@@ -6,18 +6,17 @@
 
 GEAnimation::GEAnimation()
 {
-	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
+	GEUpdateCaller::sharedInstance()->addUpdateableDelegate(this);
 }
 
-GEAnimation::GEAnimation(wstring filename)
+GEAnimation::GEAnimation(wstring filename) : GEAnimation::GEAnimation()
 {
-	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
 	loadAnimationWithFileName(filename);
 }
 
 GEAnimation::~GEAnimation()
 {
-	GEUpdateCaller::sharedInstance()->removeSelector((void**)this);
+	GEUpdateCaller::sharedInstance()->removeDelegate(this);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -34,7 +33,7 @@ void GEAnimation::stop()
 	Playing = false;
 	CurrentTime = 0;
 	m_finalFrame = Frames[0];
-	callSelectors();
+	callDelegates();
 }
 
 void GEAnimation::pause()
@@ -84,32 +83,32 @@ void GEAnimation::update(float time)
 	m_finalFrame->Bounds.MaxBound = glm::lerp(preFrame->Bounds.MaxBound, posFrame->Bounds.MaxBound, interpolation);
 	m_finalFrame->Bounds.MinBound = glm::lerp(preFrame->Bounds.MinBound, posFrame->Bounds.MinBound, interpolation);
 
-	callSelectors();
+	callDelegates();
 }
 
-void GEAnimation::callSelectors()
+void GEAnimation::callDelegates()
 {
 	// Update every selector
-	for (vector<GEAnimationProtocol*>::iterator it = m_selectors.begin(); it != m_selectors.end(); it++)
+	for (vector<GEAnimationProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
 		(*it)->poseForFrameDidFinish(m_finalFrame);
 }
 
 // ------------------------------------------------------------------------------ //
-// ----------------------------- Selector Management ---------------------------- //
+// ----------------------------- Delegate Management ---------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GEAnimation::addSelector(GEAnimationProtocol* selector)
+void GEAnimation::addDelegate(GEAnimationProtocol* delegate)
 {
-	m_selectors.push_back(selector);
+	m_delegates.push_back(delegate);
 }
 
-void GEAnimation::removeSelector(void** selector)
+void GEAnimation::removeDelegate(GEAnimationProtocol* delegate)
 {
-	for (vector<GEAnimationProtocol*>::iterator it = m_selectors.begin(); it != m_selectors.end(); it++)
+	for (vector<GEAnimationProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
 	{
-		if (it._Ptr == (GEAnimationProtocol**)selector)
+		if (*it._Ptr == delegate)
 		{
-			m_selectors.erase(it);
+			m_delegates.erase(it);
 			return;
 		}
 	}

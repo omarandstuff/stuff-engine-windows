@@ -12,37 +12,37 @@ GEUpdateCaller* GEUpdateCaller::sharedInstance()
 }
 
 // ------------------------------------------------------------------------------ //
-// ----------------------------- Selector Management ---------------------------- //
+// ----------------------------- Delegate Management ---------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GEUpdateCaller::addUpdateableSelector(GEUpdateProtocol* selector)
+void GEUpdateCaller::addUpdateableDelegate(GEUpdateProtocol* delegate)
 {
-	m_updateSelectors.push_back(selector);
+	m_updateDelegates.push_back(delegate);
 }
 
-void GEUpdateCaller::addRenderableSelector(GERenderProtocol* selector)
+void GEUpdateCaller::addRenderableDelegate(GERenderProtocol* delegate)
 {
-	m_renderSelectors.push_back(selector);
+	m_renderDelegates.push_back(delegate);
 }
 
-void GEUpdateCaller::removeSelector(void* selector)
+void GEUpdateCaller::removeDelegate(void* delegate)
 {
 	// If selector is in update selectors.
-	for (vector<GEUpdateProtocol*>::iterator it = m_updateSelectors.begin(); it != m_updateSelectors.end(); it++)
+	for (vector<GEUpdateProtocol*>::iterator it = m_updateDelegates.begin(); it != m_updateDelegates.end(); it++)
 	{
-		if (*it._Ptr == selector)
+		if (*it._Ptr == delegate)
 		{
-			m_updateSelectors.erase(it);
+			m_updateDelegates.erase(it);
 			return;
 		}
 	}
 
 	// If selector is in render selectors.
-	for (vector<GERenderProtocol*>::iterator it = m_renderSelectors.begin(); it != m_renderSelectors.end(); it++)
+	for (vector<GERenderProtocol*>::iterator it = m_renderDelegates.begin(); it != m_renderDelegates.end(); it++)
 	{
-		if (*it._Ptr == selector)
+		if (*it._Ptr == delegate)
 		{
-			m_renderSelectors.erase(it);
+			m_renderDelegates.erase(it);
 			return;
 		}
 	}
@@ -70,21 +70,21 @@ void GEUpdateCaller::update()
 	m_startTime = currentTime;
 
 	// Update every selector
-	for (vector<GEUpdateProtocol*>::iterator it = m_updateSelectors.begin(); it != m_updateSelectors.end(); it++)
+	for (vector<GEUpdateProtocol*>::iterator it = m_updateDelegates.begin(); it != m_updateDelegates.end(); it++)
 		(*it)->update(m_frameTime);
 }
 
 void GEUpdateCaller::preUpdate()
 {
 	// Pre update every selector
-	for (vector<GEUpdateProtocol*>::iterator it = m_updateSelectors.begin(); it != m_updateSelectors.end(); it++)
+	for (vector<GEUpdateProtocol*>::iterator it = m_updateDelegates.begin(); it != m_updateDelegates.end(); it++)
 		(*it)->preUpdate();
 }
 
 void GEUpdateCaller::posUpdate()
 {
 	// Pos update every selector
-	for (vector<GEUpdateProtocol*>::iterator it = m_updateSelectors.begin(); it != m_updateSelectors.end(); it++)
+	for (vector<GEUpdateProtocol*>::iterator it = m_updateDelegates.begin(); it != m_updateDelegates.end(); it++)
 		(*it)->posUpdate();
 }
 
@@ -95,12 +95,12 @@ void GEUpdateCaller::posUpdate()
 void GEUpdateCaller::render()
 {
 	// Call render for every selector.
-	for (vector<GERenderProtocol*>::iterator it = m_renderSelectors.begin(); it != m_renderSelectors.end(); it++)
+	for (vector<GERenderProtocol*>::iterator it = m_renderDelegates.begin(); it != m_renderDelegates.end(); it++)
 		(*it)->render();
 }
 
 void GEUpdateCaller::layout(int width, int height)
 {
-	for (vector<GERenderProtocol*>::iterator it = m_renderSelectors.begin(); it != m_renderSelectors.end(); it++)
+	for (vector<GERenderProtocol*>::iterator it = m_renderDelegates.begin(); it != m_renderDelegates.end(); it++)
 		(*it)->layout(width, height);
 }

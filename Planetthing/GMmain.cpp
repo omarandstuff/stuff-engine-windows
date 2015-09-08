@@ -14,8 +14,11 @@ GMMain* GMMain::sharedInstance()
 GMMain::GMMain()
 {
 	// Updatecaller starts here.
-	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
-	GEUpdateCaller::sharedInstance()->addRenderableSelector(this);
+	GEUpdateCaller::sharedInstance()->addUpdateableDelegate(this);
+	GEUpdateCaller::sharedInstance()->addRenderableDelegate(this);
+
+	// Input the Xbox Controller to here
+	GEInput::sharedInstance()->addXBoxContollerDelegate(this);
 
 	//animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
 	//animation->play();
@@ -123,4 +126,28 @@ void GMMain::layout(int width, int height)
 	m_screenWidth = width;
 	m_screenHeight = height;
 	view->layout(width, height);
+}
+
+// ------------------------------------------------------------------------------ //
+// --------------------------- Xbox Controller Events --------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GMMain::xBoxControllerButtonDown(GE_INPUT button, int player)
+{
+	plane->setPosition({ 10.0, 0.0, 0.0 });
+}
+
+void GMMain::xBoxControllerButtonUp(GE_INPUT button, int player)
+{
+	plane->setPosition({ 0.0, 0.0, 0.0 });
+}
+
+void GMMain::xBoxControllerPullTriguer(GE_INPUT trgger, int player, float value)
+{
+
+}
+
+void GMMain::xBoxControllerMoveStick(GE_INPUT stick, int player, float xAxis, float yAxis)
+{
+
 }

@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{5c946af0-623d-4ee4-90ff-0714903d8eac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{4dedf98a-fadf-4b21-9640-0e0b06e0152b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GEtextureshader.cpp">
@@ -122,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="GEcamera.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEinput.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="GEcamera.h">
       <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEinput.h">
+      <Filter>Source Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

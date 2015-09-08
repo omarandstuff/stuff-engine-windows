@@ -9,7 +9,7 @@ GE3DObject::GE3DObject()
 	m_reverse = false;
 
 	// Auto updateable
-	GEUpdateCaller::sharedInstance()->addUpdateableSelector(this);
+	GEUpdateCaller::sharedInstance()->addUpdateableDelegate(this);
 }
 
 // ------------------------------------------------------------------------------ //

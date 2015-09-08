@@ -110,6 +110,32 @@ enum GE_DIRECTION
 };
 
 // -------------------------------------------- //
+// ------------------- INPUT ------------------ //
+// -------------------------------------------- //
+
+enum GE_INPUT
+{
+	GE_INPUT_XBOX_BUTTON_A,
+	GE_INPUT_XBOX_BUTTON_B,
+	GE_INPUT_XBOX_BUTTON_Y,
+	GE_INPUT_XBOX_BUTTON_X,
+	GE_INPUT_XBOX_BUTTON_BACK,
+	GE_INPUT_XBOX_BUTTON_STAT,
+	GE_INPUT_XBOX_LBUMPER,
+	GE_INPUT_XBOX_RBUMPER,
+	GE_INPUT_XBOX_DPAD_RIGHT,
+	GE_INPUT_XBOX_DPAD_LEFT,
+	GE_INPUT_XBOX_DPAD_UP,
+	GE_INPUT_XBOX_DPAD_DOWN,
+	GE_INPUT_XBOX_PRESIONALBLE_NUMBER,
+	GE_INPUT_XBOX_LEFT_STICK,
+	GE_INPUT_XBOX_RIGHT_STICK,
+	GE_INPUT_XBOX_LEFT_TRIGGER,
+	GE_INPUT_XBOX_RIGHT_TRIGGER
+
+};
+
+// -------------------------------------------- //
 // ------------------- COLORS ----------------- //
 // -------------------------------------------- //
 

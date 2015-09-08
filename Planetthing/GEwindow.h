@@ -84,8 +84,11 @@ public:
 
 	VOID LayeredMovible(BOOL value);
 
-	// Events
+	// -------------------------------------------- //
+	// ------------ Delegate Management ----------- //
+	// -------------------------------------------- //
 	void addDelegate(GEWindowProtocol* delegate);
+	void removeDelegate(void* delegate);
 
 private:
 	VOID RegClass();

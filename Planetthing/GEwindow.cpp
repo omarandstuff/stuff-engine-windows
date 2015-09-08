@@ -212,6 +212,18 @@ void GEWindow::addDelegate(GEWindowProtocol* delegate)
 	m_delegates.push_back(delegate);
 }
 
+void GEWindow::removeDelegate(void* delegate)
+{
+	for (vector<GEWindowProtocol*>::iterator it = m_delegates.begin(); it != m_delegates.end(); it++)
+	{
+		if (*it._Ptr == delegate)
+		{
+			m_delegates.erase(it);
+			return;
+		}
+	}
+}
+
 
 HWND GEWindow::hWnd()
 {
