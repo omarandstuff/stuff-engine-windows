@@ -17,6 +17,7 @@ public:
 	glm::vec3 Rotation;
 	glm::vec3 Orbit;
 	glm::vec3 Scale;
+	bool MatrixChanged;
 	GE3DObject* Parent;
 
 	// -------------------------------------------- //
@@ -48,7 +49,6 @@ protected:
 	bool m_rotationChanged;
 	bool m_scaleChanged;
 	bool m_orbitChanged;
-	bool m_matrixChanged;
 
 	// -------------------------------------------- //
 	// --------------- 16B aligment --------------- //

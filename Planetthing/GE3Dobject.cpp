@@ -18,35 +18,40 @@ void GE3DObject::update(float time)
 	if (m_translationChanged)
 	{
 		m_translationMatrix = glm::translate(glm::mat4(1.0f), Position);
-		m_translationChanged = false;
-		m_matrixChanged = true;
+		MatrixChanged = true;
 	}
+
 	if (m_rotationChanged)
 	{
 		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), Rotation.x, { 1.0f, 0.0f, 0.0f });
 		m_rotationMatrix = glm::rotate(m_rotationMatrix, Rotation.y, { 0.0f, 1.0f, 0.0f });
 		m_rotationMatrix = glm::rotate(m_rotationMatrix, Rotation.z, { 0.0f, 0.0f, 1.0f });
-		m_rotationChanged = false;
-		m_matrixChanged = true;
+		MatrixChanged = true;
 	}
+
 	if (m_scaleChanged)
 	{
 		m_scaleMatrix = glm::scale(Scale);
-		m_scaleChanged = false;
-		m_matrixChanged = true;
+		MatrixChanged = true;
 	}
+
 	if (m_orbitChanged)
 	{
 		m_orbitMatrix = glm::rotate(glm::mat4(1.0f), Orbit.x, { 1.0f, 0.0f, 0.0f });
 		m_orbitMatrix = glm::rotate(m_orbitMatrix, Orbit.y, { 0.0f, 1.0f, 0.0f });
 		m_orbitMatrix = glm::rotate(m_orbitMatrix, Orbit.z, { 0.0f, 0.0f, 1.0f });
-		m_orbitChanged = false;
-		m_matrixChanged = true;
+		MatrixChanged = true;
 	}
-	if (m_matrixChanged)
+
+	if (MatrixChanged)
 	{
 		FinalMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_rotationMatrix;
-		m_matrixChanged = false;
+	}
+
+	if (Parent)
+	{
+		if (Parent->MatrixChanged)
+			FinalMatrix = Parent->FinalMatrix * FinalMatrix;
 	}
 }
 
@@ -57,7 +62,11 @@ void GE3DObject::preUpdate()
 
 void GE3DObject::posUpdate()
 {
-
+	m_translationChanged = false;
+	m_rotationChanged = false;
+	m_scaleChanged = false;
+	m_orbitChanged = false;
+	MatrixChanged = false;
 }
 
 // ------------------------------------------------------------------------------ //

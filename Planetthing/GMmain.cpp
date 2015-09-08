@@ -31,7 +31,7 @@ GMMain::GMMain()
 	light->Position = { -100.0f, 60.0f, 10.0f };
 	//light->Direction = { 0.0f, 30.0f, 0.0f };
 	light->Intensity = 0.8f;
-	light->Ambient = 0.85f;
+	light->Ambient = 0.4f;
 	light->CastShadows = true;
 
 	//GELight* light2 = new GELight;
@@ -67,6 +67,8 @@ GMMain::GMMain()
 	cube->setPosition({ 0.0f, 20.0f, 0.0f });
 	cube->setScale({ 0.5f, 0.5f, 0.5f });
 
+	cube->Parent = sphere;
+
 	fullScreen = GEFullScreen::sharedInstance();
 	fullScreen->TextureID = light->ShadowMapFBO->DepthTextureID;
 
@@ -87,10 +89,11 @@ void GMMain::update(float time)
 
 	angle += time / 2.0f;
 
-	//light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
+	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
 
-	//cube->setRotation({ glm::sin(angle), 0.0f, 0.0f });
+	cube->setRotation({ glm::sin(angle), 0.0f, 0.0f });
 	cube->setOrbit({ 0.0f, 0.0f, glm::cos(angle) });
+	sphere->setPosition({ 0.0f, 10.0f * glm::sin(angle), 0.0f });
 }
 
 void GMMain::preUpdate()
