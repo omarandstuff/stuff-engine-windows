@@ -134,7 +134,8 @@ void GMMain::layout(int width, int height)
 
 void GMMain::xBoxControllerButtonDown(GE_INPUT button, int player)
 {
-	plane->setPosition({ 10.0, 0.0, 0.0 });
+	if(button == GE_INPUT_XBOX_THUMB_LEFT)
+		plane->setPosition({ 10.0, 0.0, 0.0 });
 }
 
 void GMMain::xBoxControllerButtonUp(GE_INPUT button, int player)
