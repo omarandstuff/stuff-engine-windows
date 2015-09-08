@@ -19,6 +19,7 @@ GMMain::GMMain()
 
 	// Input the Xbox Controller to here
 	GEInput::sharedInstance()->addXBoxContollerDelegate(this);
+	GEInput::sharedInstance()->addMouseDelegate(this);
 
 	//animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
 	//animation->play();
@@ -160,4 +161,23 @@ void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xA
 
 	if (stick == GE_INPUT_XBOX_RIGHT_STICK)
 		plane->setRotation({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+}
+
+// ------------------------------------------------------------------------------ //
+// -------------------------------- Mouse events -------------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GMMain::mouseMove(float coordX, float coordY)
+{
+
+}
+
+void GMMain::mouseChange(float deltaX, float deltaY)
+{
+	glm::vec3 rotation = view->Camera.Rotation;
+
+	rotation.x -= deltaY / 4.0f;
+	rotation.y -= deltaX / 4.0f;
+
+	view->Camera.setRotation(rotation);
 }

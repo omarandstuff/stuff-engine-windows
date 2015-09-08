@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GEwindow.h"
 #include "GEcommon.h"
 #include "GEupdatecaller.h"
 #include <Xinput.h>
@@ -17,7 +18,14 @@ public:
 	virtual void xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis) = 0;
 };
 
-class GEInput : public GEUpdateProtocol
+class GEInputMouseProtocol
+{
+public:
+	virtual void mouseMove(float coordX, float coordY) = 0;
+	virtual void mouseChange(float deltaX, float deltaY) = 0;
+};
+
+class GEInput : public GEUpdateProtocol, public GEWindowInputProtocol
 {
 	// -------------------------------------------- //
 	// ----------------- Singleton ---------------- //
@@ -50,7 +58,9 @@ public:
 	// -------------------------------------------- //
 public:
 	void addXBoxContollerDelegate(GEInputXBoxControllerProtocol* delegate);
-	void removeXBoxControllerDelegate(GEInputXBoxControllerProtocol* selector);
+	void removeXBoxControllerDelegate(GEInputXBoxControllerProtocol* delegate);
+	void addMouseDelegate(GEInputMouseProtocol* delegate);
+	void removeMouseDelegate(GEInputMouseProtocol* delegate);
 
 	// -------------------------------------------- //
 	// -------------- XBox Controller ------------- //
@@ -61,6 +71,12 @@ private:
 	void doXboxTriggerCheck(GE_INPUT_XBOX input, int player, float currentValue);
 	void doXboxStickChange(GE_INPUT_XBOX input, int player, float currentXAxis, float currentYAxis);
 
+	// -------------------------------------------- //
+	// ---------------- Window Input -------------- //
+	// -------------------------------------------- //
+public:
+	void mouseMove(float coordX, float coordY);
+
 private:
 	XINPUT_STATE m_XBoxController[4];
 	bool m_XBoxButtons[4][GE_INPUT_XBOX_PRESIONALBLE_NUMBER];
@@ -69,6 +85,9 @@ private:
 	bool m_XBoxActiveController[4];
 	int m_XBoxActiveCount;
 	float m_XBoxCheckElapsed;
-	vector<GEInputXBoxControllerProtocol*> m_XBoxDelegates;
 
+
+	// delegates
+	vector<GEInputXBoxControllerProtocol*> m_XBoxDelegates;
+	vector<GEInputMouseProtocol*> m_mouseDelegtes;
 };

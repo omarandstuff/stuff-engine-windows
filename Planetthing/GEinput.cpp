@@ -104,10 +104,10 @@ void GEInput::readXBOXControllerState(float time)
 				doXboxTriggerCheck(GE_INPUT_XBOX_LEFT_TRIGGER, i, m_XBoxController[i].Gamepad.bLeftTrigger / 255.0f);
 
 				// Stick Right
-				doXboxStickChange(GE_INPUT_XBOX_RIGHT_STICK, i, m_XBoxController[i].Gamepad.sThumbRX / 32000.0, m_XBoxController[i].Gamepad.sThumbRY / 32000.0);
+				doXboxStickChange(GE_INPUT_XBOX_RIGHT_STICK, i, m_XBoxController[i].Gamepad.sThumbRX / 32000.0f, m_XBoxController[i].Gamepad.sThumbRY / 32000.0);
 
 				// Stick Left
-				doXboxStickChange(GE_INPUT_XBOX_LEFT_STICK, i, m_XBoxController[i].Gamepad.sThumbLX / 32000.0, m_XBoxController[i].Gamepad.sThumbLY / 32000.0);
+				doXboxStickChange(GE_INPUT_XBOX_LEFT_STICK, i, m_XBoxController[i].Gamepad.sThumbLX / 32000.0f, m_XBoxController[i].Gamepad.sThumbLY / 32000.0);
 			}
 			else
 			{
@@ -174,6 +174,22 @@ void GEInput::doXboxStickChange(GE_INPUT_XBOX input, int player, float currentXA
 }
 
 // ------------------------------------------------------------------------------ //
+// -------------------------------- Window Input -------------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GEInput::mouseMove(float coordX, float coordY)
+{
+	static float lastCoordX = coordX, lastCoordY = coordY;
+	for (vector<GEInputMouseProtocol*>::iterator it = m_mouseDelegtes.begin(); it != m_mouseDelegtes.end(); it++)
+	{
+		(*it)->mouseMove(coordX, coordY);
+		(*it)->mouseChange(coordX - lastCoordX, coordY - lastCoordY);
+	}
+	lastCoordX = coordX;
+	lastCoordY = coordY;
+}
+
+// ------------------------------------------------------------------------------ //
 // ----------------------------- Delegate Management ---------------------------- //
 // ------------------------------------------------------------------------------ //
 
@@ -189,6 +205,23 @@ void GEInput::removeXBoxControllerDelegate(GEInputXBoxControllerProtocol* delega
 		if (*it._Ptr == delegate)
 		{
 			m_XBoxDelegates.erase(it);
+			return;
+		}
+	}
+}
+
+void GEInput::addMouseDelegate(GEInputMouseProtocol* delegate)
+{
+	m_mouseDelegtes.push_back(delegate);
+}
+
+void GEInput::removeMouseDelegate(GEInputMouseProtocol* delegate)
+{
+	for (vector<GEInputMouseProtocol*>::iterator it = m_mouseDelegtes.begin(); it != m_mouseDelegtes.end(); it++)
+	{
+		if (*it._Ptr == delegate)
+		{
+			m_mouseDelegtes.erase(it);
 			return;
 		}
 	}

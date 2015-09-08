@@ -5,14 +5,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 	GEWindow main_window;
 	GMViewController main_viewControler;
 
-	// Create the main window.
-	main_window.Create();
-
 	// Share the main window with the view controller.
 	main_viewControler.MainWindow = &main_window;
 
 	// Initialize OpenGL for render in the main window.
-	glInit(main_window.DeviceContext());
+	glInit(main_window.deviceContext());
 
 	// Add the view controller to the window as a delegate.
 	main_window.addDelegate(&main_viewControler);
@@ -20,8 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 	// Did load everything
 	main_viewControler.viewDidLoad();
 
-	// Set initial size.
-	GEUpdateCaller::sharedInstance()->layout(main_window.ClientWidth(), main_window.ClientHeight());
+	// Input object needs to be delegate of the window's input.
+	main_window.addInputDelegate(GEInput::sharedInstance());
 
 	//////// Main Loop ///////
 	MSG msg;
@@ -50,7 +47,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstace, PSTR pScmdline, 
 			if (!firstRender)
 			{
 				// Show the main window.
-				main_window.Show();
+				main_window.show();
 				firstRender = true;
 			}
 		}

@@ -41,7 +41,7 @@ void GMViewController::render()
 	glFlush();
 
 	// Present final image.
-	SwapBuffers(MainWindow->DeviceContext());
+	SwapBuffers(MainWindow->deviceContext());
 }
 
 void GMViewController::didLayout(int width, int height)

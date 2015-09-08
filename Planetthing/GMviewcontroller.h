@@ -1,5 +1,4 @@
 #pragma once
-#include "GEwindow.h"
 #include "GEupdatecaller.h"
 #include "GMmain.h"
 

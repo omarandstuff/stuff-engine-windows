@@ -7,7 +7,7 @@
 #include "GEcube.h"
 #include "GEview.h"
 
-class GMMain : public GEUpdateProtocol, public GERenderProtocol, public GEInputXBoxControllerProtocol
+class GMMain : public GEUpdateProtocol, public GERenderProtocol, public GEInputXBoxControllerProtocol, public GEInputMouseProtocol
 {
 	// -------------------------------------------- //
 	// ----------------- Singleton ---------------- //
@@ -33,10 +33,18 @@ public:
 	// -------------------------------------------- //
 	// ---------- Xbox Controller Events ---------- //
 	// -------------------------------------------- //
+public:
 	void xBoxControllerButtonDown(GE_INPUT_XBOX button, int player);
 	void xBoxControllerButtonUp(GE_INPUT_XBOX button, int player);
 	void xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, float value);
 	void xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis);
+
+	// -------------------------------------------- //
+	// ---------------- Mouse Events -------------- //
+	// -------------------------------------------- //
+public:
+	void mouseMove(float coordX, float coordY);
+	void mouseChange(float deltaX, float deltaY);
 
 	// -------------------------------------------- //
 	// -------------- Private Members ------------- //
