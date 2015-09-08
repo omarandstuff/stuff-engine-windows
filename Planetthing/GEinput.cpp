@@ -56,52 +56,69 @@ void GEInput::readXBOXControllerState(float time)
 				m_XBoxActiveController[i] = true;
 
 				// Button A
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_A, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_A);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_A, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_A) > 0);
 				
 				// Button B
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_B, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_B);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_B, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_B) > 0);
 
 				// Button X
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_X, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_X);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_X, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_X) > 0);
 
 				// Button Y
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_Y, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_Y);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_Y, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_Y) > 0);
 
 				// Button Back
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_BACK, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_BACK);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_BACK, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_BACK) > 0);
 
 				// Button Start
-				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_START, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_START);
+				doXboxButtonCheck(GE_INPUT_XBOX_BUTTON_START, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_START) > 0);
 
 				// Button Left Bumper
-				doXboxButtonCheck(GE_INPUT_XBOX_LBUMPER, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER);
+				doXboxButtonCheck(GE_INPUT_XBOX_LBUMPER, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_SHOULDER) > 0);
 
 				// Button Right Bumper
-				doXboxButtonCheck(GE_INPUT_XBOX_RBUMPER, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER);
+				doXboxButtonCheck(GE_INPUT_XBOX_RBUMPER, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_SHOULDER) > 0);
 
 				// Button D Pad Right
-				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_RIGHT, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT);
+				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_RIGHT, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) > 0);
 
 				// Button D Pad Left
-				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_LEFT, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT);
+				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_LEFT, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_LEFT) > 0);
 
 				// Button D Pad Up
-				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_UP, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP);
+				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_UP, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_UP) > 0);
 
 				// Button D Pad Down
-				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_DOWN, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN);
+				doXboxButtonCheck(GE_INPUT_XBOX_DPAD_DOWN, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_DPAD_DOWN) > 0);
 
 				// Button Thumb Left
-				doXboxButtonCheck(GE_INPUT_XBOX_THUMB_LEFT, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB);
+				doXboxButtonCheck(GE_INPUT_XBOX_THUMB_LEFT, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_LEFT_THUMB) > 0);
 
 				// Button Thumb Right
-				doXboxButtonCheck(GE_INPUT_XBOX_THUMB_RIGHT, i, m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB);
+				doXboxButtonCheck(GE_INPUT_XBOX_THUMB_RIGHT, i, (m_XBoxController[i].Gamepad.wButtons & XINPUT_GAMEPAD_RIGHT_THUMB) > 0);
+
+				// Trigger Right
+				doXboxTriggerCheck(GE_INPUT_XBOX_RIGHT_TRIGGER, i, m_XBoxController[i].Gamepad.bRightTrigger / 255.0f);
+
+				// Trigger Left
+				doXboxTriggerCheck(GE_INPUT_XBOX_LEFT_TRIGGER, i, m_XBoxController[i].Gamepad.bLeftTrigger / 255.0f);
+
+				// Stick Right
+				doXboxStickChange(GE_INPUT_XBOX_RIGHT_STICK, i, m_XBoxController[i].Gamepad.sThumbRX / 32000.0, m_XBoxController[i].Gamepad.sThumbRY / 32000.0);
+
+				// Stick Left
+				doXboxStickChange(GE_INPUT_XBOX_LEFT_STICK, i, m_XBoxController[i].Gamepad.sThumbLX / 32000.0, m_XBoxController[i].Gamepad.sThumbLY / 32000.0);
 			}
 			else
 			{
-				// Clear Buttons.
-				if(m_XBoxActiveController[i])
+				// Clear Controller inf.
+				if (m_XBoxActiveController[i])
+				{
 					ZeroMemory(&m_XBoxButtons[i], sizeof(m_XBoxButtons[i]));
+					ZeroMemory(&m_XBoxTrggers[i], sizeof(m_XBoxTrggers[i]));
+					ZeroMemory(&m_XBoxSticks[i], sizeof(m_XBoxSticks[i]));
+				}
+					
 
 				// This controller is not conected;
 				m_XBoxActiveController[i] = false;
@@ -112,7 +129,7 @@ void GEInput::readXBOXControllerState(float time)
 	if (m_XBoxCheckElapsed > 5.0f) m_XBoxCheckElapsed = 0.0f;
 }
 
-void GEInput::doXboxButtonCheck(GE_INPUT input, int player, bool currentCheck)
+void GEInput::doXboxButtonCheck(GE_INPUT_XBOX input, int player, bool currentCheck)
 {
 	bool recordCheck = m_XBoxButtons[player][input];
 	if (recordCheck != currentCheck)
@@ -125,6 +142,34 @@ void GEInput::doXboxButtonCheck(GE_INPUT input, int player, bool currentCheck)
 				(*it)->xBoxControllerButtonUp(input, player);
 		}
 		m_XBoxButtons[player][input] = currentCheck;
+	}
+}
+
+void GEInput::doXboxTriggerCheck(GE_INPUT_XBOX input, int player, float currentValue)
+{
+	float recordCheck = m_XBoxTrggers[player][input - GE_INPUT_XBOX_LEFT_TRIGGER];
+	if (recordCheck != currentValue)
+	{
+		for (vector<GEInputXBoxControllerProtocol*>::iterator it = m_XBoxDelegates.begin(); it != m_XBoxDelegates.end(); it++)
+		{
+			(*it)->xBoxControllerTriguerChange(input, player, currentValue);
+		}
+		m_XBoxTrggers[player][input - GE_INPUT_XBOX_LEFT_TRIGGER] = currentValue;
+	}
+}
+
+void GEInput::doXboxStickChange(GE_INPUT_XBOX input, int player, float currentXAxis, float currentYAxis)
+{
+	float recordCheckX = m_XBoxSticks[player][input - GE_INPUT_XBOX_LEFT_STICK][0];
+	float recordCheckY = m_XBoxSticks[player][input - GE_INPUT_XBOX_LEFT_STICK][1];
+	if (recordCheckX != currentXAxis || recordCheckY != currentYAxis)
+	{
+		for (vector<GEInputXBoxControllerProtocol*>::iterator it = m_XBoxDelegates.begin(); it != m_XBoxDelegates.end(); it++)
+		{
+			(*it)->xBoxControllerStickChange(input, player, currentXAxis, currentYAxis);
+		}
+		m_XBoxSticks[player][input - GE_INPUT_XBOX_LEFT_STICK][0] = currentXAxis;
+		m_XBoxSticks[player][input - GE_INPUT_XBOX_LEFT_STICK][1] = currentYAxis;
 	}
 }
 

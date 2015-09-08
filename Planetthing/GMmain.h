@@ -33,10 +33,10 @@ public:
 	// -------------------------------------------- //
 	// ---------- Xbox Controller Events ---------- //
 	// -------------------------------------------- //
-	void xBoxControllerButtonDown(GE_INPUT button, int player);
-	void xBoxControllerButtonUp(GE_INPUT button, int player);
-	void xBoxControllerPullTriguer(GE_INPUT trgger, int player, float value);
-	void xBoxControllerMoveStick(GE_INPUT stick, int player, float xAxis, float yAxis);
+	void xBoxControllerButtonDown(GE_INPUT_XBOX button, int player);
+	void xBoxControllerButtonUp(GE_INPUT_XBOX button, int player);
+	void xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, float value);
+	void xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis);
 
 	// -------------------------------------------- //
 	// -------------- Private Members ------------- //

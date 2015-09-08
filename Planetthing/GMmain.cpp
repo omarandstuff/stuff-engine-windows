@@ -131,24 +131,33 @@ void GMMain::layout(int width, int height)
 // ------------------------------------------------------------------------------ //
 // --------------------------- Xbox Controller Events --------------------------- //
 // ------------------------------------------------------------------------------ //
-
-void GMMain::xBoxControllerButtonDown(GE_INPUT button, int player)
-{
-	if(button == GE_INPUT_XBOX_THUMB_LEFT)
-		plane->setPosition({ 10.0, 0.0, 0.0 });
-}
-
-void GMMain::xBoxControllerButtonUp(GE_INPUT button, int player)
-{
-	plane->setPosition({ 0.0, 0.0, 0.0 });
-}
-
-void GMMain::xBoxControllerPullTriguer(GE_INPUT trgger, int player, float value)
+void GMMain::xBoxControllerButtonDown(GE_INPUT_XBOX button, int player)
 {
 
 }
 
-void GMMain::xBoxControllerMoveStick(GE_INPUT stick, int player, float xAxis, float yAxis)
+void GMMain::xBoxControllerButtonUp(GE_INPUT_XBOX button, int player)
 {
 
+}
+
+void GMMain::xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, float value)
+{
+	static float factorL = 0.0f;
+	static float factorR = 0.0f;
+	if (trigger == GE_INPUT_XBOX_LEFT_TRIGGER)
+		factorL = value;
+	if (trigger == GE_INPUT_XBOX_RIGHT_TRIGGER)
+		factorR = value;
+
+	plane->setPosition({ (-factorL + factorR) * 50.0f, 0.0f, 0.0f });
+}
+
+void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis)
+{
+	if(stick == GE_INPUT_XBOX_LEFT_STICK)
+		plane->setPosition({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+
+	if (stick == GE_INPUT_XBOX_RIGHT_STICK)
+		plane->setRotation({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
 }
