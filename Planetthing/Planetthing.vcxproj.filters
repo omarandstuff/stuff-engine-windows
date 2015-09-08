@@ -120,6 +120,9 @@
     <ClCompile Include="GE3Dobject.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GEcamera.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -228,6 +231,9 @@
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="GE3Dobject.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEcamera.h">
       <Filter>Source Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

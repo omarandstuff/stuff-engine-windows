@@ -6,6 +6,7 @@
 #include "GEcolorshader.h"
 #include "GEdepthshader.h"
 #include "GEfullscreen.h"
+#include "GEcamera.h"
 
 class GEView
 {
@@ -21,12 +22,12 @@ public:
 	float Opasity;
 	map<wstring, GELayer*> Layers;
 	int Width, Height;
+	GECamera Camera;
 
 	// -------------------------------------------- //
 	// ------------------ Layers ------------------ //
 	// -------------------------------------------- //
 public:
-
 	GELayer* addLayerWithName(wstring name);
 	void addLayerWithLayer(GELayer* layer);
 	GELayer* getLayerWithName(wstring name);

@@ -43,6 +43,8 @@ GMMain::GMMain()
 
 	view = new GEView;
 	view->BackgroundColor = color_black;
+	view->Camera.setPosition({ 0.0, 40.0f, 120.0f });
+	view->Camera.setRotation({ -20.0f, 0.0f, 0.0f });
 
 	view->addLight(light);
 	//view->addLight(light2);
@@ -91,8 +93,8 @@ void GMMain::update(float time)
 
 	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
 
-	cube->setRotation({ glm::sin(angle), 0.0f, 0.0f });
-	cube->setOrbit({ 0.0f, 0.0f, glm::cos(angle) });
+	cube->setRotation({ 90.0f * glm::sin(angle), 0.0f, 0.0f });
+	cube->setOrbit({ 0.0f, 0.0f, 90.0f * glm::cos(angle) });
 	sphere->setPosition({ 0.0f, 10.0f * glm::sin(angle), 0.0f });
 }
 

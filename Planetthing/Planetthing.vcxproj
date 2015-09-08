@@ -156,6 +156,7 @@
     <ClCompile Include="GEanimation.cpp" />
     <ClCompile Include="GEblinnphongshader.cpp" />
     <ClCompile Include="GEboundingbox.cpp" />
+    <ClCompile Include="GEcamera.cpp" />
     <ClCompile Include="GEcolorshader.cpp" />
     <ClCompile Include="GEcube.cpp" />
     <ClCompile Include="GEdepthshader.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="GEblinnphongshader.h" />
     <ClInclude Include="GEbound.h" />
     <ClInclude Include="GEboundingbox.h" />
+    <ClInclude Include="GEcamera.h" />
     <ClInclude Include="GEcolorshader.h" />
     <ClInclude Include="GEcommon.h" />
     <ClInclude Include="GEcube.h" />

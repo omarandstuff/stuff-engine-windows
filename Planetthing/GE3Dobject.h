@@ -49,6 +49,7 @@ protected:
 	bool m_rotationChanged;
 	bool m_scaleChanged;
 	bool m_orbitChanged;
+	bool m_reverse;
 
 	// -------------------------------------------- //
 	// --------------- 16B aligment --------------- //
