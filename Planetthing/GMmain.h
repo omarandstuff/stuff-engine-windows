@@ -6,6 +6,7 @@
 #include "GEsphere.h"
 #include "GEcube.h"
 #include "GEview.h"
+#include <btBulletDynamicsCommon.h>
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol, public GEInputXBoxControllerProtocol, public GEInputMouseProtocol
 {
@@ -62,4 +63,22 @@ private:
 	GECamera* camera;
 	GEFullScreen* fullScreen;
 
+
+
+	btBroadphaseInterface* broadphase;
+	btDefaultCollisionConfiguration* collisionConfiguration;
+	btCollisionDispatcher* dispatcher;
+	btSequentialImpulseConstraintSolver* solver;
+	btDiscreteDynamicsWorld* dynamicsWorld;
+	btCollisionShape* groundShape;
+	btCollisionShape* fallShape;
+	btDefaultMotionState* groundMotionState;
+	btRigidBody* groundRigidBody;
+
+	btDefaultMotionState* fallMotionState;
+	btRigidBody* fallRigidBody;
+
+	btCollisionShape* cubeShape;
+	btDefaultMotionState* cubeMotionState;
+	btRigidBody* cubeRigidBody;
 };

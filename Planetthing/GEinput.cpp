@@ -104,10 +104,10 @@ void GEInput::readXBOXControllerState(float time)
 				doXboxTriggerCheck(GE_INPUT_XBOX_LEFT_TRIGGER, i, m_XBoxController[i].Gamepad.bLeftTrigger / 255.0f);
 
 				// Stick Right
-				doXboxStickChange(GE_INPUT_XBOX_RIGHT_STICK, i, m_XBoxController[i].Gamepad.sThumbRX / 32000.0f, m_XBoxController[i].Gamepad.sThumbRY / 32000.0);
+				doXboxStickChange(GE_INPUT_XBOX_RIGHT_STICK, i, m_XBoxController[i].Gamepad.sThumbRX / 32000.0f, m_XBoxController[i].Gamepad.sThumbRY / 32000.0f);
 
 				// Stick Left
-				doXboxStickChange(GE_INPUT_XBOX_LEFT_STICK, i, m_XBoxController[i].Gamepad.sThumbLX / 32000.0f, m_XBoxController[i].Gamepad.sThumbLY / 32000.0);
+				doXboxStickChange(GE_INPUT_XBOX_LEFT_STICK, i, m_XBoxController[i].Gamepad.sThumbLX / 32000.0f, m_XBoxController[i].Gamepad.sThumbLY / 32000.0f);
 			}
 			else
 			{

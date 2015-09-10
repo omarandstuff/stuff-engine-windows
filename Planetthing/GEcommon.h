@@ -8,6 +8,7 @@
 #include <sstream>
 #include <glm.hpp>
 #include <gtc\constants.hpp>
+#include <gtc\type_ptr.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtx\transform.hpp>
 #include <gtx\compatibility.hpp>

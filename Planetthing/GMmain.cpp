@@ -64,7 +64,7 @@ GMMain::GMMain()
 	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
-	cube = new GECube(40.0f, 40.0f, 40.0f, 1, 1, 1);
+	cube = new GECube(20.0f, 20.0f, 20.0f, 1, 1, 1);
 	cube->Material.DiffuseColor = color_greenyellow;
 	cube->Material.Shininess = 1024.0f;
 	cube->Wireframe = true;
@@ -83,6 +83,48 @@ GMMain::GMMain()
 	layer->addObject(plane);
 	layer->addObject(sphere);
 	layer->addObject(cube);
+
+	broadphase = new btDbvtBroadphase();
+	collisionConfiguration = new btDefaultCollisionConfiguration();
+	dispatcher = new btCollisionDispatcher(collisionConfiguration);
+	solver = new btSequentialImpulseConstraintSolver;
+	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
+
+	dynamicsWorld->setGravity(btVector3(0.0f, -9.8f, 0.0f));
+
+	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
+	fallShape = new btSphereShape(10.0f);
+
+	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+
+	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+
+	groundRigidBody = new btRigidBody(groundRigidBodyCI);
+
+	dynamicsWorld->addRigidBody(groundRigidBody);
+
+	fallMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 100, 0)));
+
+	btScalar mass = 1000;
+	btVector3 fallInertia(0, 0, 0);
+	fallShape->calculateLocalInertia(mass, fallInertia);
+
+	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	fallRigidBody = new btRigidBody(fallRigidBodyCI);
+
+	dynamicsWorld->addRigidBody(fallRigidBody);
+
+
+	cubeShape = new btBoxShape(btVector3(10.0f, 10.0f, 10.0f));
+
+	cubeMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(5, 150, 0)));
+
+	cubeShape->calculateLocalInertia(mass, fallInertia);
+
+	btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(mass, cubeMotionState, cubeShape, fallInertia);
+	cubeRigidBody = new btRigidBody(cubeRigidBodyCI);
+
+	dynamicsWorld->addRigidBody(cubeRigidBody);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -97,9 +139,32 @@ void GMMain::update(float time)
 
 	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
 
-	cube->setRotation({ 90.0f * glm::sin(angle), 0.0f, 0.0f });
-	cube->setOrbit({ 0.0f, 0.0f, 90.0f * glm::cos(angle) });
-	sphere->setPosition({ 0.0f, 10.0f * glm::sin(angle), 0.0f });
+	dynamicsWorld->stepSimulation(time, 5);
+
+	btTransform trans;
+	fallRigidBody->getMotionState()->getWorldTransform(trans);
+
+	btScalar matrix[16];
+
+	trans.getOpenGLMatrix(matrix);
+
+	sphere->FinalMatrix = glm::make_mat4(matrix);
+
+
+
+	cubeRigidBody->getMotionState()->getWorldTransform(trans);
+
+	trans.getOpenGLMatrix(matrix);
+
+	cube->FinalMatrix = glm::make_mat4(matrix);
+
+	
+
+	//cube->setRotation({ 90.0f * glm::sin(angle), 0.0f, 0.0f });
+	//cube->setOrbit({ 0.0f, 0.0f, 90.0f * glm::cos(angle) });
+	//sphere->setPosition({ 0.0f, 10.0f * glm::sin(angle), 0.0f });
+
+	
 }
 
 void GMMain::preUpdate()
