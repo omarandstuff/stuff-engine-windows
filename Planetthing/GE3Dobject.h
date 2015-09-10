@@ -40,7 +40,7 @@ public:
 	// -------------------------------------------- //
 	// ------------ Protected members ------------- //
 	// -------------------------------------------- //
-protected:
+public:
 	glm::mat4 m_translationMatrix;
 	glm::mat4 m_rotationMatrix;
 	glm::mat4 m_scaleMatrix;

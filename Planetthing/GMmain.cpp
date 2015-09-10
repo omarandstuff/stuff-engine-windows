@@ -25,7 +25,9 @@ GMMain::GMMain()
 	//animation->play();
 	//model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
 	//model->RenderBoundingBox = true;
-	//animation->addSelector(model);
+	//animation->addDelegate(model);
+
+	//model->setScale({ 0.1f, 0.1f, 0.1f });
 
 	//model = new GEAnimatedModel(L"resources/images/sphere.md5mesh");
 	//model->Meshes[0].Material.Shininess = 128.0f;
@@ -156,16 +158,25 @@ void GMMain::update(float time)
 	btScalar matrix[16];
 
 	trans.getOpenGLMatrix(matrix);
+	btQuaternion rotation = trans.getRotation();
+
+	glm::quat rot = glm::make_quat(&rotation.getX());
+
 
 	sphere->FinalMatrix = glm::make_mat4(matrix);
-
+	sphere->m_rotationMatrix = glm::toMat4(rot);
 
 
 	cubeRigidBody->getMotionState()->getWorldTransform(trans);
 
 	trans.getOpenGLMatrix(matrix);
 
+	rotation = trans.getRotation();
+	rot = glm::make_quat(&rotation.getX());
+
 	cube->FinalMatrix = glm::make_mat4(matrix);
+	cube->m_rotationMatrix = glm::toMat4(rot);
+
 
 	
 

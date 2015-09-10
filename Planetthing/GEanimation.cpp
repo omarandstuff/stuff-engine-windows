@@ -25,20 +25,20 @@ GEAnimation::~GEAnimation()
 
 void GEAnimation::play()
 {
-	Playing = true;
+	m_playing = true;
 }
 
 void GEAnimation::stop()
 {
-	Playing = false;
-	CurrentTime = 0;
-	m_finalFrame = Frames[0];
+	m_playing = false;
+	m_currentTime = 0;
+	m_finalFrame =  m_frames[0];
 	callDelegates();
 }
 
 void GEAnimation::pause()
 {
-	Playing = false;
+	m_playing = false;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -47,27 +47,27 @@ void GEAnimation::pause()
 
 void GEAnimation::update(float time)
 {
-	if (!Playing) return;
-	if (NumberOfFrames < 1) return;
+	if (!m_playing) return;
+	if (m_numberOfFrames < 1) return;
 
-	CurrentTime += time * (Reverse ? -1.0f : 1.0f);
+	m_currentTime += time * (m_reverse ? -1.0f : 1.0f);
 
 	// Delta time can be huge, find the time in the future with a big delta time.
-	while (CurrentTime > Duration) CurrentTime -= Duration;
-	while (CurrentTime < 0.0f) CurrentTime += Duration;
+	while (m_currentTime > m_duration) m_currentTime -= m_duration;
+	while (m_currentTime < 0.0f) m_currentTime += m_duration;
 
 	// Figure out which frame we're on.
-	float frameIndex = CurrentTime * FrameRate;
+	float frameIndex = m_currentTime * m_frameRate;
 
 	int preFrameIndex = (int)floorf(frameIndex);
 	int posFrameIndex = (int)ceilf(frameIndex);
-	preFrameIndex = preFrameIndex % NumberOfFrames;
-	posFrameIndex = posFrameIndex % NumberOfFrames;
+	preFrameIndex = preFrameIndex % m_numberOfFrames;
+	posFrameIndex = posFrameIndex % m_numberOfFrames;
 
 	float interpolation = frameIndex - floorf(frameIndex);
 
-	GEFrame* preFrame = Frames[preFrameIndex];
-	GEFrame* posFrame = Frames[posFrameIndex];
+	GEFrame* preFrame =  m_frames[preFrameIndex];
+	GEFrame* posFrame =  m_frames[posFrameIndex];
 
 	for (int i = 0; i < (int)preFrame->Joints.size(); i++)
 	{
@@ -125,17 +125,17 @@ void GEAnimation::loadAnimationWithFileName(wstring filename)
 	wstring fileType = filename.substr(filename.find_last_of(L".") + 1);
 	wstring filePath = filename.substr(0, filename.find_last_of(L"."));
 
-	FileName = filename;
+	m_filename = filename;
 
 	// Decide what load method to use.
 	if (fileType == L"md5anim")
-		Ready = loadMD5WithFileName(filePath);
+		m_ready = loadMD5WithFileName(filePath);
 
 	// The file was loaded successfully
-	if (Ready)
+	if (m_ready)
 	{
-		m_frameDuration = 1.0f / (float)FrameRate;
-		Duration = m_frameDuration * (float)NumberOfFrames;
+		m_frameDuration = 1.0f / (float)m_frameRate;
+		m_duration = m_frameDuration * (float)m_numberOfFrames;
 	}
 }
 
@@ -163,7 +163,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 	// Bounds
 	vector<GEBound> bounds;
 
-	// Frames
+	//  m_frames
 	vector<vector<float> > frameDatas;
 
 	m_finalFrame = new GEFrame;
@@ -181,7 +181,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 
 		if (first == L"numFrames") // Line with the number of frames in the animation.
 		{
-			newLine >> NumberOfFrames;;
+			newLine >> m_numberOfFrames;;
 			continue;
 		}
 		else if (first == L"numJoints") // Line with the number of joints to read.
@@ -191,7 +191,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 		}
 		else if (first == L"frameRate") // Line with the frame rate of the animation.
 		{
-			newLine >> FrameRate;
+			newLine >> m_frameRate;
 			continue;
 		}
 		else if (first == L"numAnimatedComponents") // Line with the number of animated componen per frame.
@@ -232,7 +232,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 		{
 			GEBound currentBound;
 			// Fill the data holder with every bound line.
-			for (unsigned int i = 0; i < NumberOfFrames; i++)
+			for (unsigned int i = 0; i < m_numberOfFrames; i++)
 			{
 				// Bound line.
 				wStream.getline(line, 256);
@@ -321,7 +321,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 	}
 
 	// Build frames
-	for (unsigned int i = 0; i < NumberOfFrames; i++)
+	for (unsigned int i = 0; i < m_numberOfFrames; i++)
 	{
 		// New Frame
 		GEFrame* currentFrame = new GEFrame;
@@ -379,7 +379,7 @@ bool GEAnimation::loadMD5WithFileName(wstring filename)
 		}
 
 		// Push the new frame.
-		Frames.push_back(currentFrame);
+		m_frames.push_back(currentFrame);
 	}
 
 	return true;
@@ -390,3 +390,70 @@ void GEAnimation::computeWComponentOfQuaternion(glm::quat& quaternion)
 	float t = 1.0f - (quaternion.x * quaternion.x) - (quaternion.y * quaternion.y) - (quaternion.z * quaternion.z);
 	quaternion.w = t < 0.0f ? 0.0f : -sqrtf(t);
 }
+
+// ------------------------------------------------------------------------------ //
+// ------------------------------ Getters / Setters ----------------------------- //
+// ------------------------------------------------------------------------------ //
+
+wstring GEAnimation::filename()
+{
+	return m_filename;
+}
+
+unsigned int GEAnimation::numberOfFrames()
+{
+	return m_numberOfFrames;
+}
+
+unsigned int GEAnimation::frameRate()
+{
+	return m_frameRate;
+}
+
+vector<GEFrame*> GEAnimation::frames()
+{
+	return m_frames;
+}
+
+bool GEAnimation::ready()
+{
+	return m_ready;
+}
+
+float GEAnimation::duration()
+{
+	return m_duration;
+}
+
+bool GEAnimation::playing()
+{
+	return m_playing;
+}
+
+float GEAnimation::currentTime()
+{
+	return m_currentTime;
+}
+
+void GEAnimation::currentTime(float time)
+{
+	if (time > m_duration)
+		time = m_duration;
+	m_currentTime = time * m_playbackSpeed;
+}
+
+void GEAnimation::reverse(bool value)
+{
+	m_reverse = value;
+}
+
+float GEAnimation::playbacSpeed()
+{
+	return m_playbackSpeed;
+}
+
+void GEAnimation::playbackSpeed(float speed)
+{
+	m_playbackSpeed = speed;
+}
+
