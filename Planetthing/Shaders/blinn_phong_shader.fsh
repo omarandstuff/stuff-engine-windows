@@ -109,7 +109,7 @@ void main()
                 float currentDepth = finalPositionLightSpaceCoord[i].z;
                 
                 // Check whether current frag pos is in shadow.
-                float bias = max(0.001 * (1.0 - normalDir), 0.001);
+                float bias = max(0.0001 * (1.0 - normalDir), 0.0001);
                 
                 for(int x = -1; x <= 1; x++)
                 {

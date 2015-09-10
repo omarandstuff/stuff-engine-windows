@@ -32,7 +32,7 @@ GMMain::GMMain()
 
 	light = new GELight;
 	//light->LightType = GE_LIGHT_POINT;
-	light->Position = { -100.0f, 60.0f, 10.0f };
+	light->Position = { -10.0f, 6.0f, 1.0f };
 	//light->Direction = { 0.0f, 30.0f, 0.0f };
 	light->Intensity = 0.8f;
 	light->Ambient = 0.4f;
@@ -47,31 +47,31 @@ GMMain::GMMain()
 
 	view = new GEView;
 	view->BackgroundColor = color_black;
-	view->Camera.setPosition({ 0.0, 40.0f, 120.0f });
-	view->Camera.setRotation({ -20.0f, 0.0f, 0.0f });
+	view->Camera.setPosition({ 0.0, 4.0f, 12.0f });
+	view->Camera.setRotation({ -2.0f, 0.0f, 0.0f });
 
 	view->addLight(light);
 	//view->addLight(light2);
 
-	plane = new GEPlane(380.0f, 260.0f, 10, 10);
+	plane = new GEPlane(38.0f, 26.0f, 10, 10);
 	plane->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/Test2.jpg");
 	plane->Material.SpecularColor = { 0.1f, 0.1f, 0.1f };
 
-	sphere = new GESphere(10.0f, 4);
+	sphere = new GESphere(1.0f, 4);
 	sphere->Material.DiffuseColor = color_greenyellow;
 	sphere->Material.Shininess = 1024.0f;
 	sphere->Wireframe = true;
 	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
-	cube = new GECube(20.0f, 20.0f, 20.0f, 1, 1, 1);
+	cube = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 	cube->Material.DiffuseColor = color_greenyellow;
 	cube->Material.Shininess = 1024.0f;
 	cube->Wireframe = true;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 	cube->setPosition({ 0.0f, 20.0f, 0.0f });
-	cube->setScale({ 0.5f, 0.5f, 0.5f });
+	//cube->setScale({ 0.0f, 0.0f, 0.0f });
 
 	cube->Parent = sphere;
 
@@ -93,7 +93,7 @@ GMMain::GMMain()
 	dynamicsWorld->setGravity(btVector3(0.0f, -9.8f, 0.0f));
 
 	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-	fallShape = new btSphereShape(10.0f);
+	fallShape = new btSphereShape(1.0f);
 
 	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
@@ -103,9 +103,9 @@ GMMain::GMMain()
 
 	dynamicsWorld->addRigidBody(groundRigidBody);
 
-	fallMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 100, 0)));
+	fallMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 10, 0)));
 
-	btScalar mass = 1000;
+	btScalar mass = 10;
 	btVector3 fallInertia(0, 0, 0);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 
@@ -115,9 +115,9 @@ GMMain::GMMain()
 	dynamicsWorld->addRigidBody(fallRigidBody);
 
 
-	cubeShape = new btBoxShape(btVector3(10.0f, 10.0f, 10.0f));
+	cubeShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 
-	cubeMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(5, 150, 0)));
+	cubeMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.5, 15, 0)));
 
 	cubeShape->calculateLocalInertia(mass, fallInertia);
 
@@ -137,7 +137,7 @@ void GMMain::update(float time)
 
 	angle += time / 2.0f;
 
-	light->Position = glm::vec3(250.0f * glm::cos(angle), 100.0f, 250.0f * glm::sin(angle));
+	light->Position = glm::vec3(25.0f * glm::cos(angle), 10.0f, 25.0f * glm::sin(angle));
 
 	dynamicsWorld->stepSimulation(time, 5);
 
