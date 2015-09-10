@@ -97,6 +97,21 @@ void main()
         
         shadow = 0.0;
         
+        // How much the fragment is facing the light
+        lightFace += max(normalDir, 0.0);
+        
+        // Spot Light.
+        if(lights[i].type == 2)
+        {
+            float theta = dot(lightDir, normalize(lights[i].position));
+            if(theta < lights[i].cutOff)
+                continue;
+        }
+        
+        // This light can be not calculated.
+        if(lightFace == 0.0)
+            continue;
+
         // Shadow calculations.
         if(lights[i].shadowsEnabled)
         {
@@ -119,24 +134,9 @@ void main()
                         shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
                     }
                 }
-                shadow /= 4.0;
+                shadow /= 9.0;
             }
         }
-        
-        // How much the fragment is facing the light
-        lightFace += max(normalDir, 0.0);
-        
-        // Spot Light.
-        if(lights[i].type == 2)
-        {
-            float theta = dot(lightDir, normalize(lights[i].position));
-            if(theta < lights[i].cutOff)
-                continue;
-        }
-        
-        // This light can be not calculated.
-        if(lightFace == 0.0)
-            continue;
         
         // Diffuce contribution base color light and facing.
         diffuse += lights[i].diffuseColor * lightFace * (1.0 - shadow);

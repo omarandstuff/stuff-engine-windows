@@ -60,5 +60,11 @@ private:
 	vector<GELight*> m_lights;
 
 	GEFullScreen* m_fullScreen;
-};
 
+	// -------------------------------------------- //
+	// --------------- 16B aligment --------------- //
+	// -------------------------------------------- //
+public:
+	void* operator new(size_t i){ return _mm_malloc(i, 16); }
+	void operator delete(void* p) { _mm_free(p); }
+};

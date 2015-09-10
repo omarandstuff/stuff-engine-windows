@@ -7,6 +7,7 @@
 #include "GEcube.h"
 #include "GEview.h"
 #include <btBulletDynamicsCommon.h>
+#include <Bullet3Dynamics\ConstraintSolver\b3TypedConstraint.h>
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol, public GEInputXBoxControllerProtocol, public GEInputMouseProtocol
 {

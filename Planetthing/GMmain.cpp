@@ -34,8 +34,8 @@ GMMain::GMMain()
 	//light->LightType = GE_LIGHT_POINT;
 	light->Position = { -10.0f, 6.0f, 1.0f };
 	//light->Direction = { 0.0f, 30.0f, 0.0f };
-	light->Intensity = 0.8f;
-	light->Ambient = 0.4f;
+	light->Intensity = 1.0f;
+	light->Ambient = 0.2f;
 	light->CastShadows = true;
 
 	//GELight* light2 = new GELight;
@@ -60,14 +60,14 @@ GMMain::GMMain()
 	sphere = new GESphere(1.0f, 4);
 	sphere->Material.DiffuseColor = color_greenyellow;
 	sphere->Material.Shininess = 1024.0f;
-	sphere->Wireframe = true;
+	sphere->Wireframe = false;
 	sphere->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	sphere->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 
 	cube = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 	cube->Material.DiffuseColor = color_greenyellow;
 	cube->Material.Shininess = 1024.0f;
-	cube->Wireframe = true;
+	cube->Wireframe = false;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 	cube->setPosition({ 0.0f, 20.0f, 0.0f });
@@ -98,6 +98,7 @@ GMMain::GMMain()
 	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
+	groundRigidBodyCI.m_restitution = 0.6f;
 
 	groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
@@ -105,11 +106,14 @@ GMMain::GMMain()
 
 	fallMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 10, 0)));
 
-	btScalar mass = 10;
+	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
+	fallRigidBodyCI.m_restitution = 0.6f;
+	fallRigidBodyCI.m_friction = 0.3f;
+
 	fallRigidBody = new btRigidBody(fallRigidBodyCI);
 
 	dynamicsWorld->addRigidBody(fallRigidBody);
@@ -122,7 +126,12 @@ GMMain::GMMain()
 	cubeShape->calculateLocalInertia(mass, fallInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(mass, cubeMotionState, cubeShape, fallInertia);
+	cubeRigidBodyCI.m_restitution = 0.6f;
+	cubeRigidBodyCI.m_friction = 0.3f;
+
 	cubeRigidBody = new btRigidBody(cubeRigidBodyCI);
+
+	//cubeRigidBody->setAngularFactor(btVector3(0.0f, 0.0f, 0.0f));
 
 	dynamicsWorld->addRigidBody(cubeRigidBody);
 }
