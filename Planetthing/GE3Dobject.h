@@ -11,15 +11,16 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
-protected:
-	glm::mat4 m_finalMatrix;
-	glm::vec3 m_position;
-	glm::vec3 m_orientation;
-	glm::vec3 m_orbit;
-	glm::vec3 m_scale;
-	glm::vec3 m_lookAt;
-	bool m_matrixChanged;
-	GE3DObject* m_parent;
+public:
+	__declspec(property(get = getModelMatrix, put = setModelMatrix)) glm::mat4 ModelMatrix;
+	__declspec(property(get = getPosition, put = setPosition)) glm::vec3 Position;
+	__declspec(property(get = getOrientation, put = setOrientation)) glm::vec3 Orientation;
+	__declspec(property(get = getOrbit, put = setOrbit)) glm::vec3 Orbit;
+	__declspec(property(get = getScale, put = setScale)) glm::vec3 Scale;
+	__declspec(property(get = getLookAt, put = setLookAt)) glm::vec3 LookAt;
+	bool MatrixChanged;
+	GE3DObject* Parent;
+	bool UseLookAt;
 
 	// -------------------------------------------- //
 	// ------------------ Update ------------------ //
@@ -32,25 +33,24 @@ public:
 	// -------------------------------------------- //
 	// ------------ Getters / Setters ------------- //
 	// -------------------------------------------- //
-public:
-	glm::vec3& position();
-	glm::vec3& orientation();
-	glm::vec3& scale();
-	glm::vec3& orbit();
-	glm::vec3& lookAt();
-	glm::mat4& modelMatrix();
-	GE3DObject* parent();
+private:
+	glm::vec3& getPosition();
+	void setPosition(glm::vec3& value);
 
-	void position(glm::vec3 position);
-	void orientation(glm::vec3 orientation);
-	void scale(glm::vec3 scale);
-	void orbit(glm::vec3 orbit);
-	void lookAt(glm::vec3 lookat);
-	void modelMatrix(glm::mat4& matrix);
-	void parent(GE3DObject* parent);
+	glm::vec3& getOrientation();
+	void setOrientation(glm::vec3& value);
 
-	void useLookAt(bool value);
-	bool useLookAt();
+	glm::vec3& getScale();
+	void setScale(glm::vec3& value);
+
+	glm::vec3& getOrbit();
+	void setOrbit(glm::vec3& value);
+
+	glm::vec3& getLookAt();
+	void setLookAt(glm::vec3& value);
+
+	glm::mat4& getModelMatrix();
+	void setModelMatrix(glm::mat4& value);
 
 	// -------------------------------------------- //
 	// ------------ Protected members ------------- //

@@ -23,36 +23,23 @@ public:
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
-private:
-	wstring m_filename;
-	unsigned int m_numberOfFrames;
-	unsigned int m_frameRate;
-	vector<GEFrame*> m_frames;
-	bool m_ready;
+public:
+	wstring Filename;
+	unsigned int NumberOfFrames;
+	unsigned int FrameRate;
+	vector<GEFrame*> Frames;
+	bool Ready;
 
-	float m_duration;
-	bool m_playing;
-	float m_currentTime;
-	bool m_reverse;
-	float m_playbackSpeed;
+	float Duration;
+	bool IsPlaying;
+	float CurrentTime;
+	bool Reverse;
+	float PlaybackSpeed;
 
 	// -------------------------------------------- //
 	// ------------- Getters / Setters ------------ //
 	// -------------------------------------------- //
-public:
-	wstring filename();
-	unsigned int numberOfFrames();
-	unsigned int frameRate();
-	vector<GEFrame*> frames();
-	bool ready();
-
-	float duration();
-	bool playing();
-	float currentTime();
-	void currentTime(float time);
-	void reverse(bool value);
-	float playbacSpeed();
-	void playbackSpeed(float speed);
+private:
 
 	// -------------------------------------------- //
 	// ------------ Delegate Management ----------- //

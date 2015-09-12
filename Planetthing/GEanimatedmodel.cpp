@@ -68,7 +68,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 
 		glCullFace(GL_BACK);
 
-		m_blinnPhongShader->ModelMatrix = &m_finalMatrix;
+		m_blinnPhongShader->ModelMatrix = &ModelMatrix;
 		m_blinnPhongShader->NormalMatrix = &m_orientationMatrix;
 
 		// Draw each mesh.
@@ -90,7 +90,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 			glLineWidth(1.0f);
 
 			m_colorShader->Material = &m_wireframeMaerial;
-			m_colorShader->ModelMatrix = &m_finalMatrix;
+			m_colorShader->ModelMatrix = &ModelMatrix;
 
 			// Draw each mesh.
 			for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
@@ -113,7 +113,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 			// Ware frame pass.
 			m_colorShader->Material = &m_boundingBoxMaterial;
 			m_colorShader->Material = &m_wireframeMaerial;
-			m_colorShader->ModelMatrix = &m_finalMatrix;
+			m_colorShader->ModelMatrix = &ModelMatrix;
 
 			m_colorShader->useProgram();
 
@@ -129,7 +129,7 @@ void GEAnimatedModel::render(GE_RENDER_MODE mode)
 		// Draw each mesh.
 		for (vector<GEMesh>::iterator mesh = Meshes.begin(); mesh != Meshes.end(); mesh++)
 		{
-			m_depthShader->ModelMatrix = &m_finalMatrix;
+			m_depthShader->ModelMatrix = &ModelMatrix;
 			m_depthShader->useProgram();
 			mesh->render(GL_TRIANGLES);
 		}
