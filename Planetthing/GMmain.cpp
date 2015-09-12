@@ -34,7 +34,7 @@ GMMain::GMMain()
 
 	light = new GELight;
 	//light->LightType = GE_LIGHT_POINT;
-	light->Position = { -10.0f, 6.0f, 1.0f };
+	light->position({ -10.0f, 6.0f, 1.0f });
 	//light->Direction = { 0.0f, 30.0f, 0.0f };
 	light->Intensity = 1.0f;
 	light->Ambient = 0.2f;
@@ -49,8 +49,8 @@ GMMain::GMMain()
 
 	view = new GEView;
 	view->BackgroundColor = color_black;
-	view->Camera.setPosition({ 0.0, 4.0f, 12.0f });
-	view->Camera.setRotation({ -2.0f, 0.0f, 0.0f });
+	view->Camera.position({ 0.0, 4.0f, 12.0f });
+	view->Camera.orientation({ -2.0f, 0.0f, 0.0f });
 
 	view->addLight(light);
 	//view->addLight(light2);
@@ -72,10 +72,10 @@ GMMain::GMMain()
 	cube->Wireframe = false;
 	cube->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	cube->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
-	cube->setPosition({ 0.0f, 20.0f, 0.0f });
+	cube->position({ 0.0f, 20.0f, 0.0f });
 	//cube->setScale({ 0.0f, 0.0f, 0.0f });
 
-	cube->Parent = sphere;
+	cube->parent(sphere);
 
 	fullScreen = GEFullScreen::sharedInstance();
 	fullScreen->TextureID = light->ShadowMapFBO->DepthTextureID;
@@ -148,7 +148,7 @@ void GMMain::update(float time)
 
 	angle += time / 2.0f;
 
-	light->Position = glm::vec3(25.0f * glm::cos(angle), 10.0f, 25.0f * glm::sin(angle));
+	light->position(glm::vec3(25.0f * glm::cos(angle), 10.0f, 25.0f * glm::sin(angle)));
 
 	dynamicsWorld->stepSimulation(time, 5);
 
@@ -163,8 +163,8 @@ void GMMain::update(float time)
 	glm::quat rot = glm::make_quat(&rotation.getX());
 
 
-	sphere->FinalMatrix = glm::make_mat4(matrix);
-	sphere->m_rotationMatrix = glm::toMat4(rot);
+	sphere->modelMatrix(glm::make_mat4(matrix));
+	//sphere->m_rotationMatrix = glm::toMat4(rot);
 
 
 	cubeRigidBody->getMotionState()->getWorldTransform(trans);
@@ -174,8 +174,8 @@ void GMMain::update(float time)
 	rotation = trans.getRotation();
 	rot = glm::make_quat(&rotation.getX());
 
-	cube->FinalMatrix = glm::make_mat4(matrix);
-	cube->m_rotationMatrix = glm::toMat4(rot);
+	cube->modelMatrix(glm::make_mat4(matrix));
+	//cube->m_rotationMatrix = glm::toMat4(rot);
 
 
 	
@@ -236,16 +236,16 @@ void GMMain::xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, floa
 	if (trigger == GE_INPUT_XBOX_RIGHT_TRIGGER)
 		factorR = value;
 
-	plane->setPosition({ (-factorL + factorR) * 50.0f, 0.0f, 0.0f });
+	plane->position({ (-factorL + factorR) * 50.0f, 0.0f, 0.0f });
 }
 
 void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis)
 {
 	if(stick == GE_INPUT_XBOX_LEFT_STICK)
-		plane->setPosition({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+		plane->position({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
 
 	if (stick == GE_INPUT_XBOX_RIGHT_STICK)
-		plane->setRotation({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+		plane->orientation({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
 }
 
 // ------------------------------------------------------------------------------ //
@@ -259,10 +259,10 @@ void GMMain::mouseMove(float coordX, float coordY)
 
 void GMMain::mouseChange(float deltaX, float deltaY)
 {
-	glm::vec3 rotation = view->Camera.Rotation;
+	glm::vec3 rotation = view->Camera.orientation();
 
 	rotation.x -= deltaY / 4.0f;
 	rotation.y -= deltaX / 4.0f;
 
-	view->Camera.setRotation(rotation);
+	view->Camera.orientation(rotation);
 }

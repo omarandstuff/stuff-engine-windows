@@ -16,7 +16,12 @@ GEAnimation::GEAnimation(wstring filename) : GEAnimation::GEAnimation()
 
 GEAnimation::~GEAnimation()
 {
+	// This animaton is no longer somthing to update.
 	GEUpdateCaller::sharedInstance()->removeDelegate(this);
+
+	// Delete every frame.
+	for (vector<GEFrame*>::iterator it = m_frames.begin(); it != m_frames.end(); it++)
+		delete it._Ptr;
 }
 
 // ------------------------------------------------------------------------------ //

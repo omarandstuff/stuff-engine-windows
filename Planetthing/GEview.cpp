@@ -35,7 +35,7 @@ void GEView::render()
 		glViewport(0, 0, (*light)->ShadowMapFBO->Width, (*light)->ShadowMapFBO->Height);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 matrix = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 1.0f, 400.0f) * glm::lookAt((*light)->Position, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::mat4 matrix = glm::ortho(-20.0f, 20.0f, -20.0f, 20.0f, 1.0f, 400.0f) * glm::lookAt((*light)->position(), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		m_depthShader->ViewProjectionMatrix = &matrix;
 
@@ -54,7 +54,7 @@ void GEView::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, Width, Height);
 
-	glm::mat4 matrix = Camera.ProjectionMatrix * Camera.FinalMatrix;
+	glm::mat4 matrix = Camera.ProjectionMatrix * Camera.modelMatrix();
 
 	m_blinnPhongShader->ViewProjectionMatrix = &matrix;
 	m_blinnPhongShader->Lights = &m_lights;

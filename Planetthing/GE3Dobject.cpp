@@ -3,7 +3,7 @@
 GE3DObject::GE3DObject()
 {
 	// Identity all transformations
-	m_translationMatrix = m_rotationMatrix = m_scaleMatrix = m_orbitMatrix = FinalMatrix = glm::mat4(1.0f);
+	m_translationMatrix = m_orientationMatrix = m_scaleMatrix = m_orbitMatrix = m_finalMatrix = glm::mat4(1.0f);
 
 	// Matrix order multiplication.
 	m_reverse = false;
@@ -18,50 +18,46 @@ GE3DObject::GE3DObject()
 
 void GE3DObject::update(float time)
 {
-	if (m_translationChanged)
+	if (m_positionChanged)
 	{
-		m_translationMatrix = glm::translate(glm::mat4(1.0f), Position * (m_reverse ? -1.0f : 1.0f));
-		MatrixChanged = true;
+		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position * (m_reverse ? -1.0f : 1.0f));
+		m_matrixChanged = true;
 	}
 
-	if (m_rotationChanged)
+	if (m_orientationChanged)
 	{
-		m_rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(Rotation.x * (m_reverse ? -1.0f : 1.0f)), { 1.0f, 0.0f, 0.0f });
-		m_rotationMatrix = glm::rotate(m_rotationMatrix, glm::radians(Rotation.y * (m_reverse ? -1.0f : 1.0f)), { 0.0f, 1.0f, 0.0f });
-		m_rotationMatrix = glm::rotate(m_rotationMatrix, glm::radians(Rotation.z * (m_reverse ? -1.0f : 1.0f)), { 0.0f, 0.0f, 1.0f });
-		MatrixChanged = true;
+
+		m_matrixChanged = true;
 	}
 
 	if (m_scaleChanged)
 	{
-		m_scaleMatrix = glm::scale(Scale * (m_reverse ? -1.0f : 1.0f));
-		MatrixChanged = true;
+		m_scaleMatrix = glm::scale(m_scale * (m_reverse ? -1.0f : 1.0f));
+		m_matrixChanged = true;
 	}
 
 	if (m_orbitChanged)
 	{
-		m_orbitMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(Orbit.x * (m_reverse ? -1.0f : 1.0f)), { 1.0f, 0.0f, 0.0f });
-		m_orbitMatrix = glm::rotate(m_orbitMatrix, glm::radians(Orbit.y * (m_reverse ? -1.0f : 1.0f)), { 0.0f, 1.0f, 0.0f });
-		m_orbitMatrix = glm::rotate(m_orbitMatrix, glm::radians(Orbit.z * (m_reverse ? -1.0f : 1.0f)), { 0.0f, 0.0f, 1.0f });
-		MatrixChanged = true;
+
+		m_matrixChanged = true;
 	}
 
-	if (MatrixChanged)
+	if (m_matrixChanged)
 	{
 		if(m_reverse)
-			FinalMatrix = m_rotationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
+			m_finalMatrix = m_orientationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
 		else
-			FinalMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_rotationMatrix;
+			m_finalMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_orientationMatrix;
 	}
 
-	if (Parent)
+	if (m_parent)
 	{
-		if (Parent->MatrixChanged)
+		if (m_parent->m_matrixChanged)
 		{
 			if (m_reverse)
-				FinalMatrix *= Parent->FinalMatrix;
+				m_finalMatrix *= m_parent->m_finalMatrix;
 			else
-				FinalMatrix = Parent->FinalMatrix * FinalMatrix;
+				m_finalMatrix = m_parent->m_finalMatrix* m_finalMatrix;
 		}
 			
 	}
@@ -74,37 +70,101 @@ void GE3DObject::preUpdate()
 
 void GE3DObject::posUpdate()
 {
-	m_translationChanged = false;
-	m_rotationChanged = false;
+	m_positionChanged = false;
+	m_orientationChanged = false;
 	m_scaleChanged = false;
 	m_orbitChanged = false;
-	MatrixChanged = false;
+	m_lookAtChanged = false;
+	m_matrixChanged = false;
 }
 
 // ------------------------------------------------------------------------------ //
 // --------------------------------- Manipulation ------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GE3DObject::setPosition(glm::vec3 position)
+glm::vec3& GE3DObject::position()
 {
-	Position = position;
-	m_translationChanged = true;
+	return m_position;
 }
 
-void GE3DObject::setRotation(glm::vec3 rotation)
+glm::vec3& GE3DObject::orientation()
 {
-	Rotation = rotation;
-	m_rotationChanged = true;
+	return m_orientation;
 }
 
-void GE3DObject::setScale(glm::vec3 scale)
+glm::vec3& GE3DObject::scale()
 {
-	Scale = scale;
+	return m_scale;
+}
+
+glm::vec3& GE3DObject::orbit()
+{
+	return m_orbit;
+}
+
+glm::vec3& GE3DObject::lookAt()
+{
+	return m_lookAt;
+}
+
+glm::mat4& GE3DObject::modelMatrix()
+{
+	return m_finalMatrix;
+}
+
+GE3DObject* GE3DObject::parent()
+{
+	return m_parent;
+}
+
+bool GE3DObject::useLookAt()
+{
+	return m_useLookAt;
+}
+
+void GE3DObject::position(glm::vec3 position)
+{
+	m_position = position;
+	m_positionChanged = true;
+}
+
+void GE3DObject::orientation(glm::vec3 orientation)
+{
+	m_orientation = orientation;
+	m_orientationChanged = true;
+}
+
+void GE3DObject::scale(glm::vec3 scale)
+{
+	m_scale = scale;
 	m_scaleChanged = true;
 }
 
-void GE3DObject::setOrbit(glm::vec3 orbit)
+void GE3DObject::orbit(glm::vec3 orbit)
 {
-	Orbit = orbit;
+	m_orbit = orbit;
 	m_orbitChanged = true;
+}
+
+void GE3DObject::lookAt(glm::vec3 lookat)
+{
+	m_lookAt = lookat;
+	m_lookAtChanged = true;
+}
+
+void GE3DObject::modelMatrix(glm::mat4& matrix)
+{
+	m_finalMatrix = matrix;
+}
+
+void GE3DObject::parent(GE3DObject* parent)
+{
+	m_parent = parent;
+	m_parentChanged = true;
+}
+
+void GE3DObject::useLookAt(bool value)
+{
+	m_lookAtChanged = !(value == m_useLookAt);
+	m_useLookAt = value;
 }

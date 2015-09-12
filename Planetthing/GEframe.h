@@ -3,7 +3,7 @@
 #include "GEjoint.h"
 #include "GEbound.h"
 
-class GEFrame
+struct GEFrame
 {
 public:
 	~GEFrame()
