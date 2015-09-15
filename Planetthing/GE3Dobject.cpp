@@ -10,6 +10,16 @@ GE3DObject::GE3DObject()
 
 	// Auto updateable
 	GEUpdateCaller::sharedInstance()->addUpdateableDelegate(this);
+
+	// Properties syntetis
+	ModelMatrix.syntetize(this, &GE3DObject::getModelMatrix, &GE3DObject::setModelMatrix);
+	Position.syntetize(this, &GE3DObject::getPosition, &GE3DObject::setPosition);
+	Orientation.syntetize(this, &GE3DObject::getOrientation, &GE3DObject::setOrientation);
+	Scale.syntetize(this, &GE3DObject::getScale, &GE3DObject::setScale);
+	Orbit.syntetize(this, &GE3DObject::getOrbit, &GE3DObject::setOrbit);
+	LookAt.syntetize(this, &GE3DObject::getLookAt, &GE3DObject::setLookAt);
+	Parent.syntetize(this, &GE3DObject::getParent, &GE3DObject::setParent);
+	UseLookAt.syntetize(this, &GE3DObject::getUseLookAt, &GE3DObject::setUseLookAt);
 }
 
 // ------------------------------------------------------------------------------ //

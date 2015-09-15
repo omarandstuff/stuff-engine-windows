@@ -110,20 +110,40 @@ void GEBlinnPhongShader::useProgram()
 	glUniform1i(m_uniforms[GE_UNIFORM_NUMBER_OF_LIGHTS], (GLint)Lights->size());
 	for (vector<GELight*>::iterator light = Lights->begin(); light != Lights->end(); light++)
 	{
+		// Light index.
 		int index = light - Lights->begin();
+
+		// Light type.
 		glUniform1i(m_lightUniforms[index][GE_UNIFORM_LIGHT_TYPE], (*light)->LightType);
-		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_POSITION], 1, &((*light)->Position).x);
-		glm::vec3 auxVec3 = (*light)->Position - (*light)->Direction;
+		
+		// Pointer to first elemnent of the postion that is pased by reference.
+		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_POSITION], 1, &((glm::vec3&)(*light)->Position).x);
+		
+		// Light direction (Position to look at vector).
+		glm::vec3 auxVec3 = (*light)->Position - (*light)->LookAt;
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_DIRECTION], 1, &auxVec3.x);
+
+		// Cone radious if it is a spot lihgt.
 		glUniform1f(m_lightUniforms[index][GE_UNIFORM_LIGHT_CUTOFF], (*light)->CutOff);
+		
+		// Diffuce color * intencity.
 		auxVec3 = (*light)->DiffuseColor * (*light)->Intensity;
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_DIFFUSE_COLOR], 1, &auxVec3.x);
+		
+		// Ambient color * ambient factor.
 		auxVec3 = (*light)->AmbientColor * (*light)->Ambient;
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_AMBIENT_COLOR], 1, &auxVec3.x);
+
+		// Specular color.
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_SPECULAR_COLOR], 1, &(*light)->SpecularColor.x);
+		
+		// This light cast shadows?
 		glUniform1i(m_lightUniforms[index][GE_UNIFORM_LIGHT_SHADOWS_ENABLED], (*light)->CastShadows);
+		
+		// Shadow map size 0 - 1.
 		glUniform1f(m_lightUniforms[index][GE_UNIFORM_LIGHT_SHADOW_MAP_TEXTEL_SIZE], 1.0f / (*light)->ShadowMapSize);
 
+		// Light space matrix.
 		glUniformMatrix4fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_VIEWPROJECTION_MATRIX], 1, 0, &(*light)->ShadowMapViewProjectionMatrix[0].x);
 
 		// Shadow map for this light.

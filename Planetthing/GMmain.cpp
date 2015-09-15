@@ -49,8 +49,8 @@ GMMain::GMMain()
 
 	view = new GEView;
 	view->BackgroundColor = color_black;
-	//view->Camera.position({ 0.0, 4.0f, 12.0f });
-	//view->Camera.orientation({ -2.0f, 0.0f, 0.0f });
+	view->Camera.Position = glm::vec3(0.0, 4.0f, 12.0f);
+	view->Camera.Orientation = glm::vec3(-2.0f, 0.0f, 0.0f);
 
 	view->addLight(light);
 	//view->addLight(light2);
@@ -148,7 +148,7 @@ void GMMain::update(float time)
 
 	angle += time / 2.0f;
 
-	//light->position(glm::vec3(25.0f * glm::cos(angle), 10.0f, 25.0f * glm::sin(angle)));
+	light->Position = glm::vec3(25.0f * glm::cos(angle), 10.0f, 25.0f * glm::sin(angle));
 
 	dynamicsWorld->stepSimulation(time, 5);
 
@@ -236,16 +236,16 @@ void GMMain::xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, floa
 	if (trigger == GE_INPUT_XBOX_RIGHT_TRIGGER)
 		factorR = value;
 
-	//plane->position({ (-factorL + factorR) * 50.0f, 0.0f, 0.0f });
+	plane->Position = glm::vec3((-factorL + factorR) * 50.0f, 0.0f, 0.0f);
 }
 
 void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis)
 {
-	//if(stick == GE_INPUT_XBOX_LEFT_STICK)
-		//plane->position({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+	if(stick == GE_INPUT_XBOX_LEFT_STICK)
+		plane->Position = glm::vec3(xAxis * 50.0f, 0.0f, yAxis * 50.0f);
 
-	//if (stick == GE_INPUT_XBOX_RIGHT_STICK)
-		//plane->orientation({ xAxis * 50.0f, 0.0f, yAxis * 50.0f });
+	if (stick == GE_INPUT_XBOX_RIGHT_STICK)
+		plane->Orientation = glm::vec3(xAxis * 50.0f, 0.0f, yAxis * 50.0f);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -259,10 +259,10 @@ void GMMain::mouseMove(float coordX, float coordY)
 
 void GMMain::mouseChange(float deltaX, float deltaY)
 {
-	//glm::vec3 rotation = view->Camera.orientation();
+	glm::vec3 rotation = view->Camera.Orientation;
 
-	//rotation.x -= deltaY / 4.0f;
-	//rotation.y -= deltaX / 4.0f;
+	rotation.x -= deltaY / 4.0f;
+	rotation.y -= deltaX / 4.0f;
 
-	//view->Camera.orientation(rotation);
+	view->Camera.Orientation = rotation;
 }

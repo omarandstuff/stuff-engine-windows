@@ -45,7 +45,13 @@ protected:
 public:
 	bool MatrixChanged;
 	Property<GE3DObject, glm::mat4&> ModelMatrix;
-	glm::vec3 Position;
+	Property<GE3DObject, glm::vec3&> Position;
+	Property<GE3DObject, glm::vec3&> Orientation;
+	Property<GE3DObject, glm::vec3&> Scale;
+	Property<GE3DObject, glm::vec3&> Orbit;
+	Property<GE3DObject, glm::vec3&> LookAt;
+	Property<GE3DObject, GE3DObject*> Parent;
+	Property<GE3DObject, bool> UseLookAt;
 
 private:
 

@@ -13,6 +13,18 @@ public:
 public:
 	inline operator TProperty(void);
 	inline TProperty operator=(TProperty value);
+	inline TProperty operator+(TProperty value);
+	inline TProperty operator-(TProperty value);
+	inline TProperty operator*(TProperty value);
+	inline TProperty operator/(TProperty value);
+	inline TProperty operator+=(TProperty value);
+	inline TProperty operator-=(TProperty value);
+	inline TProperty operator*=(TProperty value);
+	inline TProperty operator/=(TProperty value);
+	inline TProperty operator<(TProperty value);
+	inline TProperty operator>(TProperty value);
+	inline TProperty operator==(TProperty value);
+	inline TProperty operator!=(TProperty value);
 
 private:
 	inline TProperty getter(void);
@@ -26,7 +38,6 @@ private:
 	TProperty(TClass::*m_getter)();
 	TClass * m_class;
 };
-
 
 // ------------------------------------------------------------------------------ //
 // ------------------------------- Initialization ------------------------------- //
@@ -49,7 +60,7 @@ void Property<TClass, TProperty>::syntetize(TClass* p_class, TProperty(TClass::*
 }
 
 // ------------------------------------------------------------------------------ //
-// ------------------------------- Setter / Getter ------------------------------ //
+// --------------------------------- Operattors --------------------------------- //
 // ------------------------------------------------------------------------------ //
 
 template <typename TClass, typename TProperty>
@@ -64,6 +75,81 @@ TProperty Property<TClass, TProperty>::operator=(TProperty value)
 	this->setter(value);
 	return *this;
 }
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator+(TProperty value)
+{
+	return this->getter() + value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator-(TProperty value)
+{
+	return this->getter() - value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator*(TProperty value)
+{
+	return this->getter() * value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator/(TProperty value)
+{
+	return this->getter() / value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator+=(TProperty value)
+{
+	return this->getter() += value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator-=(TProperty value)
+{
+	return this->getter() -= value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator*=(TProperty value)
+{
+	return this->getter() *= value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator/=(TProperty value)
+{
+	return this->getter() /= value;
+}
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator<(TProperty value)
+{
+	return this->getter() < value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator>(TProperty value)
+{
+	return this->getter() > value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator==(TProperty value)
+{
+	return this->getter() == value;
+}
+
+template <typename TClass, typename TProperty>
+inline TProperty Property<TClass, TProperty>::operator!=(TProperty value)
+{
+	return this->getter() != value;
+}
+
+// ------------------------------------------------------------------------------ //
+// ------------------------------- Setter / Getter ------------------------------ //
+// ------------------------------------------------------------------------------ //
 
 template <typename TClass, typename TProperty>
 TProperty Property<TClass, TProperty>::getter(void)
