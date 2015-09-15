@@ -245,6 +245,9 @@
     <ClInclude Include="GEinput.h">
       <Filter>Source Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="property.h">
+      <Filter>Source Files\Support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Planetthing.rc">

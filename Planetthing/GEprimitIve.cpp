@@ -30,7 +30,7 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 
 		// Material and model matrices.
 		m_blinnPhongShader->Material = &Material;
-		m_blinnPhongShader->ModelMatrix = &ModelMatrix;
+		m_blinnPhongShader->ModelMatrix = &m_finalMatrix;
 		m_blinnPhongShader->NormalMatrix = &m_orientationMatrix;
 
 		m_blinnPhongShader->useProgram();
@@ -50,7 +50,7 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 			glLineWidth(1.0f);
 
 			m_colorShader->Material = &m_wireframeMaerial;
-			m_colorShader->ModelMatrix = &ModelMatrix;
+			m_colorShader->ModelMatrix = &m_finalMatrix;
 			m_colorShader->useProgram();
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
@@ -66,7 +66,7 @@ void GEPrimitive::render(GE_RENDER_MODE mode)
 		glDisable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);
 
-		m_depthShader->ModelMatrix = &ModelMatrix;
+		m_depthShader->ModelMatrix = &m_finalMatrix;
 		m_depthShader->useProgram();
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);

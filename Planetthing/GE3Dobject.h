@@ -9,20 +9,6 @@ public:
 	GE3DObject();
 
 	// -------------------------------------------- //
-	// ---------------- Properties ---------------- //
-	// -------------------------------------------- //
-public:
-	__declspec(property(get = getModelMatrix, put = setModelMatrix)) glm::mat4 ModelMatrix;
-	__declspec(property(get = getPosition, put = setPosition)) glm::vec3 Position;
-	__declspec(property(get = getOrientation, put = setOrientation)) glm::vec3 Orientation;
-	__declspec(property(get = getOrbit, put = setOrbit)) glm::vec3 Orbit;
-	__declspec(property(get = getScale, put = setScale)) glm::vec3 Scale;
-	__declspec(property(get = getLookAt, put = setLookAt)) glm::vec3 LookAt;
-	bool MatrixChanged;
-	GE3DObject* Parent;
-	bool UseLookAt;
-
-	// -------------------------------------------- //
 	// ------------------ Update ------------------ //
 	// -------------------------------------------- //
 public:
@@ -31,9 +17,45 @@ public:
 	void posUpdate();
 
 	// -------------------------------------------- //
+	// ---------------- Properties ---------------- //
+	// -------------------------------------------- //
+protected:
+	glm::mat4 m_translationMatrix;
+	glm::mat4 m_orientationMatrix;
+	glm::mat4 m_scaleMatrix;
+	glm::mat4 m_orbitMatrix;
+	bool m_positionChanged;
+	bool m_orientationChanged;
+	bool m_scaleChanged;
+	bool m_orbitChanged;
+	bool m_lookAtChanged;
+	bool m_parentChanged;
+	bool m_useLookAt;
+	bool m_reverse;
+
+	glm::mat4 m_finalMatrix;
+	glm::vec3 m_position;
+	glm::vec3 m_orientation;
+	glm::vec3 m_scale;
+	glm::vec3 m_orbit;
+	glm::vec3 m_lookAt;
+
+	GE3DObject* m_parent;
+
+public:
+	bool MatrixChanged;
+	Property<GE3DObject, glm::mat4&> ModelMatrix;
+	glm::vec3 Position;
+
+private:
+
+	// -------------------------------------------- //
 	// ------------ Getters / Setters ------------- //
 	// -------------------------------------------- //
 private:
+	glm::mat4& getModelMatrix();
+	void setModelMatrix(glm::mat4& value);
+
 	glm::vec3& getPosition();
 	void setPosition(glm::vec3& value);
 
@@ -49,25 +71,11 @@ private:
 	glm::vec3& getLookAt();
 	void setLookAt(glm::vec3& value);
 
-	glm::mat4& getModelMatrix();
-	void setModelMatrix(glm::mat4& value);
+	GE3DObject* getParent();
+	void setParent(GE3DObject* value);
 
-	// -------------------------------------------- //
-	// ------------ Protected members ------------- //
-	// -------------------------------------------- //
-protected:
-	glm::mat4 m_translationMatrix;
-	glm::mat4 m_orientationMatrix;
-	glm::mat4 m_scaleMatrix;
-	glm::mat4 m_orbitMatrix;
-	bool m_positionChanged;
-	bool m_orientationChanged;
-	bool m_scaleChanged;
-	bool m_orbitChanged;
-	bool m_lookAtChanged;
-	bool m_useLookAt;
-	bool m_reverse;
-	bool m_parentChanged;
+	bool getUseLookAt();
+	void setUseLookAt(bool value);
 
 	// -------------------------------------------- //
 	// --------------- 16B aligment --------------- //

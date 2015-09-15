@@ -6,6 +6,8 @@
 #include <tuple>
 #include <fstream>
 #include <sstream>
+
+#pragma managed(push, off)
 #include <glm.hpp>
 #include <gtc\constants.hpp>
 #include <gtc\type_ptr.hpp>
@@ -13,6 +15,9 @@
 #include <gtx\transform.hpp>
 #include <gtx\compatibility.hpp>
 #include <gtx\quaternion.hpp>
+#pragma managed(pop)
+#include "property.h"
+
 using namespace std;
 
 // -------------------------------------------- //

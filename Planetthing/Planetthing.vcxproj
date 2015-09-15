@@ -222,6 +222,7 @@
     <ClInclude Include="GEupdatecaller.h" />
     <ClInclude Include="GMviewcontroller.h" />
     <ClInclude Include="GEwindow.h" />
+    <ClInclude Include="property.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

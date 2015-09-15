@@ -112,8 +112,8 @@ void GEBlinnPhongShader::useProgram()
 	{
 		int index = light - Lights->begin();
 		glUniform1i(m_lightUniforms[index][GE_UNIFORM_LIGHT_TYPE], (*light)->LightType);
-		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_POSITION], 1, &((*light)->position()).x);
-		glm::vec3 auxVec3 = (*light)->position() - (*light)->Direction;
+		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_POSITION], 1, &((*light)->Position).x);
+		glm::vec3 auxVec3 = (*light)->Position - (*light)->Direction;
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_DIRECTION], 1, &auxVec3.x);
 		glUniform1f(m_lightUniforms[index][GE_UNIFORM_LIGHT_CUTOFF], (*light)->CutOff);
 		auxVec3 = (*light)->DiffuseColor * (*light)->Intensity;
