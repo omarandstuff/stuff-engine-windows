@@ -170,8 +170,9 @@
     <ClCompile Include="GElight.cpp" />
     <ClCompile Include="GEplane.cpp" />
     <ClCompile Include="GEprimitIve.cpp" />
+    <ClCompile Include="GErigidbody.cpp" />
     <ClCompile Include="GEsphere.cpp" />
-    <ClCompile Include="GEview.cpp" />
+    <ClCompile Include="GEscene.cpp" />
     <ClCompile Include="GMmain.cpp" />
     <ClCompile Include="GEmaterial.cpp" />
     <ClCompile Include="GEmesh.cpp" />
@@ -207,10 +208,11 @@
     <ClInclude Include="GEplane.h" />
     <ClInclude Include="GEprimitIve.h" />
     <ClInclude Include="GErenderable.h" />
+    <ClInclude Include="GErigidbody.h" />
     <ClInclude Include="GEsphere.h" />
     <ClInclude Include="GEtriangle.h" />
     <ClInclude Include="GEvertex.h" />
-    <ClInclude Include="GEview.h" />
+    <ClInclude Include="GEscene.h" />
     <ClInclude Include="GEweigh.h" />
     <ClInclude Include="GMmain.h" />
     <ClInclude Include="GEmaterial.h" />

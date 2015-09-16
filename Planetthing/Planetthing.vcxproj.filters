@@ -93,9 +93,6 @@
     <ClCompile Include="GElayer.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
-    <ClCompile Include="GEview.cpp">
-      <Filter>Source Files\View</Filter>
-    </ClCompile>
     <ClCompile Include="GEfbo.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
@@ -128,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="GEinput.cpp">
       <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="GErigidbody.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="GEscene.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -206,9 +209,6 @@
     <ClInclude Include="GElayer.h">
       <Filter>Source Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="GEview.h">
-      <Filter>Source Files\View</Filter>
-    </ClInclude>
     <ClInclude Include="GEfbo.h">
       <Filter>Source Files\View</Filter>
     </ClInclude>
@@ -247,6 +247,12 @@
     </ClInclude>
     <ClInclude Include="property.h">
       <Filter>Source Files\Support</Filter>
+    </ClInclude>
+    <ClInclude Include="GErigidbody.h">
+      <Filter>Source Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GEscene.h">
+      <Filter>Source Files\View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

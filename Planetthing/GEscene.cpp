@@ -1,10 +1,10 @@
-#include "GEview.h"
+#include "GEscene.h"
 
 // ------------------------------------------------------------------------------ //
 // -------------------------------- Initialization ------------------------------ //
 // ------------------------------------------------------------------------------ //
 
-GEView::GEView()
+GEScene::GEScene()
 {
 	// Get the shaders.
 	m_blinnPhongShader = GEBlinnPhongShader::sharedInstance();
@@ -12,23 +12,43 @@ GEView::GEView()
 	m_colorShader = GEColorShader::sharedInstance();
 	m_depthShader = GEDepthShader::sharedInstance();
 
-	// Full Screen
-	m_fullScreen = GEFullScreen::sharedInstance();
+	// Build the physics world.
+	m_broadphase = new btDbvtBroadphase();
+	m_collisionConfiguration = new btDefaultCollisionConfiguration();
+	m_dispatcher = new btCollisionDispatcher(m_collisionConfiguration);
+	m_solver = new btSequentialImpulseConstraintSolver;
+	DynamicsWorld = new btDiscreteDynamicsWorld(m_dispatcher, m_broadphase, m_solver, m_collisionConfiguration);
+
+	// Standard earth grabity.
+	DynamicsWorld->setGravity(btVector3(0.0f, -9.8f, 0.0f));
 }
 
 
-GEView::~GEView()
+GEScene::~GEScene()
 {
+	// Delete the physics world objects
+	delete m_broadphase;
+	delete m_collisionConfiguration;
+	delete m_dispatcher;
+	delete m_solver;
+	delete DynamicsWorld;
 }
 
 // ------------------------------------------------------------------------------ //
-// ------------------------------------ Render ---------------------------------- //
+// -------------------------------- Render / Update ----------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GEView::render()
+void GEScene::update(float time)
+{
+	// Update the dynamics for thhis frame.
+	DynamicsWorld->stepSimulation(time, 5);
+}
+
+void GEScene::render()
 {
 	glClearColor(BackgroundColor.r, BackgroundColor.g, BackgroundColor.b, 1.0f);
 
+	// Calculate every light shadow if it casts them.
 	for (vector<GELight*>::iterator light = m_lights.begin(); light != m_lights.end(); light++)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, (*light)->ShadowMapFBO->FrameBufferID);
@@ -54,8 +74,10 @@ void GEView::render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glViewport(0, 0, Width, Height);
 
+	// View projection matric based the camera projection and position of this scene.
 	glm::mat4 matrix = Camera.ProjectionMatrix * (glm::mat4&)Camera.ModelMatrix;
 
+	// Pass it to the shaders that need it.
 	m_blinnPhongShader->ViewProjectionMatrix = &matrix;
 	m_blinnPhongShader->Lights = &m_lights;
 	m_colorShader->ViewProjectionMatrix = &matrix;
@@ -65,7 +87,7 @@ void GEView::render()
 		layer->second->render(GE_RENDER_MODE_NORMAL);
 }
 
-void GEView::layout(int width, int height)
+void GEScene::layout(int width, int height)
 {
 	Width = width;
 	Height = height;
@@ -76,7 +98,7 @@ void GEView::layout(int width, int height)
 // ----------------------------------- Layers ----------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-GELayer* GEView::addLayerWithName(wstring name)
+GELayer* GEScene::addLayerWithName(wstring name)
 {
 	if (Layers[name] != 0) return 0;
 
@@ -85,27 +107,29 @@ GELayer* GEView::addLayerWithName(wstring name)
 
 	Layers[name] = newLayer;
 
+	newLayer->DynamicsWorld = DynamicsWorld;
+
 	return newLayer;
 }
 
-void GEView::addLayerWithLayer(GELayer* layer)
+void GEScene::addLayerWithLayer(GELayer* layer)
 {
 	GELayer* currentLayer = Layers[layer->Name];
 	if (currentLayer == 0)
 		Layers[layer->Name] = layer;
 }
 
-GELayer* GEView::getLayerWithName(wstring name)
+GELayer* GEScene::getLayerWithName(wstring name)
 {
 	return Layers[name];
 }
 
-void GEView::removeLayerWithName(wstring name)
+void GEScene::removeLayerWithName(wstring name)
 {
 	Layers.erase(name);
 }
 
-void GEView::removeLayer(GELayer* layer)
+void GEScene::removeLayer(GELayer* layer)
 {
 	Layers.erase(layer->Name);
 }
@@ -114,12 +138,12 @@ void GEView::removeLayer(GELayer* layer)
 // ----------------------------------- Lights ----------------------------------- //
 // ------------------------------------------------------------------------------ //
 
-void GEView::addLight(GELight* light)
+void GEScene::addLight(GELight* light)
 {
 	m_lights.push_back(light);
 }
 
-void GEView::removeLight(GELight* light)
+void GEScene::removeLight(GELight* light)
 {
 	for (vector<GELight*>::iterator _light = m_lights.begin(); _light != m_lights.end(); _light++)
 	{
@@ -131,7 +155,7 @@ void GEView::removeLight(GELight* light)
 	}
 }
 
-void GEView::cleanLights()
+void GEScene::cleanLights()
 {
 	m_lights.clear();
 }

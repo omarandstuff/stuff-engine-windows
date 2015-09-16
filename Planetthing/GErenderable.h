@@ -5,6 +5,7 @@
 #include "GEtextureshader.h"
 #include "GEdepthshader.h"
 #include "GEcolorshader.h"
+#include <btBulletDynamicsCommon.h>
 
 class GERenderable : public GE3DObject
 {

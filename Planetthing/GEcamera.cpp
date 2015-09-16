@@ -59,4 +59,5 @@ void GECamera::setViewSize(float width, float height)
 	ViewWidth = width;
 	ViewHeight = height;
 	m_projectionChange = true;
+	update(0.0f);
 }

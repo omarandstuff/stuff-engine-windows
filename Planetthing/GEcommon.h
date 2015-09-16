@@ -142,6 +142,16 @@ enum GE_INPUT_XBOX
 	GE_INPUT_XBOX_RIGHT_STICK
 };
 
+enum GE_BODY_TYPE
+{
+	GE_BODY_TYPE_CUBE,
+	GE_BODY_TYPE_SPHERE,
+	GE_BODY_TYPE_CAPSULE,
+	GE_BODY_TYPE_PLANE,
+	GE_BODY_TYPE_CYLINDRE,
+	GE_BODY_TYPE_MESH
+};
+
 // -------------------------------------------- //
 // ------------------- COLORS ----------------- //
 // -------------------------------------------- //

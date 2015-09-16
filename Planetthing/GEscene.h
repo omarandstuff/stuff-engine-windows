@@ -8,11 +8,11 @@
 #include "GEfullscreen.h"
 #include "GEcamera.h"
 
-class GEView
+class GEScene
 {
 public:
-	GEView();
-	~GEView();
+	GEScene();
+	~GEScene();
 
 	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
@@ -23,6 +23,7 @@ public:
 	map<wstring, GELayer*> Layers;
 	int Width, Height;
 	GECamera Camera;
+	btDiscreteDynamicsWorld* DynamicsWorld;
 
 	// -------------------------------------------- //
 	// ------------------ Layers ------------------ //
@@ -42,9 +43,10 @@ public:
 	void cleanLights();
 
 	// -------------------------------------------- //
-	// ------------------ Render ------------------ //
+	// -------------- Render / Update ------------- //
 	// -------------------------------------------- //
 public:
+	void update(float time);
 	void render();
 	void layout(int width, int height);
 
@@ -59,7 +61,10 @@ private:
 
 	vector<GELight*> m_lights;
 
-	GEFullScreen* m_fullScreen;
+	btBroadphaseInterface* m_broadphase;
+	btDefaultCollisionConfiguration* m_collisionConfiguration;
+	btCollisionDispatcher* m_dispatcher;
+	btSequentialImpulseConstraintSolver* m_solver;
 
 	// -------------------------------------------- //
 	// --------------- 16B aligment --------------- //

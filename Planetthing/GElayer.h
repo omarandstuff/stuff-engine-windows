@@ -15,6 +15,7 @@ public:
 	bool Visible;
 	wstring Name;
 	unsigned int NumberOfObjects;
+	btDiscreteDynamicsWorld* DynamicsWorld;
 
 	// -------------------------------------------- //
 	// ------------------ Render ------------------ //

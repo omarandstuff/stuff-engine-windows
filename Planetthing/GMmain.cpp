@@ -47,7 +47,7 @@ GMMain::GMMain()
 	//light2->Intensity = 1.0f;
 	//light2->CastShadows = true;
 
-	view = new GEView;
+	view = new GEScene;
 	view->BackgroundColor = color_black;
 	view->Camera.Position = glm::vec3(0.0, 4.0f, 12.0f);
 	view->Camera.Orientation = glm::vec3(-2.0f, 0.0f, 0.0f);
@@ -92,12 +92,11 @@ GMMain::GMMain()
 	solver = new btSequentialImpulseConstraintSolver;
 	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
 
-	dynamicsWorld->setGravity(btVector3(0.0f, -9.8f, 0.0f));
+	dynamicsWorld->setGravity(btVector3(0.0f, 0.0f, 0.0f));
 
 	groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-	fallShape = new btSphereShape(1.0f);
-
-	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+	
+	groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 
 	btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, groundMotionState, groundShape, btVector3(0, 0, 0));
 	groundRigidBodyCI.m_restitution = 0.6f;
@@ -110,6 +109,7 @@ GMMain::GMMain()
 
 	btScalar mass = 1;
 	btVector3 fallInertia(0, 0, 0);
+	fallShape = new btSphereShape(1.0f);
 	fallShape->calculateLocalInertia(mass, fallInertia);
 
 	btRigidBody::btRigidBodyConstructionInfo fallRigidBodyCI(mass, fallMotionState, fallShape, fallInertia);
@@ -152,29 +152,8 @@ void GMMain::update(float time)
 
 	dynamicsWorld->stepSimulation(time, 5);
 
-	btTransform trans;
-	fallRigidBody->getMotionState()->getWorldTransform(trans);
-
-	btScalar matrix[16];
-
-	trans.getOpenGLMatrix(matrix);
-	btQuaternion rotation = trans.getRotation();
-
-	glm::quat rot = glm::make_quat(&rotation.getX());
-
-
-	//sphere->modelMatrix(glm::make_mat4(matrix));
-	//sphere->m_rotationMatrix = glm::toMat4(rot);
-
-
-	cubeRigidBody->getMotionState()->getWorldTransform(trans);
-
-	trans.getOpenGLMatrix(matrix);
-
-	rotation = trans.getRotation();
-	rot = glm::make_quat(&rotation.getX());
-
-	//cube->modelMatrix(glm::make_mat4(matrix));
+	
+	
 	//cube->m_rotationMatrix = glm::toMat4(rot);
 
 
@@ -189,12 +168,45 @@ void GMMain::update(float time)
 
 void GMMain::preUpdate()
 {
+	btTransform trans;
+	cubeRigidBody->getMotionState()->getWorldTransform(trans);
 
+
+	btVector3 pos1 = trans.getOrigin();
+
+	btQuaternion qi(10, 10, 10);
+
+
+	btTransform trans2(qi, btVector3(0.5, 15, 0));
+
+	btMatrix3x3 caca;
 }
 
 void GMMain::posUpdate()
 {
+	btTransform trans;
+	fallRigidBody->getMotionState()->getWorldTransform(trans);
 
+	btScalar matrix[16];
+
+	trans.getOpenGLMatrix(matrix);
+	btQuaternion rotation = trans.getRotation();
+
+	glm::quat rot = glm::make_quat(&rotation.getX());
+
+
+	sphere->ModelMatrix = glm::make_mat4(matrix);
+	//sphere->m_rotationMatrix = glm::toMat4(rot);
+
+
+	cubeRigidBody->getMotionState()->getWorldTransform(trans);
+
+	trans.getOpenGLMatrix(matrix);
+
+	rotation = trans.getRotation();
+	rot = glm::make_quat(&rotation.getX());
+
+	cube->ModelMatrix = glm::make_mat4(matrix);
 }
 
 // ------------------------------------------------------------------------------ //

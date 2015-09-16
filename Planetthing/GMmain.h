@@ -5,9 +5,7 @@
 #include "GEplane.h"
 #include "GEsphere.h"
 #include "GEcube.h"
-#include "GEview.h"
-#include <btBulletDynamicsCommon.h>
-#include <Bullet3Dynamics\ConstraintSolver\b3TypedConstraint.h>
+#include "GEscene.h"
 
 class GMMain : public GEUpdateProtocol, public GERenderProtocol, public GEInputXBoxControllerProtocol, public GEInputMouseProtocol
 {
@@ -60,22 +58,21 @@ private:
 	GEPlane* plane;
 	GESphere* sphere;
 	GECube* cube;
-	GEView* view;
+	GEScene* view;
 	GECamera* camera;
 	GEFullScreen* fullScreen;
-
-
 
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
+
 	btCollisionShape* groundShape;
-	btCollisionShape* fallShape;
 	btDefaultMotionState* groundMotionState;
 	btRigidBody* groundRigidBody;
 
+	btCollisionShape* fallShape;
 	btDefaultMotionState* fallMotionState;
 	btRigidBody* fallRigidBody;
 

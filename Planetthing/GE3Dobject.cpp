@@ -36,7 +36,7 @@ void GE3DObject::update(float time)
 
 	if (m_orientationChanged)
 	{
-
+		m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orientation.x), glm::radians(m_orientation.y), glm::radians(m_orientation.z)) * (m_reverse ? -1.0f : 1.0f)));
 		MatrixChanged = true;
 	}
 
@@ -48,7 +48,7 @@ void GE3DObject::update(float time)
 
 	if (m_orbitChanged)
 	{
-
+		m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orbit.x), glm::radians(m_orbit.y), glm::radians(m_orbit.z)) * (m_reverse ? -1.0f : 1.0f)));
 		MatrixChanged = true;
 	}
 
@@ -64,14 +64,10 @@ void GE3DObject::update(float time)
 	{
 		if (m_parent->MatrixChanged)
 		{
-			//if (m_reverse)
-				//m_finalMatrix *= m_parent->ModelMatrix;
-			//else
-			//{
-				//glm::mat4 matrix = m_parent->ModelMatrix;
-				//m_finalMatrix = matrix * m_finalMatrix;
-			//}
-				
+			if (m_reverse)
+				m_finalMatrix *= (glm::mat4&)m_parent->ModelMatrix;
+			else
+				m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_finalMatrix;
 		}
 			
 	}
