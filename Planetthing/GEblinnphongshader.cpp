@@ -120,7 +120,7 @@ void GEBlinnPhongShader::useProgram()
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_POSITION], 1, &((glm::vec3&)(*light)->Position).x);
 		
 		// Light direction (Position to look at vector).
-		glm::vec3 auxVec3 = (*light)->Position - (*light)->LookAt;
+		glm::vec3 auxVec3 = (glm::vec3&)(*light)->Position - (glm::vec3&)(*light)->LookAt;
 		glUniform3fv(m_lightUniforms[index][GE_UNIFORM_LIGHT_DIRECTION], 1, &auxVec3.x);
 
 		// Cone radious if it is a spot lihgt.

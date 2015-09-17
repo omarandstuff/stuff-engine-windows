@@ -52,15 +52,13 @@ public:
 private:
 	unsigned int m_screenWidth, m_screenHeight;
 
-	GEAnimation* animation;
 	GELight* light;
-	GEAnimatedModel* model;
-	GEPlane* plane;
-	GESphere* sphere;
-	GECube* cube;
+	GEAnimation* animation;
+	GEAnimatedModel* player;
+	GESphere* earth;
+	GECube* cubes[10];
+
 	GEScene* view;
-	GECamera* camera;
-	GEFullScreen* fullScreen;
 
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
@@ -68,15 +66,13 @@ private:
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
 
-	btCollisionShape* groundShape;
-	btDefaultMotionState* groundMotionState;
-	btRigidBody* groundRigidBody;
 
-	btCollisionShape* fallShape;
-	btDefaultMotionState* fallMotionState;
-	btRigidBody* fallRigidBody;
+	btCollisionShape* earthShape;
+	btRigidBody* earthRigidBody;
 
-	btCollisionShape* cubeShape;
-	btDefaultMotionState* cubeMotionState;
-	btRigidBody* cubeRigidBody;
+	btCollisionShape* boxshape;
+	btRigidBody* boxRigidBodies[10];
+
+	btCollisionShape* playerShape;
+	btRigidBody* playerRigidBody;
 };
