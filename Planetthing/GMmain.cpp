@@ -46,7 +46,7 @@ GMMain::GMMain()
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 
-	earth = new GESphere(20.0f, 8);
+	earth = new GESphere(20.0f, 12);
 	earth->Material.DiffuseColor = color_greenyellow;
 	earth->Material.Shininess = 1024.0f;
 	earth->Wireframe = true;
@@ -55,7 +55,7 @@ GMMain::GMMain()
 	layer->addObject(earth);
 
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 		cubes[i]->Material.DiffuseColor = color_greenyellow;
@@ -74,20 +74,21 @@ GMMain::GMMain()
 
 	// Earth
 	earthShape = new btSphereShape(20);
-	btDefaultMotionState* auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
+	btDefaultMotionState* auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
 	btRigidBody::btRigidBodyConstructionInfo earthRigidBodyCI(0, auxMs, earthShape, btVector3(0, 0, 0));
 	earthRigidBodyCI.m_restitution = 0.6f;
 	earthRigidBody = new btRigidBody(earthRigidBodyCI);
 
 	dynamicsWorld->addRigidBody(earthRigidBody);
 
+	btVector3 boxInertia;
 	boxshape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
-	boxshape->calculateLocalInertia(1, btVector3(0, 0, 0));
+	boxshape->calculateLocalInertia(1, boxInertia);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 200; i++)
 	{
-		auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0, 30, 0)));
-		btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(1, auxMs, boxshape, btVector3(0, 0, 0));
+		auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0, 50, 0)));
+		btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(1, auxMs, boxshape, boxInertia);
 		cubeRigidBodyCI.m_restitution = 0.7f;
 		cubeRigidBodyCI.m_friction = 0.3f;
 		boxRigidBodies[i] = new btRigidBody(cubeRigidBodyCI);
@@ -115,7 +116,7 @@ void GMMain::preUpdate()
 	btVector3 direction;
 	btRigidBody* current;
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		current = boxRigidBodies[i];
 		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
@@ -129,7 +130,7 @@ void GMMain::posUpdate()
 	btTransform trans;
 	btScalar matrix[16];
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 200; i++)
 	{
 		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(matrix);
