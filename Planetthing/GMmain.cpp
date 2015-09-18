@@ -39,8 +39,7 @@ GMMain::GMMain()
 
 	view = new GEScene;
 	view->BackgroundColor = color_black;
-	view->Camera.Position = glm::vec3(0.0, 30.0f, 40.0f);
-	view->Camera.Orientation = glm::vec3(-2.0f, 0.0f, 0.0f);
+	view->Camera.Position = glm::vec3(0.0, 0.0f, 20.0f);
 
 	view->addLight(light);
 
@@ -55,7 +54,7 @@ GMMain::GMMain()
 	layer->addObject(earth);
 
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 		cubes[i]->Material.DiffuseColor = color_greenyellow;
@@ -63,6 +62,13 @@ GMMain::GMMain()
 		cubes[i]->Wireframe = false;
 		layer->addObject(cubes[i]);
 	}
+
+	player = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
+	player->Material.DiffuseColor = color_blue_3;
+	player->Material.Shininess = 1024.0f;
+	player->Wireframe = false;
+	player->Position = glm::vec3(0, 0, 30);
+	layer->addObject(player);
 
 	//// World
 	broadphase = new btDbvtBroadphase();
@@ -85,15 +91,26 @@ GMMain::GMMain()
 	boxshape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
 	boxshape->calculateLocalInertia(1, boxInertia);
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 20; i++)
 	{
-		auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0, 50, 0)));
+		auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0, 500, 0)));
 		btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(1, auxMs, boxshape, boxInertia);
 		cubeRigidBodyCI.m_restitution = 0.7f;
 		cubeRigidBodyCI.m_friction = 0.3f;
 		boxRigidBodies[i] = new btRigidBody(cubeRigidBodyCI);
 		dynamicsWorld->addRigidBody(boxRigidBodies[i]);
 	}
+
+	playerShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
+	auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 21)));
+	btRigidBody::btRigidBodyConstructionInfo playerRigidBodyCI(1, auxMs, boxshape, boxInertia);
+	playerRigidBodyCI.m_restitution = 0.7f;
+	playerRigidBodyCI.m_friction = 0.3f;
+	playerRigidBody = new btRigidBody(playerRigidBodyCI);
+	//playerRigidBody->setAngularFactor(btVector3(0.0f, 0.0f, 0.0f));
+	dynamicsWorld->addRigidBody(playerRigidBody);
+
+	view->Camera.Parent = player;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -116,13 +133,19 @@ void GMMain::preUpdate()
 	btVector3 direction;
 	btRigidBody* current;
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		current = boxRigidBodies[i];
 		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
 		direction = trans.getOrigin().normalize() * -9.8f;
 		boxRigidBodies[i]->setGravity(direction);
 	}
+
+	playerRigidBody->getMotionState()->getWorldTransform(trans);
+	direction = trans.getOrigin().normalize() * -9.8f;
+	playerRigidBody->setGravity(direction);
+
+	player->MatrixChanged = true;
 }
 
 void GMMain::posUpdate()
@@ -130,12 +153,16 @@ void GMMain::posUpdate()
 	btTransform trans;
 	btScalar matrix[16];
 
-	for (int i = 0; i < 200; i++)
+	for (int i = 0; i < 20; i++)
 	{
 		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
 		trans.getOpenGLMatrix(matrix);
 		cubes[i]->ModelMatrix = glm::make_mat4(matrix);
 	}
+
+	playerRigidBody->getMotionState()->getWorldTransform(trans);
+	trans.getOpenGLMatrix(matrix);
+	player->ModelMatrix = glm::make_mat4(matrix);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -179,7 +206,19 @@ void GMMain::xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, floa
 
 void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis)
 {
+	if (stick == GE_INPUT_XBOX_RIGHT_STICK)
+	{
+		glm::vec3 rotation = view->Camera.Orientation;
 
+		rotation.x = yAxis * 90.0f;
+		rotation.y = xAxis * -90.0f;
+
+		//view->Camera.Orientation = rotation;
+	}
+	if (stick == GE_INPUT_XBOX_LEFT_STICK)
+	{
+		playerRigidBody->applyCentralForce(btVector3(0.0, 100.0, 0.0));
+	}
 }
 
 // ------------------------------------------------------------------------------ //
@@ -193,10 +232,5 @@ void GMMain::mouseMove(float coordX, float coordY)
 
 void GMMain::mouseChange(float deltaX, float deltaY)
 {
-	glm::vec3 rotation = view->Camera.Orientation;
-
-	rotation.x -= deltaY / 4.0f;
-	rotation.y -= deltaX / 4.0f;
-
-	view->Camera.Orientation = rotation;
+	
 }

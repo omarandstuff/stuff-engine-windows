@@ -3,7 +3,7 @@
 GE3DObject::GE3DObject()
 {
 	// Identity all transformations
-	m_translationMatrix = m_orientationMatrix = m_scaleMatrix = m_orbitMatrix = m_finalMatrix = glm::mat4(1.0f);
+	m_translationMatrix = m_orientationMatrix = m_scaleMatrix = m_orbitMatrix = m_finalMatrix = m_localMatrix = glm::mat4(1.0f);
 
 	// Matrix order multiplication.
 	m_reverse = false;
@@ -54,10 +54,10 @@ void GE3DObject::update(float time)
 
 	if (MatrixChanged)
 	{
-		if(m_reverse)
-			m_finalMatrix = m_orientationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
+		if (m_reverse)
+			m_localMatrix = m_orientationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
 		else
-			m_finalMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_orientationMatrix;
+			m_localMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_orientationMatrix;
 	}
 
 	if (m_parent)
@@ -65,11 +65,14 @@ void GE3DObject::update(float time)
 		if (m_parent->MatrixChanged)
 		{
 			if (m_reverse)
-				m_finalMatrix *= (glm::mat4&)m_parent->ModelMatrix;
+				m_finalMatrix = m_localMatrix * glm::inverse((glm::mat4&)m_parent->ModelMatrix);
 			else
-				m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_finalMatrix;
+				m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_localMatrix;
 		}
-			
+	}
+	else
+	{
+		m_finalMatrix = m_localMatrix;
 	}
 }
 

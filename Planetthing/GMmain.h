@@ -54,9 +54,10 @@ private:
 
 	GELight* light;
 	GEAnimation* animation;
-	GEAnimatedModel* player;
+	GEAnimatedModel* model;
 	GESphere* earth;
-	GECube* cubes[200];
+	GECube* cubes[20];
+	GECube* player;
 
 	GEScene* view;
 
@@ -71,7 +72,7 @@ private:
 	btRigidBody* earthRigidBody;
 
 	btCollisionShape* boxshape;
-	btRigidBody* boxRigidBodies[200];
+	btRigidBody* boxRigidBodies[20];
 
 	btCollisionShape* playerShape;
 	btRigidBody* playerRigidBody;

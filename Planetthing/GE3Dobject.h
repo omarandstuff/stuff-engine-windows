@@ -34,6 +34,7 @@ protected:
 	bool m_reverse;
 
 	glm::mat4 m_finalMatrix;
+	glm::mat4 m_localMatrix;
 	glm::vec3 m_position;
 	glm::vec3 m_orientation;
 	glm::vec3 m_scale;
