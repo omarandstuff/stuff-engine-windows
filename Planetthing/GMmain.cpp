@@ -39,7 +39,8 @@ GMMain::GMMain()
 
 	view = new GEScene;
 	view->BackgroundColor = color_black;
-	view->Camera.Position = glm::vec3(0.0, 0.0f, 20.0f);
+	view->Camera.Position = glm::vec3(0.0f, 20.0f, 0.0f);
+	view->Camera.Orientation = glm::vec3(-90.0f, 0.0f, 0.0f);
 
 	view->addLight(light);
 
@@ -98,11 +99,11 @@ GMMain::GMMain()
 		cubeRigidBodyCI.m_restitution = 0.7f;
 		cubeRigidBodyCI.m_friction = 0.3f;
 		boxRigidBodies[i] = new btRigidBody(cubeRigidBodyCI);
-		dynamicsWorld->addRigidBody(boxRigidBodies[i]);
+		//dynamicsWorld->addRigidBody(boxRigidBodies[i]);
 	}
 
 	playerShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
-	auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 21)));
+	auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 21, 0)));
 	btRigidBody::btRigidBodyConstructionInfo playerRigidBodyCI(1, auxMs, boxshape, boxInertia);
 	playerRigidBodyCI.m_restitution = 0.7f;
 	playerRigidBodyCI.m_friction = 0.3f;
@@ -210,14 +211,14 @@ void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xA
 	{
 		glm::vec3 rotation = view->Camera.Orientation;
 
-		rotation.x = yAxis * 90.0f;
+		rotation.x = -90.0f + yAxis * 90.0f;
 		rotation.y = xAxis * -90.0f;
 
-		//view->Camera.Orientation = rotation;
+		view->Camera.Orientation = rotation;
 	}
 	if (stick == GE_INPUT_XBOX_LEFT_STICK)
 	{
-		playerRigidBody->applyCentralForce(btVector3(0.0, 100.0, 0.0));
+		playerRigidBody->applyCentralForce(btVector3(100.0f * xAxis, 100.0f * yAxis, 0.0f));
 	}
 }
 
