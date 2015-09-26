@@ -43,7 +43,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + j;
-			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, radious, index, false, i == segments2 && j == segments2);
+			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, index, false, i == segments2 && j == segments2);
 		}
 	}
 
@@ -57,7 +57,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + (j - segments2);
-			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, radious, vertexOffset +  index, false, i == segments2 && j == segments2);
+			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, vertexOffset +  index, false, i == segments2 && j == segments2);
 		}
 	}
 
@@ -71,7 +71,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + j;
-			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, j == segments2, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, vertexOffset + index, j == segments2, false);
 		}
 	}
 
@@ -85,7 +85,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + (j - segments2);
-			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, false, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f, -1.0f + segmentStride * i, vertexOffset + index, false, false);
 		}
 	}
 
@@ -101,7 +101,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + j;
-			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, false, i == segments2 && j == segments2);
+			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, vertexOffset + index, false, i == segments2 && j == segments2);
 		}
 	}
 
@@ -115,7 +115,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + (j - segments2);
-			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, false, i == segments2 && j == segments2);
+			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, vertexOffset + index, false, i == segments2 && j == segments2);
 		}
 	}
 
@@ -129,7 +129,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + j;
-			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, j == segments2, false);
+			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, vertexOffset + index, j == segments2, false);
 		}
 	}
 
@@ -143,7 +143,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + (j - segments2);
-			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, radious, vertexOffset + index, false, false);
+			processVertex(1.0f - segmentStride * j, -1.0f, -1.0f + segmentStride * i, vertexOffset + index, false, false);
 		}
 	}
 
@@ -157,7 +157,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments; j++)
 		{
 			unsigned int index = (segments + 1) * i + j;
-			processVertex(-1.0f, 1.0f - segmentStride * i, -1.0f + segmentStride * j, radious, vertexOffset + index, false, false);
+			processVertex(-1.0f, 1.0f - segmentStride * i, -1.0f + segmentStride * j, vertexOffset + index, false, false);
 		}
 	}
 
@@ -171,7 +171,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments; j++)
 		{
 			unsigned int index = (segments + 1) * i + j;
-			processVertex(1.0f, 1.0f - segmentStride * i, 1.0f - segmentStride * j, radious, vertexOffset + index, false, false);
+			processVertex(1.0f, 1.0f - segmentStride * i, 1.0f - segmentStride * j, vertexOffset + index, false, false);
 		}
 	}
 
@@ -185,7 +185,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments; j++)
 		{
 			unsigned int index = (segments + 1) * i + j;
-			processVertex(1.0f - segmentStride * j, 1.0f - segmentStride * i, -1.0f, radious, vertexOffset + index, false, false);
+			processVertex(1.0f - segmentStride * j, 1.0f - segmentStride * i, -1.0f, vertexOffset + index, false, false);
 		}
 	}
 
@@ -201,7 +201,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + j;
-			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f , radious, vertexOffset + index, j == segments2, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, vertexOffset + index, j == segments2, false);
 		}
 	}
 
@@ -215,7 +215,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * i + (j - segments2);
-			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, radious, vertexOffset + index, false, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, vertexOffset + index, false, false);
 		}
 	}
 
@@ -229,7 +229,7 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = 0; j <= segments2; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + j;
-			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, radious, vertexOffset + index, j == segments2, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, vertexOffset + index, j == segments2, false);
 		}
 	}
 
@@ -243,17 +243,19 @@ void GESphere::generate(float radious, unsigned int segments)
 		for (unsigned int j = segments2; j <= segments; j++)
 		{
 			unsigned int index = (segments2 + 1) * (i - segments2) + (j - segments2);
-			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, radious, vertexOffset + index, false, false);
+			processVertex(-1.0f + segmentStride * j, 1.0f - segmentStride * i, 1.0f, vertexOffset + index, false, false);
 		}
 	}
 
 	processIndexArea(vertexOffset, indexOffset, segments2);
 
+	m_scale = glm::vec3(radious);
+	m_scaleChanged = true;
 
 	generateBuffers();
 }
 
-void GESphere::processVertex(float x, float y, float z, float radious, unsigned int index, bool lastU, bool lastV)
+void GESphere::processVertex(float x, float y, float z, unsigned int index, bool lastU, bool lastV)
 {
 	float pi = glm::pi<float>();
 
@@ -261,11 +263,11 @@ void GESphere::processVertex(float x, float y, float z, float radious, unsigned 
 	float cubeY2 = y * y;
 	float cubeZ2 = z * z;
 
-	m_vertexBuffer[index * 8] = radious * x * glm::sqrt(1.0f - cubeY2 * 0.5f - cubeZ2 * 0.5f + cubeY2 * cubeZ2 / 3.0f);
-	m_vertexBuffer[index * 8 + 1] = radious * y * glm::sqrt(1.0f - cubeZ2 * 0.5f - cubeX2 * 0.5f + cubeZ2 * cubeX2 / 3.0f);
-	m_vertexBuffer[index * 8 + 2] = radious * z * glm::sqrt(1.0f - cubeX2 * 0.5f - cubeY2  * 0.5f + cubeX2 * cubeY2 / 3.0f);
+	m_vertexBuffer[index * 8] = x * glm::sqrt(1.0f - cubeY2 * 0.5f - cubeZ2 * 0.5f + cubeY2 * cubeZ2 / 3.0f);
+	m_vertexBuffer[index * 8 + 1] = y * glm::sqrt(1.0f - cubeZ2 * 0.5f - cubeX2 * 0.5f + cubeZ2 * cubeX2 / 3.0f);
+	m_vertexBuffer[index * 8 + 2] = z * glm::sqrt(1.0f - cubeX2 * 0.5f - cubeY2  * 0.5f + cubeX2 * cubeY2 / 3.0f);
 
-	glm::vec3 currentNormal = glm::normalize(glm::vec3(m_vertexBuffer[index * 8], m_vertexBuffer[index * 8 + 1], m_vertexBuffer[index * 8 + 2]));
+	glm::vec3 currentNormal = glm::vec3(m_vertexBuffer[index * 8], m_vertexBuffer[index * 8 + 1], m_vertexBuffer[index * 8 + 2]);
 
 	m_vertexBuffer[index * 8 + 5] = currentNormal.x;
 	m_vertexBuffer[index * 8 + 6] = currentNormal.y;

@@ -53,8 +53,7 @@ public:
 	Property<GE3DObject, glm::vec3&> LookAt;
 	Property<GE3DObject, GE3DObject*> Parent;
 	Property<GE3DObject, bool> UseLookAt;
-
-private:
+	btRigidBody* RigidBody;
 
 	// -------------------------------------------- //
 	// ------------ Getters / Setters ------------- //

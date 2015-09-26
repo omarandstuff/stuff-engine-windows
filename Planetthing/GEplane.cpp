@@ -28,11 +28,11 @@ void GEPlane::generate(float width, float height, unsigned int segments_w, unsig
 	m_vertexBuffer = new float[m_vertexCount];
 	m_indexBuffer = new unsigned int[m_indexCount];
 
-	float wOrigin = width / 2.0f;
-	float hOrigin = height / 2.0f;
+	float wOrigin = 1.0f / 2.0f;
+	float hOrigin = 1.0f / 2.0f;
 
-	float wStride = width / segments_w;
-	float hStride = height / segments_h;
+	float wStride = 1.0f / segments_w;
+	float hStride = 1.0f / segments_h;
 
 	for (unsigned int i = 0; i <= segments_h; i++)
 	{
@@ -88,6 +88,15 @@ void GEPlane::generate(float width, float height, unsigned int segments_w, unsig
 			m_indexBuffer[index * 6 + 5] = (segments_w + 1) * (i + 1) + j + 1;
 		}
 	}
+
+	if (direction.y != 0)
+		m_scale = { width, 0.0f, height };
+	else if (direction.x != 0)
+		m_scale = { 0.0f, height, width };
+	else if (direction.z != 0)
+		m_scale = { width, height, 0.0f };
+
+	m_scaleChanged = true;
 
 	generateBuffers();
 }

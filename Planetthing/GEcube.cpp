@@ -27,40 +27,43 @@ void GECube::generate(float width, float height, float depth, unsigned int segme
 	m_vertexBuffer = new float[m_vertexCount];
 	m_indexBuffer = new unsigned int[m_indexCount];
 
-	float xOrigin = width / 2.0f;
-	float yOrigin = height / 2.0f;
-	float zOrigin = depth / 2.0f;
+	float xOrigin = 1.0 / 2.0f;
+	float yOrigin = 1.0 / 2.0f;
+	float zOrigin = 1.0 / 2.0f;
 
 	unsigned int vertexOffset = 0;
 	unsigned int indexOffset = 0;
 
 	// Top
-	createPlane(width, depth, segments_x, segments_z, yOrigin, { 0.0f, 1.0f, 0.0f }, 0, 0);
+	createPlane(1.0f, 1.0, segments_x, segments_z, yOrigin, { 0.0f, 1.0f, 0.0f }, 0, 0);
 
 	// Bottom
 	vertexOffset = (segments_x + 1) * (segments_z + 1);
 	indexOffset = segments_x * segments_z;
-	createPlane(width, depth, segments_x, segments_z, yOrigin, { 0.0f, -1.0f, 0.0f }, vertexOffset, indexOffset);
+	createPlane(1.0f, 1.0f, segments_x, segments_z, yOrigin, { 0.0f, -1.0f, 0.0f }, vertexOffset, indexOffset);
 
 	// Left
 	vertexOffset = (segments_x + 1) * (segments_z + 1) * 2;
 	indexOffset = segments_x * segments_z * 2;
-	createPlane(depth, height, segments_z, segments_y, xOrigin, { -1.0f, 0.0f, 0.0f }, vertexOffset, indexOffset);
+	createPlane(1.0f, 1.0f, segments_z, segments_y, xOrigin, { -1.0f, 0.0f, 0.0f }, vertexOffset, indexOffset);
 
 	//Right
 	vertexOffset = (segments_x + 1) * (segments_z + 1) * 2 + (segments_z + 1) * (segments_y + 1);
 	indexOffset = segments_x * segments_z * 2 + segments_z * segments_y;
-	createPlane(depth, height, segments_z, segments_y, xOrigin, { 1.0f, 0.0f, 0.0f }, vertexOffset, indexOffset);
+	createPlane(1.0f, 1.0f, segments_z, segments_y, xOrigin, { 1.0f, 0.0f, 0.0f }, vertexOffset, indexOffset);
 
 	//Back
 	vertexOffset = ((segments_x + 1) * (segments_z + 1) + (segments_z + 1) * (segments_y + 1)) * 2;
 	indexOffset = (segments_x * segments_z + segments_z * segments_y) * 2;
-	createPlane(width, height, segments_x, segments_y, zOrigin, { 0.0f, 0.0f, -1.0f }, vertexOffset, indexOffset);
+	createPlane(1.0f, 1.0f, segments_x, segments_y, zOrigin, { 0.0f, 0.0f, -1.0f }, vertexOffset, indexOffset);
 
 	//Back
 	vertexOffset = ((segments_x + 1) * (segments_z + 1) + (segments_z + 1) * (segments_y + 1)) * 2 + (segments_x + 1) * (segments_y + 1);
 	indexOffset = (segments_x * segments_z + segments_z * segments_y) * 2 + segments_x * segments_y;
-	createPlane(width, height, segments_x, segments_y, zOrigin, { 0.0f, 0.0f, 1.0f }, vertexOffset, indexOffset);
+	createPlane(1.0f, 1.0f, segments_x, segments_y, zOrigin, { 0.0f, 0.0f, 1.0f }, vertexOffset, indexOffset);
+
+	m_scale = { width, height, depth };
+	m_scaleChanged = true;
 
 	generateBuffers();
 }

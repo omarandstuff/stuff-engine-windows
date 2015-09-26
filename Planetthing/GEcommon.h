@@ -16,7 +16,9 @@
 #include <gtx\compatibility.hpp>
 #include <gtx\quaternion.hpp>
 #pragma managed(pop)
+
 #include "property.h"
+#include <btBulletDynamicsCommon.h>
 
 using namespace std;
 

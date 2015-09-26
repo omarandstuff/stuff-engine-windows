@@ -18,6 +18,6 @@ public:
 	// -------------- Private memvers ------------- //
 	// -------------------------------------------- //
 private:
-	void processVertex(float x, float y, float z, float radious, unsigned int index, bool lastU, bool lastV);
+	void processVertex(float x, float y, float z, unsigned int index, bool lastU, bool lastV);
 	void processIndexArea(unsigned int vertexOffset, unsigned int indexOffset, unsigned int areaSegments);
 };
