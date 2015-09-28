@@ -65,6 +65,10 @@ void GECube::generate(float width, float height, float depth, unsigned int segme
 	m_scale = { width, height, depth };
 	m_scaleChanged = true;
 
+	m_width = width;
+	m_height = height;
+	m_depth = depth;
+
 	generateBuffers();
 }
 
@@ -130,4 +134,13 @@ void GECube::createPlane(float width, float height, unsigned int segments_w, uns
 			m_indexBuffer[index * 6 + 5] = vertexOffset + (segments_w + 1) * (i + 1) + j + 1;
 		}
 	}
+}
+
+// ------------------------------------------------------------------------------ //
+// --------------------------------- Rigidbody ---------------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GECube::makeRigidBody(bool kinematic)
+{
+	makeCubeRigidBody(m_width, m_height, m_depth, kinematic);
 }

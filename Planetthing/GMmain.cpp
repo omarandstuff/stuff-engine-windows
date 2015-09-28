@@ -38,80 +38,39 @@ GMMain::GMMain()
 	light->CastShadows = true;
 
 	view = new GEScene;
-	view->BackgroundColor = color_black;
-	view->Camera.Position = glm::vec3(0.0f, 20.0f, 0.0f);
-	view->Camera.Orientation = glm::vec3(-90.0f, 0.0f, 0.0f);
+	view->BackgroundColor = color_banana;
+	view->Camera.Position = glm::vec3(0.0f, 0.0f, 100.0f);
+	view->Camera.Orientation = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	view->addLight(light);
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 
-	earth = new GESphere(20.0f, 12);
-	earth->Material.DiffuseColor = color_greenyellow;
-	earth->Material.Shininess = 1024.0f;
-	earth->Wireframe = true;
-	earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
-	earth->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
-	layer->addObject(earth);
+	//earth = new GESphere(20.0f, 12);
+	//earth->Material.DiffuseColor = color_greenyellow;
+	//earth->Material.Shininess = 1024.0f;
+	//earth->Wireframe = true;
+	//earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	//earth->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+	//layer->addObject(earth);
 
 
 	for (int i = 0; i < 20; i++)
 	{
-		cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
-		cubes[i]->Material.DiffuseColor = color_greenyellow;
-		cubes[i]->Material.Shininess = 1024.0f;
-		cubes[i]->Wireframe = false;
-		layer->addObject(cubes[i]);
+		//cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
+		//cubes[i]->Material.DiffuseColor = color_greenyellow;
+		//cubes[i]->Material.Shininess = 1024.0f;
+		//cubes[i]->Wireframe = false;
+		//layer->addObject(cubes[i]);
 	}
 
 	player = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 	player->Material.DiffuseColor = color_blue_3;
 	player->Material.Shininess = 1024.0f;
 	player->Wireframe = false;
-	player->Position = glm::vec3(0, 0, 30);
+	player->Position = glm::vec3(1, 30, 0);
+	player->makeRigidBody();
 	layer->addObject(player);
-
-	//// World
-	broadphase = new btDbvtBroadphase();
-	collisionConfiguration = new btDefaultCollisionConfiguration();
-	dispatcher = new btCollisionDispatcher(collisionConfiguration);
-	solver = new btSequentialImpulseConstraintSolver;
-	dynamicsWorld = new btDiscreteDynamicsWorld(dispatcher, broadphase, solver, collisionConfiguration);
-	dynamicsWorld->setGravity(btVector3(0.0f, 0.0f, 0.0f));
-
-	// Earth
-	earthShape = new btSphereShape(20);
-	btDefaultMotionState* auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 0, 0)));
-	btRigidBody::btRigidBodyConstructionInfo earthRigidBodyCI(0, auxMs, earthShape, btVector3(0, 0, 0));
-	earthRigidBodyCI.m_restitution = 0.6f;
-	earthRigidBody = new btRigidBody(earthRigidBodyCI);
-
-	dynamicsWorld->addRigidBody(earthRigidBody);
-
-	btVector3 boxInertia;
-	boxshape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
-	boxshape->calculateLocalInertia(1, boxInertia);
-
-	for (int i = 0; i < 20; i++)
-	{
-		auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0.0, 500, 0)));
-		btRigidBody::btRigidBodyConstructionInfo cubeRigidBodyCI(1, auxMs, boxshape, boxInertia);
-		cubeRigidBodyCI.m_restitution = 0.7f;
-		cubeRigidBodyCI.m_friction = 0.3f;
-		boxRigidBodies[i] = new btRigidBody(cubeRigidBodyCI);
-		//dynamicsWorld->addRigidBody(boxRigidBodies[i]);
-	}
-
-	playerShape = new btBoxShape(btVector3(1.0f, 1.0f, 1.0f));
-	auxMs = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 21, 0)));
-	btRigidBody::btRigidBodyConstructionInfo playerRigidBodyCI(1, auxMs, boxshape, boxInertia);
-	playerRigidBodyCI.m_restitution = 0.7f;
-	playerRigidBodyCI.m_friction = 0.3f;
-	playerRigidBody = new btRigidBody(playerRigidBodyCI);
-	//playerRigidBody->setAngularFactor(btVector3(0.0f, 0.0f, 0.0f));
-	dynamicsWorld->addRigidBody(playerRigidBody);
-
-	view->Camera.Parent = player;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -125,45 +84,17 @@ void GMMain::update(float time)
 	angle += time / 2.0f;
 	light->Position = glm::vec3(40.0f * glm::cos(angle), 0.0f, 40.0f * glm::sin(angle));
 
-	dynamicsWorld->stepSimulation(time, 5);
+	view->update(time);
 }
 
 void GMMain::preUpdate()
 {
-	btTransform trans;
-	btVector3 direction;
-	btRigidBody* current;
 
-	for (int i = 0; i < 20; i++)
-	{
-		current = boxRigidBodies[i];
-		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
-		direction = trans.getOrigin().normalize() * -9.8f;
-		boxRigidBodies[i]->setGravity(direction);
-	}
-
-	playerRigidBody->getMotionState()->getWorldTransform(trans);
-	direction = trans.getOrigin().normalize() * -9.8f;
-	playerRigidBody->setGravity(direction);
-
-	player->MatrixChanged = true;
 }
 
 void GMMain::posUpdate()
 {
-	btTransform trans;
-	btScalar matrix[16];
 
-	for (int i = 0; i < 20; i++)
-	{
-		boxRigidBodies[i]->getMotionState()->getWorldTransform(trans);
-		trans.getOpenGLMatrix(matrix);
-		cubes[i]->ModelMatrix = glm::make_mat4(matrix);
-	}
-
-	playerRigidBody->getMotionState()->getWorldTransform(trans);
-	trans.getOpenGLMatrix(matrix);
-	player->ModelMatrix = glm::make_mat4(matrix);
 }
 
 // ------------------------------------------------------------------------------ //
@@ -197,12 +128,7 @@ void GMMain::xBoxControllerButtonUp(GE_INPUT_XBOX button, int player)
 
 void GMMain::xBoxControllerTriguerChange(GE_INPUT_XBOX trigger, int player, float value)
 {
-	static float factorL = 0.0f;
-	static float factorR = 0.0f;
-	if (trigger == GE_INPUT_XBOX_LEFT_TRIGGER)
-		factorL = value;
-	if (trigger == GE_INPUT_XBOX_RIGHT_TRIGGER)
-		factorR = value;
+
 }
 
 void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xAxis, float yAxis)
@@ -218,7 +144,7 @@ void GMMain::xBoxControllerStickChange(GE_INPUT_XBOX stick, int player, float xA
 	}
 	if (stick == GE_INPUT_XBOX_LEFT_STICK)
 	{
-		playerRigidBody->applyCentralForce(btVector3(100.0f * xAxis, 100.0f * yAxis, 0.0f));
+
 	}
 }
 

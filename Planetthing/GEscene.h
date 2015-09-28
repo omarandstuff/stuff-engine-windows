@@ -8,7 +8,7 @@
 #include "GEfullscreen.h"
 #include "GEcamera.h"
 
-class GEScene
+class GEScene : public GEUpdateProtocol, public GERenderProtocol
 {
 public:
 	GEScene();
@@ -20,7 +20,6 @@ public:
 public:
 	glm::vec3 BackgroundColor;
 	float Opasity;
-	map<wstring, GELayer*> Layers;
 	int Width, Height;
 	GECamera Camera;
 	btDiscreteDynamicsWorld* DynamicsWorld;
@@ -30,10 +29,8 @@ public:
 	// -------------------------------------------- //
 public:
 	GELayer* addLayerWithName(wstring name);
-	void addLayerWithLayer(GELayer* layer);
 	GELayer* getLayerWithName(wstring name);
 	void removeLayerWithName(wstring name);
-	void removeLayer(GELayer* layer);
 
 	// -------------------------------------------- //
 	// ------------------ Lights ------------------ //
@@ -43,10 +40,12 @@ public:
 	void cleanLights();
 
 	// -------------------------------------------- //
-	// -------------- Render / Update ------------- //
+	// --------- Update - Render - Layout --------- //
 	// -------------------------------------------- //
 public:
+	void preUpdate();
 	void update(float time);
+	void posUpdate();
 	void render();
 	void layout(int width, int height);
 
@@ -60,6 +59,7 @@ private:
 	GEColorShader* m_colorShader;
 
 	vector<GELight*> m_lights;
+	map<wstring, GELayer*> m_layers;
 
 	btBroadphaseInterface* m_broadphase;
 	btDefaultCollisionConfiguration* m_collisionConfiguration;

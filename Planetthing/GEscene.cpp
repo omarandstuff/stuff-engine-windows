@@ -38,6 +38,16 @@ GEScene::~GEScene()
 // -------------------------------- Render / Update ----------------------------- //
 // ------------------------------------------------------------------------------ //
 
+void GEScene::preUpdate()
+{
+
+}
+
+void GEScene::posUpdate()
+{
+
+}
+
 void GEScene::update(float time)
 {
 	// Update the dynamics for thhis frame.
@@ -65,7 +75,7 @@ void GEScene::render()
 		glCullFace(GL_FRONT);
 
 		// Render depth of object.
-		for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)
+		for (map<wstring, GELayer*>::iterator layer = m_layers.begin(); layer != m_layers.end(); layer++)
 			layer->second->render(GE_RENDER_MODE_DEPTH);
 	}
 
@@ -83,7 +93,7 @@ void GEScene::render()
 	m_colorShader->ViewProjectionMatrix = &matrix;
 
 	// Render normal objects;
-	for (map<wstring, GELayer*>::iterator layer = Layers.begin(); layer != Layers.end(); layer++)
+	for (map<wstring, GELayer*>::iterator layer = m_layers.begin(); layer != m_layers.end(); layer++)
 		layer->second->render(GE_RENDER_MODE_NORMAL);
 }
 
@@ -100,38 +110,27 @@ void GEScene::layout(int width, int height)
 
 GELayer* GEScene::addLayerWithName(wstring name)
 {
-	if (Layers[name] != 0) return 0;
+	if (m_layers[name] != 0) return 0;
 
 	GELayer* newLayer = new GELayer;
 	newLayer->Name = name;
 
-	Layers[name] = newLayer;
+	m_layers[name] = newLayer;
 
 	newLayer->DynamicsWorld = DynamicsWorld;
 
 	return newLayer;
 }
 
-void GEScene::addLayerWithLayer(GELayer* layer)
-{
-	GELayer* currentLayer = Layers[layer->Name];
-	if (currentLayer == 0)
-		Layers[layer->Name] = layer;
-}
-
 GELayer* GEScene::getLayerWithName(wstring name)
 {
-	return Layers[name];
+	return m_layers[name];
 }
 
 void GEScene::removeLayerWithName(wstring name)
 {
-	Layers.erase(name);
-}
-
-void GEScene::removeLayer(GELayer* layer)
-{
-	Layers.erase(layer->Name);
+	GELayer* layer = m_layers[name];
+	m_layers.erase(name);
 }
 
 // ------------------------------------------------------------------------------ //

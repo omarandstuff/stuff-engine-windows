@@ -60,20 +60,4 @@ private:
 	GECube* player;
 
 	GEScene* view;
-
-	btBroadphaseInterface* broadphase;
-	btDefaultCollisionConfiguration* collisionConfiguration;
-	btCollisionDispatcher* dispatcher;
-	btSequentialImpulseConstraintSolver* solver;
-	btDiscreteDynamicsWorld* dynamicsWorld;
-
-
-	btCollisionShape* earthShape;
-	btRigidBody* earthRigidBody;
-
-	btCollisionShape* boxshape;
-	btRigidBody* boxRigidBodies[20];
-
-	btCollisionShape* playerShape;
-	btRigidBody* playerRigidBody;
 };

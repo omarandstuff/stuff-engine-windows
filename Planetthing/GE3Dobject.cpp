@@ -20,6 +20,8 @@ GE3DObject::GE3DObject()
 	LookAt.syntetize(this, &GE3DObject::getLookAt, &GE3DObject::setLookAt);
 	Parent.syntetize(this, &GE3DObject::getParent, &GE3DObject::setParent);
 	UseLookAt.syntetize(this, &GE3DObject::getUseLookAt, &GE3DObject::setUseLookAt);
+
+	m_isKinematic = true;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -28,52 +30,69 @@ GE3DObject::GE3DObject()
 
 void GE3DObject::update(float time)
 {
-	if (m_positionChanged)
+	if (!m_isKinematic)
 	{
-		m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position * (m_reverse ? -1.0f : 1.0f));
-		MatrixChanged = true;
-	}
-
-	if (m_orientationChanged)
-	{
-		m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orientation.x), glm::radians(m_orientation.y), glm::radians(m_orientation.z)) * (m_reverse ? -1.0f : 1.0f)));
-		MatrixChanged = true;
-	}
-
-	if (m_scaleChanged)
-	{
-		m_scaleMatrix = glm::scale(m_scale * (m_reverse ? -1.0f : 1.0f));
-		MatrixChanged = true;
-	}
-
-	if (m_orbitChanged)
-	{
-		m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orbit.x), glm::radians(m_orbit.y), glm::radians(m_orbit.z)) * (m_reverse ? -1.0f : 1.0f)));
-		MatrixChanged = true;
-	}
-
-	if (MatrixChanged)
-	{
-		if (m_reverse)
-			m_localMatrix = m_orientationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
-		else
-			m_localMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_orientationMatrix;
-	}
-
-	if (m_parent)
-	{
-		if (m_parent->MatrixChanged)
+		if (RigidBody->isActive())
 		{
-			if (m_reverse)
-				m_finalMatrix = m_localMatrix * glm::inverse((glm::mat4&)m_parent->ModelMatrix);
-			else
-				m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_localMatrix;
+			btTransform trans;
+			btScalar matrix[16];
+
+			m_motionState->getWorldTransform(trans);
+			trans.getOpenGLMatrix(matrix);
+
+			m_finalMatrix = glm::make_mat4(matrix) * glm::scale(m_scale * (m_reverse ? -1.0f : 1.0f));
 		}
 	}
 	else
 	{
-		m_finalMatrix = m_localMatrix;
+		if (m_positionChanged)
+		{
+			m_translationMatrix = glm::translate(glm::mat4(1.0f), m_position * (m_reverse ? -1.0f : 1.0f));
+			MatrixChanged = true;
+		}
+
+		if (m_orientationChanged)
+		{
+			m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orientation.x), glm::radians(m_orientation.y), glm::radians(m_orientation.z)) * (m_reverse ? -1.0f : 1.0f)));
+			MatrixChanged = true;
+		}
+
+		if (m_scaleChanged)
+		{
+			m_scaleMatrix = glm::scale(m_scale * (m_reverse ? -1.0f : 1.0f));
+			MatrixChanged = true;
+		}
+
+		if (m_orbitChanged)
+		{
+			m_orientationMatrix = glm::mat4(glm::quat(glm::vec3(glm::radians(m_orbit.x), glm::radians(m_orbit.y), glm::radians(m_orbit.z)) * (m_reverse ? -1.0f : 1.0f)));
+			MatrixChanged = true;
+		}
+
+		if (MatrixChanged)
+		{
+			if (m_reverse)
+				m_localMatrix = m_orientationMatrix * m_scaleMatrix * m_translationMatrix * m_orbitMatrix;
+			else
+				m_localMatrix = m_orbitMatrix * m_translationMatrix * m_scaleMatrix * m_orientationMatrix;
+		}
+
+		if (m_parent)
+		{
+			if (m_parent->MatrixChanged)
+			{
+				if (m_reverse)
+					m_finalMatrix = m_localMatrix * glm::inverse((glm::mat4&)m_parent->ModelMatrix);
+				else
+					m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_localMatrix;
+			}
+		}
+		else
+		{
+			m_finalMatrix = m_localMatrix;
+		}
 	}
+
 }
 
 void GE3DObject::preUpdate()
@@ -89,6 +108,66 @@ void GE3DObject::posUpdate()
 	m_orbitChanged = false;
 	m_lookAtChanged = false;
 	MatrixChanged = false;
+}
+
+// ------------------------------------------------------------------------------ //
+// ----------------------------------- Rigidbody -------------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GE3DObject::makeCubeRigidBody(float width, float height, float depth, bool kinematic)
+{
+	btCollisionShape* shape = new btBoxShape(btVector3(width, height, depth));
+	m_isKinematic = kinematic;
+
+	btVector3 inertia(0, 0, 0);
+	btScalar mass = 0;
+	glm::quat orientation = glm::quat(glm::vec3(glm::radians(m_orientation.x), glm::radians(m_orientation.y), glm::radians(m_orientation.z)));
+	
+	if (!kinematic)
+	{
+		shape->calculateLocalInertia(1, inertia);
+		mass = 1;
+	}
+
+	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, m_motionState, shape, inertia);
+	rigidBodyCI.m_restitution = 0.5f;
+	rigidBodyCI.m_friction = 0.1f;
+	RigidBody = new btRigidBody(rigidBodyCI);
+}
+
+void GE3DObject::makeSphereRigidBody(float radious, bool kinematic)
+{
+	btCollisionShape* shape = new btSphereShape(radious);
+	m_isKinematic = kinematic;
+
+	btVector3 inertia(0, 0, 0);
+	btScalar mass = 0;
+	glm::quat orientation = glm::quat(glm::vec3(glm::radians(m_orientation.x), glm::radians(m_orientation.y), glm::radians(m_orientation.z)));
+
+	if (!kinematic)
+	{
+		shape->calculateLocalInertia(1, inertia);
+		mass = 1;
+	}
+
+	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, m_motionState, shape, inertia);
+	rigidBodyCI.m_restitution = 0.5f;
+	rigidBodyCI.m_friction = 0.1f;
+	RigidBody = new btRigidBody(rigidBodyCI);
+}
+
+void GE3DObject::makePlaneRigidBody(glm::vec3 direction)
+{
+	m_isKinematic = true;
+	btVector3 inertia(0, 0, 0);
+	btCollisionShape* shape = new btStaticPlaneShape(btVector3(direction.x, direction.y, direction.z), 1);
+	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(0, m_motionState, shape, inertia);
+	rigidBodyCI.m_restitution = 0.5f;
+	rigidBodyCI.m_friction = 0.1f;
+	RigidBody = new btRigidBody(rigidBodyCI);
 }
 
 // ------------------------------------------------------------------------------ //

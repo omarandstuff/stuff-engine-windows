@@ -252,6 +252,8 @@ void GESphere::generate(float radious, unsigned int segments)
 	m_scale = glm::vec3(radious);
 	m_scaleChanged = true;
 
+	m_radious = radious;
+
 	generateBuffers();
 }
 
@@ -295,4 +297,13 @@ void GESphere::processIndexArea(unsigned int vertexOffset, unsigned int indexOff
 			m_indexBuffer[(indexOffset + index) * 6 + 5] = vertexOffset + (i + 1) * (areaSegments + 1) + j + 1;
 		}
 	}
+}
+
+// ------------------------------------------------------------------------------ //
+// --------------------------------- Rigidbody ---------------------------------- //
+// ------------------------------------------------------------------------------ //
+
+void GESphere::makeRigidBody(bool kinematic)
+{
+	makeSphereRigidBody(m_radious, kinematic);
 }

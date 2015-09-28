@@ -31,6 +31,8 @@ void GELayer::render(GE_RENDER_MODE mode)
 void GELayer::addObject(GERenderable* object)
 {
 	m_objects.push_back(object);
+	if (object->RigidBody)
+		DynamicsWorld->addRigidBody(object->RigidBody);
 	NumberOfObjects++;
 }
 
@@ -41,6 +43,7 @@ void GELayer::removeObject(GERenderable* object)
 		if (*_object._Ptr == object)
 		{
 			m_objects.erase(_object);
+			DynamicsWorld->removeRigidBody(object->RigidBody);
 			NumberOfObjects--;
 			return;
 		}

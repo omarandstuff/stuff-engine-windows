@@ -17,6 +17,14 @@ public:
 	void posUpdate();
 
 	// -------------------------------------------- //
+	// ---------------- Rigid body ---------------- //
+	// -------------------------------------------- //
+protected:
+	void makeCubeRigidBody(float width, float height, float depth, bool kinematic = false);
+	void makeSphereRigidBody(float radious, bool kinematic = false);
+	void makePlaneRigidBody(glm::vec3 direction);
+
+	// -------------------------------------------- //
 	// ---------------- Properties ---------------- //
 	// -------------------------------------------- //
 protected:
@@ -42,6 +50,9 @@ protected:
 	glm::vec3 m_lookAt;
 
 	GE3DObject* m_parent;
+
+	btMotionState* m_motionState;
+	bool m_isKinematic;
 
 public:
 	bool MatrixChanged;
