@@ -51,7 +51,6 @@ protected:
 
 	GE3DObject* m_parent;
 
-	btMotionState* m_motionState;
 	bool m_isKinematic;
 
 public:
@@ -65,6 +64,7 @@ public:
 	Property<GE3DObject, GE3DObject*> Parent;
 	Property<GE3DObject, bool> UseLookAt;
 	btRigidBody* RigidBody;
+	btMotionState* MotionState;
 
 	// -------------------------------------------- //
 	// ------------ Getters / Setters ------------- //

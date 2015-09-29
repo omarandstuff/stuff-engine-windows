@@ -39,38 +39,44 @@ GMMain::GMMain()
 
 	view = new GEScene;
 	view->BackgroundColor = color_banana;
-	view->Camera.Position = glm::vec3(0.0f, 0.0f, 100.0f);
-	view->Camera.Orientation = glm::vec3(0.0f, 0.0f, 0.0f);
+	view->Camera.Position = glm::vec3(0.0f, 20.0f, 0.0f);
+	view->Camera.Orientation = glm::vec3(-90.0f, 0.0f, 0.0f);
 
 	view->addLight(light);
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 
-	//earth = new GESphere(20.0f, 12);
-	//earth->Material.DiffuseColor = color_greenyellow;
-	//earth->Material.Shininess = 1024.0f;
-	//earth->Wireframe = true;
-	//earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
-	//earth->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
-	//layer->addObject(earth);
+	earth = new GESphere(20.0f, 12);
+	earth->Material.DiffuseColor = color_black;
+	earth->Material.Shininess = 1024.0f;
+	earth->Wireframe = true;
+	earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	earth->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
+	earth->makeRigidBody(true);
+	layer->addObject(earth);
 
 
 	for (int i = 0; i < 20; i++)
 	{
-		//cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
-		//cubes[i]->Material.DiffuseColor = color_greenyellow;
-		//cubes[i]->Material.Shininess = 1024.0f;
-		//cubes[i]->Wireframe = false;
-		//layer->addObject(cubes[i]);
+		cubes[i] = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
+		cubes[i]->Material.DiffuseColor = color_greenyellow;
+		cubes[i]->Material.Shininess = 1024.0f;
+		cubes[i]->Wireframe = false;
+		cubes[i]->Position = glm::vec3(0.0f, 30, 0.0f);
+		cubes[i]->makeRigidBody();
+		cubes[i]->RigidBody->setRestitution(0.0f);
+		layer->addObject(cubes[i]);
 	}
 
 	player = new GECube(2.0f, 2.0f, 2.0f, 1, 1, 1);
 	player->Material.DiffuseColor = color_blue_3;
 	player->Material.Shininess = 1024.0f;
 	player->Wireframe = false;
-	player->Position = glm::vec3(1, 30, 0);
+	player->Position = glm::vec3(1, 40, 0);
 	player->makeRigidBody();
 	layer->addObject(player);
+
+	view->Camera.Parent = player;
 }
 
 // ------------------------------------------------------------------------------ //
@@ -89,7 +95,20 @@ void GMMain::update(float time)
 
 void GMMain::preUpdate()
 {
+	btTransform trans;
+	btVector3 direction;
+	btRigidBody* current;
 
+	for (int i = 0; i < 20; i++)
+	{
+		cubes[i]->MotionState->getWorldTransform(trans);
+		direction = trans.getOrigin().normalize() * -9.8f;
+		cubes[i]->RigidBody->setGravity(direction);
+	}
+
+	player->MotionState->getWorldTransform(trans);
+	direction = trans.getOrigin().normalize() * -9.8f;
+	player->RigidBody->setGravity(direction);
 }
 
 void GMMain::posUpdate()

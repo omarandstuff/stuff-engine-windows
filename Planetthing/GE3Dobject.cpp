@@ -37,10 +37,17 @@ void GE3DObject::update(float time)
 			btTransform trans;
 			btScalar matrix[16];
 
-			m_motionState->getWorldTransform(trans);
+			MotionState->getWorldTransform(trans);
 			trans.getOpenGLMatrix(matrix);
 
+			btQuaternion rotation = trans.getRotation();
+			glm::quat rot = glm::make_quat(&rotation.getX());
+
+			m_orientationMatrix = glm::toMat4(rot);
+
 			m_finalMatrix = glm::make_mat4(matrix) * glm::scale(m_scale * (m_reverse ? -1.0f : 1.0f));
+
+			MatrixChanged = true;
 		}
 	}
 	else
@@ -79,13 +86,10 @@ void GE3DObject::update(float time)
 
 		if (m_parent)
 		{
-			if (m_parent->MatrixChanged)
-			{
-				if (m_reverse)
-					m_finalMatrix = m_localMatrix * glm::inverse((glm::mat4&)m_parent->ModelMatrix);
-				else
-					m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_localMatrix;
-			}
+			if (m_reverse)
+				m_finalMatrix = m_localMatrix * glm::inverse((glm::mat4&)m_parent->ModelMatrix);
+			else
+				m_finalMatrix = (glm::mat4&)m_parent->ModelMatrix * m_localMatrix;
 		}
 		else
 		{
@@ -116,7 +120,7 @@ void GE3DObject::posUpdate()
 
 void GE3DObject::makeCubeRigidBody(float width, float height, float depth, bool kinematic)
 {
-	btCollisionShape* shape = new btBoxShape(btVector3(width, height, depth));
+	btCollisionShape* shape = new btBoxShape(btVector3(width / 2.0f, height / 2.0f, depth / 2.0f));
 	m_isKinematic = kinematic;
 
 	btVector3 inertia(0, 0, 0);
@@ -129,8 +133,8 @@ void GE3DObject::makeCubeRigidBody(float width, float height, float depth, bool 
 		mass = 1;
 	}
 
-	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
-	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, m_motionState, shape, inertia);
+	MotionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, MotionState, shape, inertia);
 	rigidBodyCI.m_restitution = 0.5f;
 	rigidBodyCI.m_friction = 0.1f;
 	RigidBody = new btRigidBody(rigidBodyCI);
@@ -151,8 +155,8 @@ void GE3DObject::makeSphereRigidBody(float radious, bool kinematic)
 		mass = 1;
 	}
 
-	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
-	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, m_motionState, shape, inertia);
+	MotionState = new btDefaultMotionState(btTransform(btQuaternion(orientation.x, orientation.y, orientation.z, orientation.w), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(mass, MotionState, shape, inertia);
 	rigidBodyCI.m_restitution = 0.5f;
 	rigidBodyCI.m_friction = 0.1f;
 	RigidBody = new btRigidBody(rigidBodyCI);
@@ -163,8 +167,8 @@ void GE3DObject::makePlaneRigidBody(glm::vec3 direction)
 	m_isKinematic = true;
 	btVector3 inertia(0, 0, 0);
 	btCollisionShape* shape = new btStaticPlaneShape(btVector3(direction.x, direction.y, direction.z), 1);
-	m_motionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(m_position.x, m_position.y, m_position.z)));
-	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(0, m_motionState, shape, inertia);
+	MotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(m_position.x, m_position.y, m_position.z)));
+	btRigidBody::btRigidBodyConstructionInfo rigidBodyCI(0, MotionState, shape, inertia);
 	rigidBodyCI.m_restitution = 0.5f;
 	rigidBodyCI.m_friction = 0.1f;
 	RigidBody = new btRigidBody(rigidBodyCI);
