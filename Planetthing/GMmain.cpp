@@ -97,7 +97,6 @@ void GMMain::preUpdate()
 {
 	btTransform trans;
 	btVector3 direction;
-	btRigidBody* current;
 
 	for (int i = 0; i < 20; i++)
 	{
