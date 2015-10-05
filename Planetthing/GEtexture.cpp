@@ -17,6 +17,10 @@ GETexture* GETexture::textureWithFileName(wstring filename)
 		t_i.first = 1;
 		m_texturesHolder[filename] = t_i;
 	}
+	else
+	{
+		t_i.first++;
+	}
 
 	return t_i.second;
 }

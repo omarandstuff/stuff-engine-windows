@@ -21,17 +21,6 @@ GMMain::GMMain()
 	GEInput::sharedInstance()->addXBoxContollerDelegate(this);
 	GEInput::sharedInstance()->addMouseDelegate(this);
 
-	//animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
-	//animation->play();
-	//model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
-	//model->RenderBoundingBox = true;
-	//animation->addDelegate(model);
-
-	//model->setScale({ 0.1f, 0.1f, 0.1f });
-
-	//model = new GEAnimatedModel(L"resources/images/sphere.md5mesh");
-	//model->Meshes[0].Material.Shininess = 128.0f;
-
 	light = new GELight;
 	light->Intensity = 1.0f;
 	light->Ambient = 0.2f;
@@ -39,18 +28,18 @@ GMMain::GMMain()
 
 	view = new GEScene;
 	view->BackgroundColor = color_banana;
-	view->Camera.Position = glm::vec3(0.0f, 20.0f, 0.0f);
-	view->Camera.Orientation = glm::vec3(-90.0f, 0.0f, 0.0f);
+	view->Camera.Position = glm::vec3(0.0f, 30.0f, 30.0f);
+	view->Camera.Orientation = glm::vec3(-20.0f, 0.0f, 0.0f);
 
 	view->addLight(light);
 
 	GELayer* layer = view->addLayerWithName(L"Layer1");
 
 	earth = new GESphere(20.0f, 12);
-	earth->Material.DiffuseColor = color_black;
-	earth->Material.Shininess = 1024.0f;
+	earth->Material.DiffuseColor = color_bisque_2;
+	earth->Material.Shininess = 128.0f;
 	earth->Wireframe = true;
-	earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
+	//earth->Material.DiffuseMap = GETexture::textureWithFileName(L"Resources/Images/earth.png");
 	earth->Material.SpecularMap = GETexture::textureWithFileName(L"Resources/Images/earth_specular.png");
 	earth->makeRigidBody(true);
 	layer->addObject(earth);
@@ -76,7 +65,17 @@ GMMain::GMMain()
 	player->makeRigidBody();
 	layer->addObject(player);
 
-	view->Camera.Parent = player;
+	//view->Camera.Parent = player;
+
+	animation = new GEAnimation(L"resources/models/bob lamp/bob_lamp.md5anim");
+	animation->play();
+	model = new GEAnimatedModel(L"resources/models/bob lamp/bob_lamp.md5mesh");
+	animation->addDelegate(model);
+
+	model->Position = glm::vec3(0.0f, 20.0f, 0.0f);
+	model->Scale = glm::vec3(0.1f, 0.1f, 0.1f);
+
+	layer->addObject(model);
 }
 
 // ------------------------------------------------------------------------------ //
